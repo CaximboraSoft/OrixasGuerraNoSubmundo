@@ -62,9 +62,10 @@ public class Abejide : MonoBehaviour {
 	void Update () {
 		//Faz a câmera seguir o jogador.
 		abejideCamera.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y - distanceCameraY, gameObject.transform.position.z - distanceCameraZ);
+		animacaoState = abejideAnimator.GetCurrentAnimatorStateInfo (0);
 
 		Atacar ();
-		if (!animacaoState.IsTag("Atacando") && !abejideAnimator.GetBool("Atacando")) {
+		if (animacaoState.IsTag("Andando") || animacaoState.IsTag("Parado")) {
 			MoverRodarAbejide ();
 		}
 		CalcularFisica ();
@@ -76,8 +77,6 @@ public class Abejide : MonoBehaviour {
 	}
 
 	void Atacar () {
-		animacaoState = abejideAnimator.GetCurrentAnimatorStateInfo (0);
-
 		if (!animacaoState.IsTag("Atacando") && !abejideAnimator.GetBool ("Andando") ) {
 			//TrocaDeArma
 			if (Input.GetKeyDown (KeyCode.Alpha1) && abejideAnimator.GetInteger("ArmaAtual") != 0) {
@@ -343,5 +342,6 @@ public class Abejide : MonoBehaviour {
 		armas [abejideAnimator.GetInteger("ArmaAtual")].GetComponent<Renderer> ().enabled = false;
 		abejideAnimator.SetInteger("ArmaAtual", novaArma);
 		armas [novaArma].GetComponent<Renderer> ().enabled = true;
+		abejideAnimator.SetTrigger ("TrocarDeArma");
 	}
 }
