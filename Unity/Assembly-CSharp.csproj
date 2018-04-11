@@ -51,20 +51,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Character\Abejide\Scripts\Abejide.cs" />
-     <Compile Include="Assets\Character\Abejide\Scripts\Arma.cs" />
-     <Compile Include="Assets\Character\Abejide\Scripts\OldAbejide.cs" />
-     <None Include="Assets\Character\Abejide\Shader\Sword Shaded.shader" />
-     <None Include="Assets\Character\Abejide\Shader\Examples\Broken Strong Ouline.shader" />
-     <None Include="Assets\Character\Abejide\Shader\Examples\Diffuse Simple.shader" />
-     <None Include="Assets\Character\Abejide\Shader\Examples\NewSurfaceShader.shader" />
-     <None Include="Assets\Character\Abejide\Shader\Examples\Tint Final Color.shader" />
-     <None Include="Assets\Character\Abejide\Shader\Examples\Diffuse Bump.shader" />
-     <None Include="Assets\Character\Abejide\Shader\Examples\Detail.shader" />
-     <None Include="Assets\Character\Abejide\Shader\Character Shaded.shader" />
-     <None Include="Assets\Character\Abejide\Shader\Examples\Diffuse Texture.shader" />
-     <None Include="Assets\Character\Abejide\Shader\Examples\Rim.shader" />
-     <None Include="Assets\Character\Abejide\Shader\Examples\WorldRefl Normalmap.shader" />
+     <Compile Include="Assets\Cenario\Scripts\DadosDaFase.cs" />
+     <Compile Include="Assets\Personagem\Abejide\Scripts\Abejide.cs" />
+     <Compile Include="Assets\Personagem\Abejide\Scripts\Arma.cs" />
+     <Compile Include="Assets\Personagem\Abejide\Scripts\OldAbejide.cs" />
+     <Compile Include="Assets\Personagem\Esqueleto\Scripts\Esqueleto.cs" />
+     <None Include="Assets\Personagem\Shader\Armas Shaded.shader" />
+     <None Include="Assets\Personagem\Shader\Examples\Diffuse Simple.shader" />
+     <None Include="Assets\Personagem\Shader\Examples\NewSurfaceShader.shader" />
+     <None Include="Assets\Personagem\Shader\Examples\Tint Final Color.shader" />
+     <None Include="Assets\Personagem\Shader\Examples\Diffuse Bump.shader" />
+     <None Include="Assets\Personagem\Shader\Personagem Shaded.shader" />
+     <None Include="Assets\Personagem\Shader\Examples\Detail.shader" />
+     <None Include="Assets\Personagem\Shader\Examples\Diffuse Texture.shader" />
+     <None Include="Assets\Personagem\Shader\Examples\Rim.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
