@@ -52,9 +52,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Cenario\Scripts\DadosDaFase.cs" />
-     <Compile Include="Assets\Personagem\Abejide\Scripts\Abejide.cs" />
+     <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideAndando.cs" />
+     <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideAtaque.cs" />
+     <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideMagia.cs" />
+     <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideOlhando.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\Arma.cs" />
-     <Compile Include="Assets\Personagem\Abejide\Scripts\OldAbejide.cs" />
      <Compile Include="Assets\Personagem\Esqueleto\Scripts\Esqueleto.cs" />
      <None Include="Assets\Personagem\Shader\Armas Shaded.shader" />
      <None Include="Assets\Personagem\Shader\Examples\Diffuse Simple.shader" />

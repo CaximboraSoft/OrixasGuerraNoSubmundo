@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Esqueleto : MonoBehaviour {
 
-	public Transform abejide;
+	private GameObject abejide;
 
 	public float distancia;
 	private float distanciaX;
@@ -13,15 +13,15 @@ public class Esqueleto : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		abejide = GameObject.Find ("Abejide");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		distanciaX = abejide.position.x - transform.position.x;
-		distanciaZ = abejide.position.z - transform.position.z;
+		distanciaX = abejide.transform.position.x - transform.position.x;
+		distanciaZ = abejide.transform.position.z - transform.position.z;
 		distancia = Mathf.Sqrt(Mathf.Pow(distanciaX, 2) + Mathf.Pow(distanciaZ, 2));
 
-		transform.LookAt (new Vector3(abejide.position.x, transform.position.y, abejide.position.z));
+		transform.LookAt (new Vector3(abejide.transform.position.x, transform.position.y, abejide.transform.position.z));
 	}
 }
