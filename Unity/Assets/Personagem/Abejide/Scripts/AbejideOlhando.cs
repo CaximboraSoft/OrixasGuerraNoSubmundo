@@ -54,7 +54,7 @@ public class AbejideOlhando : MonoBehaviour {
 				estaAndandoZ = true;
 				newtonZ = CalcularFisica (newtonZ, aceleracaoZ, false);
 				if (angulo > 135 - distanciaTransicao) {
-					Debug.Log ("MATA");
+					//Debug.Log ("MATA");
 					trasicaoAngulo = true;
 					newtonX = CalcularFisica (newtonX, aceleracaoX, true);
 					//transform.Translate (1 * Time.deltaTime, 0, 0);

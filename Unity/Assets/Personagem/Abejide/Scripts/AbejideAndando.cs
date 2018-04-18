@@ -19,7 +19,6 @@ public class AbejideAndando : MonoBehaviour {
 	private bool estaAndando;
 	private bool estaRodando;
 
-	private float aceleracaoAndando;
 	private float newtonAndando; //força(newton) = massa(kg) * aceleração(m/s²)
 	public float addNewtonAndando;
 	public float subNewtonAndando;
@@ -38,7 +37,6 @@ public class AbejideAndando : MonoBehaviour {
 	void Awake () {
 		estaRodando = false;
 
-		aceleracaoAndando = 0;
 		aceleracaoRotacao = 0;
 
 		abejideAnimator = GameObject.Find ("AbejideMesh").GetComponent<Animator> ();
@@ -46,17 +44,16 @@ public class AbejideAndando : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	animacaoState = abejideAnimator.GetCurrentAnimatorStateInfo (0);
+		animacaoState = abejideAnimator.GetCurrentAnimatorStateInfo (0);
 
-		if (animacaoState.IsTag ("Andando") || animacaoState.IsTag ("Parado")) {
+		if ((animacaoState.IsTag ("Andando") || animacaoState.IsTag ("Parado")) && GetComponent<AbejideAtaque>().TempoComboMaiorQueLimite ()) {
+			estaAndando = false;
 			MoverRodarAbejide ();
 		}
 		CalcularFisica ();
 	}
 
 	void MoverRodarAbejide () {
-		estaAndando = false;
-
 		/*Se na hora de rotacionar o Abejide de acordo com o que o jogador estiver pressionando for necessario passar de -180,
 		 *ficar menor que -180, quer dizer que o novo angulo do Abejide tem que ser positivo e é isso que este if faz, deixa
 		 * o angulo positivo, pois o código só funciona sem bugs com angulos entre -180 e 180.
@@ -120,7 +117,6 @@ public class AbejideAndando : MonoBehaviour {
 				 * é negativa e se for para a direita a rotação é positiva, então precisa existir uma transição no número 180.
 				 */
 				if (angulo < 0) {
-					
 					/*
 					 * Serve para resolver um bug, pois quando o jogador aperta rapidamente a seta da direita e esquerda, o if
 					 * lá em cima que impede que o angulo passe do -180 e 180 entra, então é necessario desfazer essa soma de
@@ -166,7 +162,7 @@ public class AbejideAndando : MonoBehaviour {
 	void CalcularFisica () {
 		//Rotação do Abejide
 		if (estaRodando && aceleracaoRotacao < maxAceleracaoRotacao) {
-			aceleracaoRotacao += (addNewtonRotacao + aceleracaoAndando * gameObject.GetComponent<AbejideAtaque>().PegarMassaTotal ()) / gameObject.GetComponent<AbejideAtaque>().PegarMassaTotal ();
+			aceleracaoRotacao += (addNewtonRotacao + abejideAnimator.GetFloat ("AceleracaoAndando") * gameObject.GetComponent<AbejideAtaque>().PegarMassaTotal ()) / gameObject.GetComponent<AbejideAtaque>().PegarMassaTotal ();
 
 			if (aceleracaoRotacao > maxAceleracaoRotacao) {
 				aceleracaoRotacao = maxAceleracaoRotacao;
@@ -191,7 +187,7 @@ public class AbejideAndando : MonoBehaviour {
 					newtonAndando = maxNewtonAndando;
 				}
 			//Desaceleração.
-			} else if (aceleracaoAndando != 0) {
+			} else if (abejideAnimator.GetFloat ("AceleracaoAndando") != 0) {
 				newtonAndando -= subNewtonAndando;
 
 				if (newtonAndando < 0) {
@@ -199,17 +195,16 @@ public class AbejideAndando : MonoBehaviour {
 				}
 			}
 		}
-
-		aceleracaoAndando = (newtonAndando / (gameObject.GetComponent<AbejideAtaque>().PegarMassaTotal ()));
-		//abejideAnimator.SetFloat ("AceleracaoAndando",  (newtonAndando / (gameObject.GetComponent<AbejideAtaque>().PegarMassaTotal ())));
+		
+		abejideAnimator.SetFloat ("AceleracaoAndando",  (newtonAndando / (gameObject.GetComponent<AbejideAtaque>().PegarMassaTotal ())));
 
 		gameObject.transform.eulerAngles = new Vector3 (0, angulo, 0);
-		gameObject.transform.Translate(0, 0, aceleracaoAndando * Time.deltaTime);
+		gameObject.transform.Translate(0, 0, abejideAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime);
 
 		//Muda a animação do Abejide:
 		//Se Abejide estiver se movendo, pode ser que a animação precise ser mudada dependendo da ocasião.
 		if (estaAndando) {
-			if (aceleracaoAndando <= (maxNewtonAndando + (maxNewtonCorrendo / 2)) / (gameObject.GetComponent<AbejideAtaque>().PegarMassaTotal ())) {
+			if (abejideAnimator.GetFloat ("AceleracaoAndando") <= (maxNewtonAndando + (maxNewtonCorrendo / 2)) / (gameObject.GetComponent<AbejideAtaque>().PegarMassaTotal ())) {
 				//Mudar a animação para andando quando Abejide começar a movendo.
 				//de correndo para andando.
 				if (!abejideAnimator.GetBool ("Andando")) {
@@ -222,13 +217,13 @@ public class AbejideAndando : MonoBehaviour {
 			} else if (!abejideAnimator.GetBool ("Correndo")) {
 				abejideAnimator.SetBool ("Correndo", true);
 			}
-		} else if (abejideAnimator.GetBool ("Andando") && aceleracaoAndando <= (maxNewtonAndando + (maxNewtonCorrendo / 3)) / (gameObject.GetComponent<AbejideAtaque>().PegarMassaTotal ())) {
+		} else if (abejideAnimator.GetBool ("Andando") && abejideAnimator.GetFloat ("AceleracaoAndando") <= (maxNewtonAndando + (maxNewtonCorrendo / 3)) / (gameObject.GetComponent<AbejideAtaque>().PegarMassaTotal ())) {
 			//Muda a animação para andando quando o jogador não estiver mais apertando a tecla de movimento, pois se o jogador começar a correr mais depois parar
 			//é preciso trocar da animação correndo para andando, por que dessa forma a animação fica mais suave.
 			if (abejideAnimator.GetBool ("Correndo")) {
 				abejideAnimator.SetBool ("Correndo", false);
 			//Mudar a animação para parado quando Abejide não estiver se movendo.
-			} else if (aceleracaoAndando < minPlayAndando) {
+			} else if (abejideAnimator.GetFloat ("AceleracaoAndando") < minPlayAndando) {
 				abejideAnimator.SetBool ("Andando", false);
 			}
 		}
@@ -244,23 +239,19 @@ public class AbejideAndando : MonoBehaviour {
 	/// <param name="negativo">If set to <c>true</c> negativo.</param>
 	/// <param name="chegarAngulo">Chegar angulo.</param>
 	void RotacionarAbejide () {
-		float distancia = 0;
-
 		if (angulo != chegarAngulo) {
 			estaRodando = true;
 		}
 
 		if (chegarAngulo < 0) {
 			if (angulo > chegarAngulo) {
-				if (angulo < chegarAngulo + 22.5f) {
-					distancia = (angulo - chegarAngulo) * 20;
-				}
-				angulo -= (aceleracaoRotacao - distancia) * Time.deltaTime;
+				angulo -= (aceleracaoRotacao) * Time.deltaTime;
 				if (angulo < chegarAngulo) {
 					angulo = chegarAngulo;
 					estaRodando = false;
 				}
 			} else {
+				
 				angulo += aceleracaoRotacao * Time.deltaTime;
 				if (angulo > chegarAngulo) {
 					angulo = chegarAngulo;
@@ -269,7 +260,7 @@ public class AbejideAndando : MonoBehaviour {
 			}
 		} else {
 			if (angulo < chegarAngulo) {
-				angulo += aceleracaoRotacao * Time.deltaTime;
+				angulo += (aceleracaoRotacao) * Time.deltaTime;
 				if (angulo > chegarAngulo) {
 					angulo = chegarAngulo;
 					estaRodando = false;
