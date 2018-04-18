@@ -24,6 +24,9 @@ public class AbejideAtaque : MonoBehaviour {
 	private bool olhandoInimigo;
 	private bool jogouMagia;
 
+	private float newtonRodando;
+	public float addNewtonRodando;
+	public float maxNewtonRodando;
 	private float tempoCombo;
 	public float maxTempoCombo;
 	private float tempoMagia;
@@ -34,13 +37,16 @@ public class AbejideAtaque : MonoBehaviour {
 	private float distanceCameraZ;
 	private float distanceCameraY;
 
+	public float distanciaAngulo;
+
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		olhandoInimigo = false;
 		jogouMagia = false;
 
 		tempoCombo = 0;
 		tempoMagia = 0;
+		newtonRodando = 0;
 
 		abejideCamera = Camera.main;
 		distanceCameraY = gameObject.transform.position.y - abejideCamera.transform.position.y;
@@ -57,7 +63,36 @@ public class AbejideAtaque : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		seta.LookAt (new Vector3(inimigo.position.x, seta.position.y, inimigo.position.z));
+		if (gameObject.GetComponent<AbejideOlhando> ().enabled) {
+			transform.LookAt (new Vector3(inimigo.position.x, transform.position.y, inimigo.position.z));
+		} else if (olhandoInimigo && !gameObject.GetComponent<AbejideOlhando> ().enabled) {
+			newtonRodando += addNewtonRodando;
+			if (newtonRodando > maxNewtonRodando) {
+				newtonRodando = maxNewtonRodando;
+			}
+			seta.LookAt (new Vector3(inimigo.position.x, seta.position.y, inimigo.position.z));
+
+			distanciaAngulo = transform.eulerAngles.y - seta.transform.eulerAngles.y;
+			if (distanciaAngulo < 0) {
+				distanciaAngulo += 360;
+			} else if (distanciaAngulo > 360) {
+				distanciaAngulo -= 360;
+			}
+
+			if (distanciaAngulo > 180) {
+				transform.Rotate (0, (newtonRodando / (massa + massaArma)) * Time.deltaTime, 0);
+
+				if (distanciaAngulo >= 350) {
+					gameObject.GetComponent<AbejideOlhando> ().enabled = true;
+				}
+			} else {
+				transform.Rotate (0, -(newtonRodando / (massa + massaArma)) * Time.deltaTime, 0);
+
+				if (distanciaAngulo <= 10) {
+					gameObject.GetComponent<AbejideOlhando> ().enabled = true;
+				}
+			}
+		}
 
 		//Faz a câmera seguir o jogador.
 		abejideCamera.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y - distanceCameraY, gameObject.transform.position.z - distanceCameraZ);
@@ -85,8 +120,12 @@ public class AbejideAtaque : MonoBehaviour {
 			gameObject.GetComponent<AbejideAndando> ().MudarAngulo (transform.eulerAngles.y);
 
 			olhandoInimigo = !olhandoInimigo;
-			gameObject.GetComponent<AbejideOlhando> ().enabled = olhandoInimigo;
+			//gameObject.GetComponent<AbejideOlhando> ().enabled = olhandoInimigo;
 			gameObject.GetComponent<AbejideAndando> ().enabled = !olhandoInimigo;
+			if (gameObject.GetComponent<AbejideAndando> ().enabled) {
+				gameObject.GetComponent<AbejideOlhando> ().enabled = false;
+				newtonRodando = 0;
+			}
 		}
 
 		//Fecha o jogo quando for aperdato a tecla 'esc' do teclado.
@@ -138,5 +177,9 @@ public class AbejideAtaque : MonoBehaviour {
 
 	public float PegarMassaTotal() {
 		return (massa + massaArma);
+	}
+
+	public bool TempoComboMaiorQueLimite () {
+		return (tempoCombo > maxTempoCombo);
 	}
 }
