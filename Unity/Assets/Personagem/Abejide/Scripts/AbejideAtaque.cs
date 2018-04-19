@@ -39,8 +39,7 @@ public class AbejideAtaque : MonoBehaviour {
 
 	public float distanciaAngulo;
 
-	// Use this for initialization
-	void Awake () {
+	public void AtivarCodigo () {
 		olhandoInimigo = false;
 		jogouMagia = false;
 
