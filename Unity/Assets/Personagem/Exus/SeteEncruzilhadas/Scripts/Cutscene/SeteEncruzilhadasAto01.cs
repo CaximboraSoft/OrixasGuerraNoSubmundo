@@ -9,30 +9,15 @@ public class SeteEncruzilhadasAto01 : MonoBehaviour {
 	public RuntimeAnimatorController controllerInicial;
 	public RuntimeAnimatorController controllerCutscene;
 
-	private Transform objeto;
-	public string posicoesNome;
-	public float[] rotacoes;
-
 	private float tempoEspera;
 	private float maxTempoEspera;
-
-	private int ato;
-	private int indicePosicoes;
-	private int indiceRotacoes;
 
 	// Use this for initialization
 	void Start () {
 		atorAnimator.runtimeAnimatorController = controllerCutscene as RuntimeAnimatorController;
 
-		ato = 0;
-		indicePosicoes = 0;
-		indiceRotacoes = 0;
 		tempoEspera = 10;
 		maxTempoEspera = 0;
-
-		objeto = GameObject.Find(posicoesNome + " (" + indicePosicoes.ToString () + ")").GetComponent<Transform> ();
-		transform.position = objeto.position;
-		transform.eulerAngles = new Vector3 (transform.eulerAngles.x, rotacoes[0], transform.eulerAngles.z);
 	}
 	
 	// Update is called once per frame
@@ -41,54 +26,39 @@ public class SeteEncruzilhadasAto01 : MonoBehaviour {
 
 		if (!GetComponent<MetodosDaCutscene> ().PegarEstaAtuando () && tempoEspera > maxTempoEspera) {
 
-			switch (ato) {
+			switch (GetComponent<MetodosDaCutscene> ().PegarAto ()) {
 			case 0:
-				if (terreno.GetComponent<DadosDaFase>().atores[0].GetComponent<AbejideAto01>().PegarAto () > 7) {
-					ato++;
+				if (terreno.GetComponent<DadosDaFase>().atores[0].GetComponent<MetodosDaCutscene>().PegarAto () > 7) {
+					tempoEspera = 0;
+					maxTempoEspera = 2;
+					GetComponent<MetodosDaCutscene> ().IncrementarAto ();
 				}
 				break;
 			case 1:
-				MudarPosicao (true, false, true, false);
-				ato++;
+				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (false, false, true, false, 0);
 				break;
 			case 2:
-				MudarPosicao (true, false, false, false);
-				ato++;
+				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (true, false, true, false, 0);
+				break;
+			case 3:
+				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (false, false, false, false, 0);
+				break;
+			case 4:
+				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoRotacao (false, false, 3); //Indice 1
+				break;
+			case 5:
+				atorAnimator.GetComponent<Rigidbody> ().useGravity = false;
+				atorAnimator.GetComponent<Collider> ().enabled = false;
+				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoMoverNoEixoY (2.7f, false, true, false, 1, 0);
+				break;
+			case 6:
+				GetComponent<MetodosDaCutscene> ().IncrementarAto ();
 				break;
 			default:
-				//ato--;
-				/*
-				GetComponent<Ato01> ().enabled = false;
-				GetComponent<MetodosDaCutscene> ().enabled = false;
-				GetComponent<AbejideAtaque> ().enabled = true;
-				GetComponent<AbejideAndando> ().enabled = true;*/
 				break;
 			}
 		} else {
 			tempoEspera += Time.deltaTime;
 		}
-	}
-
-	private void MoverNoEixoY(float distancia, bool cima, bool correndo) {
-		GetComponent<MetodosDaCutscene> ().ComecarAtuacaoMoverNoEixoY (distancia, cima, correndo);
-	}
-
-	private void ApontarParaObjeto (bool sentidoHorario, bool manterNewtonRotacao) {
-		GetComponent<MetodosDaCutscene> ().ComecarAtuacaoOlharParaObjeto (objeto, sentidoHorario, manterNewtonRotacao);
-	}
-
-	private void MudarRotacao (bool sentidoHorario, bool manterNewtonRotacao) {
-		indiceRotacoes++;
-		GetComponent<MetodosDaCutscene> ().ComecarAtuacaoRotacao (rotacoes[indiceRotacoes], sentidoHorario, manterNewtonRotacao);
-	}
-
-	private void MudarPosicao (bool sentidoHorario, bool correndo, bool manterNewtonAndando, bool manterNewtonRodando) {
-		indicePosicoes++;
-		objeto = GameObject.Find(posicoesNome + " (" + indicePosicoes.ToString () + ")").GetComponent<Transform> ();
-		GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (objeto, sentidoHorario, correndo, manterNewtonAndando, manterNewtonRodando);
-	}
-
-	public int PegarAto () {
-		return ato;
 	}
 }

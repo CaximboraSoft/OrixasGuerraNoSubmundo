@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Cenario\Camera\Scripts\Cutscene\CameraAto01.cs" />
      <Compile Include="Assets\Cenario\Scripts\DadosDaFase.cs" />
      <Compile Include="Assets\Cenario\Scripts\EsconderObjeto.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideAndando.cs" />
@@ -59,6 +60,7 @@
      <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideOlhando.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\Arma.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" />
+     <Compile Include="Assets\Personagem\Esqueleto\Scripts\Cutscene\EsqueletoAto01.cs" />
      <Compile Include="Assets\Personagem\Esqueleto\Scripts\Esqueleto.cs" />
      <Compile Include="Assets\Personagem\Exus\SeteEncruzilhadas\Scripts\Cutscene\SeteEncruzilhadasAto01.cs" />
      <Compile Include="Assets\Personagem\Exus\TrancaRua\Scripts\Cutscene\TrancaRuaAto01.cs" />

@@ -34,8 +34,8 @@ public class AbejideAtaque : MonoBehaviour {
 	public float massa = 0;
 	private float massaArma;
 	//Salva a distancia do eixo z entra a câmera e o jogador, para que ela sempre fique nesta distancia quando Abejide se mover
-	private float distanceCameraZ;
-	private float distanceCameraY;
+	public float distanceCameraZ;
+	public float distanceCameraY;
 
 	public float distanciaAngulo;
 
@@ -48,8 +48,6 @@ public class AbejideAtaque : MonoBehaviour {
 		newtonRodando = 0;
 
 		abejideCamera = Camera.main;
-		distanceCameraY = gameObject.transform.position.y - abejideCamera.transform.position.y;
-		distanceCameraZ = gameObject.transform.position.z - abejideCamera.transform.position.z;
 
 		abejideAnimator = GameObject.Find ("AbejideMesh").GetComponent<Animator> ();
 
@@ -94,7 +92,7 @@ public class AbejideAtaque : MonoBehaviour {
 		}
 
 		//Faz a câmera seguir o jogador.
-		abejideCamera.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y - distanceCameraY, gameObject.transform.position.z - distanceCameraZ);
+		abejideCamera.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y + distanceCameraY, gameObject.transform.position.z - distanceCameraZ);
 
 		Atacar ();
 
