@@ -217,6 +217,8 @@ ModelImporter:
     7400180: Sieg_AndandoNegativo
     7400182: Sieg_AndandoParaTras
     7400184: Paralizado
+    7400186: Sieg_AndandoParaFrente
+    7400188: Sieg_AtaqueAndando
     9500000: //RootNode
     13700000: Abejide
     13700002: Azagaia
@@ -1549,7 +1551,7 @@ ModelImporter:
       name: Sieg_AndandoParaTras
       takeName: Sieg_Movendo
       firstFrame: 180
-      lastFrame: 231
+      lastFrame: 199
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1578,6 +1580,62 @@ ModelImporter:
       takeName: Sieg_Parado
       firstFrame: 21
       lastFrame: 22
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Sieg_AndandoParaFrente
+      takeName: Sieg_Movendo
+      firstFrame: 210
+      lastFrame: 229
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Sieg_AtaqueAndando
+      takeName: Sieg_Ataques
+      firstFrame: 130
+      lastFrame: 142
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

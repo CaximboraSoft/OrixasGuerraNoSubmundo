@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MetodosDaCutscene : MonoBehaviour {
 
-	public Transform objeto;
+	public Transform boca;
+	private Transform objeto;
 	public Transform seta;
 	private Transform posicao;
 	public float[] rotacoes;
 	private float rotacao;
 
+	public bool mudarTexto; 
 	private bool cima;
 	private bool estaAtuando;
 	private bool sentidoHorario;
@@ -27,8 +30,7 @@ public class MetodosDaCutscene : MonoBehaviour {
 	private float distanciaZ;
 	private float distancia;
 	private float newton;
-	private float newtonAndando;
-	private float newtonRodando;
+	//private float newtonRodando;
 	private float hipotenusa;
 	private float cateto1;
 	private float cateto2;
@@ -37,6 +39,8 @@ public class MetodosDaCutscene : MonoBehaviour {
 	private float tempoEspera;
 	private float maxTempoEspera;
 	private float vezes;
+	public float tempoMudarTexto;
+	public float maxTempoMudarTexto;
 
 	/*
 	 * 0 faz nada.
@@ -53,23 +57,25 @@ public class MetodosDaCutscene : MonoBehaviour {
 	private int indiceRotacoes;
 	public int ato;
 
+	public string menssagem;
 	public string posicoesNome;
 
 	// Use this for initialization
 	void Start () {
 		ato = 0;
 		newton = 0;
-		newtonAndando = 0;
-		newtonRodando = 0;
 		tipoDeAtuacao = 0;
 		indicePosicoes = 0;
 		indiceRotacoes = 0;
+		tempoMudarTexto = 0;
+		maxTempoMudarTexto = 0;
 
 		objeto = GameObject.Find(posicoesNome + " (" + indicePosicoes.ToString () + ")").GetComponent<Transform> ();
 		transform.position = objeto.position;
 		transform.eulerAngles = new Vector3 (transform.eulerAngles.x, rotacoes[0], transform.eulerAngles.z);
 
 		estaAtuando = false;
+		mudarTexto = false;
 	}
 	
 	// Update is called once per frame
@@ -97,6 +103,15 @@ public class MetodosDaCutscene : MonoBehaviour {
 			case 21:
 				ApontarParaObjeto ();
 				break;
+			}
+		}
+
+		//Muda a mensagem para a nova que foi passada após seu tempo de espera acabar.
+		if (mudarTexto) {
+			tempoMudarTexto += Time.deltaTime;
+			if (tempoMudarTexto >= maxTempoMudarTexto) {
+				boca.GetComponent<Text> ().text = menssagem;
+				mudarTexto = false;
 			}
 		}
 	}
@@ -180,6 +195,7 @@ public class MetodosDaCutscene : MonoBehaviour {
 			RodarAtor ();
 
 			if (chegouNoAngulo) {
+				transform.eulerAngles = new Vector3 (transform.eulerAngles.x, rotacoes[indiceRotacoes], transform.eulerAngles.z);
 				acabouAtuacao = true;
 			}
 		} else {
@@ -194,21 +210,17 @@ public class MetodosDaCutscene : MonoBehaviour {
 	private void MudarPosicaoDeLado () {
 		if (!acabouAtuacao) {
 			//Faz o ator andar.
-			newtonAndando += GetComponent<DadosForcaResultante> ().addNewtonAndando;
+
 			if (correndo) {
-				if (newtonAndando > GetComponent<DadosForcaResultante> ().maxNewtonCorrendo) {
-					newtonAndando = GetComponent<DadosForcaResultante> ().maxNewtonCorrendo;
-				}
+				GetComponent<DadosForcaResultante> ().AddNewtonCorrendo ();
 			} else {
-				if (newtonAndando > GetComponent<DadosForcaResultante> ().maxNewtonAndando) {
-					newtonAndando = GetComponent<DadosForcaResultante> ().maxNewtonAndando;
-				}
+				GetComponent<DadosForcaResultante> ().AddNewtonAndando ();
 			}
 
 			if (transform.position.x < posicao.position.x) {
-				transform.Translate (-(newtonAndando / GetComponent<DadosForcaResultante> ().PegarMassaTotal ()) * Time.deltaTime, 0, 0);
+				transform.Translate (-(GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando ()) * Time.deltaTime, 0, 0);
 			} else {
-				transform.Translate ((newtonAndando / GetComponent<DadosForcaResultante> ().PegarMassaTotal ()) * Time.deltaTime, 0, 0);
+				transform.Translate ((GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando ()) * Time.deltaTime, 0, 0);
 			}
 
 			cateto1 = transform.position.x - posicao.position.x;
@@ -217,10 +229,10 @@ public class MetodosDaCutscene : MonoBehaviour {
 
 			if (hipotenusa < 0.4f) {
 				if (!manterNewtonAndando) {
-					newtonAndando = 0;
+					GetComponent<DadosForcaResultante> ().MudarNewtonAndando (0);
 				}
 				if (!manterNewtonRodando) {
-					newtonRodando = 0;
+					GetComponent<DadosForcaResultante> ().MudarNewtonRodando (0);
 				}
 				acabouAtuacao = true;
 			}
@@ -237,18 +249,13 @@ public class MetodosDaCutscene : MonoBehaviour {
 	private void MudarPosicaoAndando () {
 		if (!acabouAtuacao) {
 			//Faz o ator andar.
-			newtonAndando += GetComponent<DadosForcaResultante> ().addNewtonAndando;
 			if (correndo) {
-				if (newtonAndando > GetComponent<DadosForcaResultante> ().maxNewtonCorrendo) {
-					newtonAndando = GetComponent<DadosForcaResultante> ().maxNewtonCorrendo;
-				}
+				GetComponent<DadosForcaResultante> ().AddNewtonCorrendo ();
 			} else {
-				if (newtonAndando > GetComponent<DadosForcaResultante> ().maxNewtonAndando) {
-					newtonAndando = GetComponent<DadosForcaResultante> ().maxNewtonAndando;
-				}
+				GetComponent<DadosForcaResultante> ().AddNewtonAndando ();
 			}
 
-			transform.Translate (0, 0, (newtonAndando / GetComponent<DadosForcaResultante> ().PegarMassaTotal ()) * Time.deltaTime);
+			transform.Translate (0, 0, (GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando ()) * Time.deltaTime);
 
 			cateto1 = transform.position.x - posicao.position.x;
 			cateto2 = transform.position.z - posicao.position.z;
@@ -256,10 +263,10 @@ public class MetodosDaCutscene : MonoBehaviour {
 
 			if (hipotenusa < 0.4f) {
 				if (!manterNewtonAndando) {
-					newtonAndando = 0;
+					GetComponent<DadosForcaResultante> ().MudarNewtonAndando (0);
 				}
 				if (!manterNewtonRodando) {
-					newtonRodando = 0;
+					GetComponent<DadosForcaResultante> ().MudarNewtonRodando (0);
 				}
 				acabouAtuacao = true;
 			}
@@ -272,6 +279,8 @@ public class MetodosDaCutscene : MonoBehaviour {
 					rotacao += 360;
 				}
 				RodarAtor ();
+			} else {
+				transform.LookAt (new Vector3 (posicao.position.x, transform.position.y, posicao.position.z));
 			}
 		} else {
 			if (tempoEspera >= maxTempoEspera) {
@@ -283,19 +292,16 @@ public class MetodosDaCutscene : MonoBehaviour {
 	}
 
 	private void RodarAtor () {
-		newtonRodando += GetComponent<DadosForcaResultante> ().addNewtonRodando;
-		if (newtonRodando > GetComponent<DadosForcaResultante> ().maxNewtonRodando) {
-			newtonRodando = GetComponent<DadosForcaResultante> ().maxNewtonRodando;
-		}
+		GetComponent<DadosForcaResultante> ().AddNewtonRodando ();
 
 		if (sentidoHorario) {
-			angulo += ((newtonRodando / GetComponent<DadosForcaResultante> ().PegarMassaTotal ()) * 30) * Time.deltaTime;
+			angulo += (GetComponent<DadosForcaResultante> ().PegarNewtonRodando () / 180);
 
 			if (angulo + rotacao > 360) {
 				chegouNoAngulo = true;
 			}
 		} else {
-			angulo -= ((newtonRodando / GetComponent<DadosForcaResultante> ().PegarMassaTotal ()) * 30) * Time.deltaTime;
+			angulo -= (GetComponent<DadosForcaResultante> ().PegarNewtonRodando ()) / 180;
 
 			if (angulo + rotacao < 0) {
 				chegouNoAngulo = true;
@@ -454,6 +460,22 @@ public class MetodosDaCutscene : MonoBehaviour {
 		estaAtuando = true;
 	}
 
+	/// <summary>
+	/// Este método coloca um dialogo na tela para o jogador ler, é possivel fazer com a nova mensagem espere o outro acabar.
+	/// </summary>
+	/// <param name="menssagem">Menssagem.</param>
+	/// <param name="maxTempoMudarTexto">Max tempo mudar texto.</param>
+	/// <param name="maxTempoVidaTexto">Max tempo vida texto.</param>
+	/// <param name="esperarAcabar">If set to <c>true</c> esperar acabar.</param>
+	public void Falar (string menssagem, float maxTempoMudarTexto, float maxTempoVidaTexto) {
+		this.menssagem = menssagem;
+		this.maxTempoMudarTexto = maxTempoMudarTexto;
+
+		mudarTexto = true;
+
+		boca.GetComponent<Conversas> ().MudarTempoLimparTexto(maxTempoMudarTexto + maxTempoVidaTexto);
+	}
+
 	public void MoverNosEixosXZ (float distanciaX, float distanciaZ, bool manterNewtonAndando, float maxTempoEspera) {
 		this.manterNewtonAndando = manterNewtonAndando;
 		this.maxTempoEspera = maxTempoEspera;
@@ -474,15 +496,7 @@ public class MetodosDaCutscene : MonoBehaviour {
 	public bool PegarEstaAtuando () {
 		return estaAtuando;
 	}
-
-	/// <summary>
-	/// Pega o valor da variável <newtonAndando>.
-	/// </summary>
-	/// <returns>The newton andando.</returns>
-	public float PegarNewtonAndando () {
-		return newtonAndando;
-	}
-
+	
 	public void MudarEstaAtuando (bool valor) {
 		estaAtuando = valor;
 	}

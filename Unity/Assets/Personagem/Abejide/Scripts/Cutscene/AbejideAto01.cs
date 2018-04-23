@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class AbejideAto01 : MonoBehaviour {
 
+	public Canvas hud;
 	public GameObject terreno;
 	public Animator atorAnimator;
-	public RuntimeAnimatorController controllerInicial;
 	public RuntimeAnimatorController controllerCutscene;
 
 	private float tempoEspera;
@@ -14,21 +14,23 @@ public class AbejideAto01 : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		hud.enabled = false;
 		atorAnimator.runtimeAnimatorController = controllerCutscene as RuntimeAnimatorController;
 
 		tempoEspera = 10;
 		maxTempoEspera = 0;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		atorAnimator.SetFloat ("NewtonAndando", GetComponent<MetodosDaCutscene> ().PegarNewtonAndando ());
+		atorAnimator.SetFloat ("NewtonAndando", GetComponent<DadosForcaResultante> ().PegarNewtonAndando ());
 
 		if (!GetComponent<MetodosDaCutscene> ().PegarEstaAtuando () && tempoEspera > maxTempoEspera) {
 			
 			switch (GetComponent<MetodosDaCutscene> ().PegarAto ()) {
 			case 0:
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoMoverNoEixoY (1.85f, true, false, false, 1, 2);
+				GetComponent<MetodosDaCutscene> ().Falar ("Eae veio tarado, tô chegando e quero a minha maconha.", 2, 9);
 				break;
 			case 1:
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoOlharParaObjeto (terreno.GetComponent<DadosDaFase> ().atores [1], true, false);
@@ -36,12 +38,13 @@ public class AbejideAto01 : MonoBehaviour {
 			case 2:
 				//Comeca a tentar fugir.
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (true, true, false, false, 0);
+				GetComponent<MetodosDaCutscene> ().Falar ("Esquece cara, vou sair dessa merda.", 0, 6);
 				break;
 			case 3:
 				if (terreno.GetComponent<DadosDaFase> ().atores [1].GetComponent<MetodosDaCutscene> ().PegarAto () > 8) {
 					atorAnimator.SetTrigger ("Paralizar");
 					tempoEspera = 0;
-					maxTempoEspera = 1;
+					maxTempoEspera = 2.5f;
 					GetComponent<MetodosDaCutscene> ().IncrementarAto ();
 				}
 				break;
@@ -53,6 +56,7 @@ public class AbejideAto01 : MonoBehaviour {
 				break;
 			case 6:
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (true, true, false, false, 0);
+				GetComponent<MetodosDaCutscene> ().Falar ("Que diabo de magia é essa meu, você é filho do diabo satanas.", 0, 4);
 				break;
 			case 7:
 				//Nesse ponto é que o velho vai se apriximar do Abejide, incrementa para fazer o velho começar sua rotina.
@@ -67,13 +71,13 @@ public class AbejideAto01 : MonoBehaviour {
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoSeguirOutroAtor (terreno.GetComponent<DadosDaFase> ().atores [2], true, true, true);
 				break;
 			case 10:
-				atorAnimator.runtimeAnimatorController = controllerInicial as RuntimeAnimatorController;
 				transform.position = new Vector3 (287.86f, 1.47f, 266.84f);
 				transform.eulerAngles = new Vector3 (0, 0, 0);
 				GetComponent<AbejideAtaque> ().AtivarCodigo ();
 				GetComponent<AbejideAtaque> ().enabled = true;
 				GetComponent<AbejideAndando> ().enabled = true;
 
+				hud.enabled = true;
 				GetComponent<AbejideAto01> ().enabled = false;
 				GetComponent<MetodosDaCutscene> ().enabled = false;
 				break;

@@ -17,41 +17,47 @@ public class AbejideAtaque : MonoBehaviour {
 	private Animator abejideAnimator;
 	public GameObject[] armas;
 	public GameObject[] magias;
+	public float[] maxTempoMagia;
 	public GameObject mao;
 	public Camera abejideCamera;
+	public RuntimeAnimatorController controllerAndando;
+	public RuntimeAnimatorController controllerOlhando;
 	private AnimatorStateInfo animacaoState;
 
+	private bool estaAtaqueAndando;
 	private bool olhandoInimigo;
 	private bool jogouMagia;
 
-	private float newtonRodando;
-	public float addNewtonRodando;
-	public float maxNewtonRodando;
 	private float tempoCombo;
 	public float maxTempoCombo;
+	private float tempoAtaqueAndando;
+	public float maxTempoAtaqueAndando;
 	private float tempoMagia;
-	public float[] maxTempoMagia;
-	public float massa = 0;
-	private float massaArma;
 	//Salva a distancia do eixo z entra a câmera e o jogador, para que ela sempre fique nesta distancia quando Abejide se mover
 	public float distanceCameraZ;
 	public float distanceCameraY;
 
 	public float distanciaAngulo;
 
+	void Start () {
+		AtivarCodigo ();
+	}
+
 	public void AtivarCodigo () {
+		estaAtaqueAndando = false;
 		olhandoInimigo = false;
 		jogouMagia = false;
 
 		tempoCombo = 0;
 		tempoMagia = 0;
-		newtonRodando = 0;
 
 		abejideCamera = Camera.main;
+		abejideCamera.transform.eulerAngles = new Vector3 (50, 0 ,0);
 
 		abejideAnimator = GameObject.Find ("AbejideMesh").GetComponent<Animator> ();
+		abejideAnimator.runtimeAnimatorController = controllerAndando as RuntimeAnimatorController;
 
-		massaArma = armas [abejideAnimator.GetInteger ("ArmaAtual")].GetComponent<Arma> ().massa;
+		GetComponent<DadosForcaResultante> ().armaMassa = armas [abejideAnimator.GetInteger ("ArmaAtual")].GetComponent<Arma> ().massa;
 		armas [abejideAnimator.GetInteger("ArmaAtual")].GetComponent<Renderer> ().enabled = true;
 		for (int linha = 1; linha < armas.Length; linha++) {
 			armas [linha].GetComponent<Renderer> ().enabled = false;
@@ -63,10 +69,7 @@ public class AbejideAtaque : MonoBehaviour {
 		if (gameObject.GetComponent<AbejideOlhando> ().enabled) {
 			transform.LookAt (new Vector3(inimigo.position.x, transform.position.y, inimigo.position.z));
 		} else if (olhandoInimigo && !gameObject.GetComponent<AbejideOlhando> ().enabled) {
-			newtonRodando += addNewtonRodando;
-			if (newtonRodando > maxNewtonRodando) {
-				newtonRodando = maxNewtonRodando;
-			}
+			//GetComponent<DadosForcaResultante> ().AddNewtonRodando ();
 			seta.LookAt (new Vector3(inimigo.position.x, seta.position.y, inimigo.position.z));
 
 			distanciaAngulo = transform.eulerAngles.y - seta.transform.eulerAngles.y;
@@ -77,13 +80,13 @@ public class AbejideAtaque : MonoBehaviour {
 			}
 
 			if (distanciaAngulo > 180) {
-				transform.Rotate (0, (newtonRodando / (massa + massaArma)) * Time.deltaTime, 0);
+//				transform.Rotate (0, (newtonRodando / GetComponent<DadosForcaResultante> ().PegarMassaTotal ()) * Time.deltaTime, 0);
 
 				if (distanciaAngulo >= 350) {
 					gameObject.GetComponent<AbejideOlhando> ().enabled = true;
 				}
 			} else {
-				transform.Rotate (0, -(newtonRodando / (massa + massaArma)) * Time.deltaTime, 0);
+//				transform.Rotate (0, -(newtonRodando / GetComponent<DadosForcaResultante> ().PegarMassaTotal ()) * Time.deltaTime, 0);
 
 				if (distanciaAngulo <= 10) {
 					gameObject.GetComponent<AbejideOlhando> ().enabled = true;
@@ -92,12 +95,12 @@ public class AbejideAtaque : MonoBehaviour {
 		}
 
 		//Faz a câmera seguir o jogador.
-		abejideCamera.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y + distanceCameraY, gameObject.transform.position.z - distanceCameraZ);
+		abejideCamera.transform.position = new Vector3 (transform.position.x, gameObject.transform.position.y + distanceCameraY, gameObject.transform.position.z - distanceCameraZ);
 
 		Atacar ();
 
 		animacaoState = abejideAnimator.GetCurrentAnimatorStateInfo (0);
-		if (!animacaoState.IsTag("Atacando") && !abejideAnimator.GetBool ("Andando") ) {
+		if (!animacaoState.IsTag("Atacando") && abejideAnimator.GetFloat ("AceleracaoAndando") == 0f) {
 			TrocarDeArma ();
 
 			//Joga a magia.
@@ -121,7 +124,7 @@ public class AbejideAtaque : MonoBehaviour {
 			gameObject.GetComponent<AbejideAndando> ().enabled = !olhandoInimigo;
 			if (gameObject.GetComponent<AbejideAndando> ().enabled) {
 				gameObject.GetComponent<AbejideOlhando> ().enabled = false;
-				newtonRodando = 0;
+				//newtonRodando = 0;
 			}
 		}
 
@@ -134,12 +137,37 @@ public class AbejideAtaque : MonoBehaviour {
 	void Atacar() {
 		tempoCombo += Time.deltaTime;
 
-		if (Input.GetKeyDown (KeyCode.Z) && !abejideAnimator.GetBool ("Andando")) {
+		if (Input.GetKeyDown (KeyCode.Z)) {
 			tempoCombo = 0;
 
-			if (!abejideAnimator.GetBool ("Atacando")) {
-				abejideAnimator.SetBool ("Atacando", true);
+			if (!animacaoState.IsTag ("Atacando")) {
+				if (abejideAnimator.GetFloat ("AceleracaoAndando") >= 0.4f && !estaAtaqueAndando) {
+					estaAtaqueAndando = true;
+					abejideAnimator.SetTrigger ("AtacandoCorrendo");
+
+				} else if (!abejideAnimator.GetBool ("Atacando")) {
+					abejideAnimator.SetBool ("Atacando", true);
+				}
 			}
+		}
+
+		if (estaAtaqueAndando) {
+			tempoAtaqueAndando += Time.deltaTime;
+			if (tempoAtaqueAndando > maxTempoAtaqueAndando) {
+				GetComponent<DadosForcaResultante> ().SubNewtonAndando (1);
+				if (GetComponent<DadosForcaResultante> ().PegarNewtonAndando () > GetComponent<DadosForcaResultante> ().maxNewtonAndando) {
+					GetComponent<DadosForcaResultante> ().SubNewtonAndando (1);
+				}
+
+				if (GetComponent<DadosForcaResultante> ().PegarNewtonAndando() == 0) {
+					estaAtaqueAndando = false;
+				}
+			} else {
+				GetComponent<DadosForcaResultante> ().AddNewtonAndando ();
+			}
+
+			abejideAnimator.SetFloat ("AceleracaoAndando",  (GetComponent<DadosForcaResultante>().PegarAceleracaoAndando ()));
+			transform.Translate(0, 0, abejideAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime);
 		}
 
 		if (tempoCombo > maxTempoCombo) {
@@ -169,14 +197,14 @@ public class AbejideAtaque : MonoBehaviour {
 
 
 		//Atualiza a variavel que quarda a massa da arma atual que Abejide esta usando.
-		massaArma = armas [novaArma].GetComponent<Arma> ().massa;
-	}
-
-	public float PegarMassaTotal() {
-		return (massa + massaArma);
+		GetComponent<DadosForcaResultante> ().armaMassa = armas [novaArma].GetComponent<Arma> ().massa;
 	}
 
 	public bool TempoComboMaiorQueLimite () {
 		return (tempoCombo > maxTempoCombo);
+	}
+
+	public bool PegarEstaAtaqueAndando () {
+		return estaAtaqueAndando;
 	}
 }

@@ -22,7 +22,7 @@ public class SeteEncruzilhadasAto01 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		atorAnimator.SetFloat ("NewtonAndando", GetComponent<MetodosDaCutscene> ().PegarNewtonAndando ());
+		atorAnimator.SetFloat ("NewtonAndando", GetComponent<DadosForcaResultante> ().PegarNewtonAndando ());
 
 		if (!GetComponent<MetodosDaCutscene> ().PegarEstaAtuando () && tempoEspera > maxTempoEspera) {
 
@@ -36,6 +36,7 @@ public class SeteEncruzilhadasAto01 : MonoBehaviour {
 				break;
 			case 1:
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (false, false, true, false, 0);
+				GetComponent<MetodosDaCutscene> ().Falar ("Oh seu lixo filho do satanas, deixa esse neguinho comigo, vou matar ele e toda a sua familia.", 0, 8);
 				break;
 			case 2:
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (true, false, true, false, 0);
@@ -45,11 +46,13 @@ public class SeteEncruzilhadasAto01 : MonoBehaviour {
 				break;
 			case 4:
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoRotacao (false, false, 3); //Indice 1
+				GetComponent<MetodosDaCutscene> ().Falar ("Cara, a minha família já morreu de overdose de maconha a muito tempo atrás.", 0, 6);
 				break;
 			case 5:
 				atorAnimator.GetComponent<Rigidbody> ().useGravity = false;
 				atorAnimator.GetComponent<Collider> ().enabled = false;
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoMoverNoEixoY (2.7f, false, true, false, 1, 0);
+				GetComponent<MetodosDaCutscene> ().Falar ("isso é o que você pensa, por que eu sou seu pai...", 1, 5);
 				break;
 			case 6:
 				GetComponent<MetodosDaCutscene> ().IncrementarAto ();

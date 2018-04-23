@@ -49,7 +49,6 @@ public class CameraAto01 : MonoBehaviour {
 			case 3:
 				if (terreno.GetComponent<DadosDaFase>().atores[0].GetComponent<AbejideAtaque>().enabled == true) {
 					atorAnimator.enabled = false;
-					transform.eulerAngles = new Vector3 (50, 0 ,0);
 
 					GetComponent<CameraAto01> ().enabled = false;
 				}

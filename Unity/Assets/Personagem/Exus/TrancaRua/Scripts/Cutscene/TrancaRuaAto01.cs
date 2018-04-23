@@ -22,7 +22,7 @@ public class TrancaRuaAto01 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		atorAnimator.SetFloat ("NewtonAndando", GetComponent<MetodosDaCutscene> ().PegarNewtonAndando ());
+		atorAnimator.SetFloat ("NewtonAndando", GetComponent<DadosForcaResultante> ().PegarNewtonAndando ());
 
 		if (!GetComponent<MetodosDaCutscene> ().PegarEstaAtuando () && tempoEspera > maxTempoEspera) {
 
@@ -30,6 +30,7 @@ public class TrancaRuaAto01 : MonoBehaviour {
 			case 0:
 				if (terreno.GetComponent<DadosDaFase>().atores[0].GetComponent<MetodosDaCutscene>().PegarAto () > 1) {
 					GetComponent<MetodosDaCutscene> ().IncrementarAto ();
+					GetComponent<MetodosDaCutscene> ().Falar ("Oh fã do felixo feto, a maconha aumentou de preço, vai custar 500 conto.", 2, 8);
 				}
 				break;
 			case 1:
@@ -42,9 +43,11 @@ public class TrancaRuaAto01 : MonoBehaviour {
 				tempoEspera = 0;
 				maxTempoEspera = 2;
 				GetComponent<MetodosDaCutscene> ().IncrementarAto ();
+				GetComponent<MetodosDaCutscene> ().Falar ("...", 0, 2);
 				break;
 			case 4:
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoRotacao (false, true, 0);
+				GetComponent<MetodosDaCutscene> ().Falar ("Pera ai, esqueci de pegar a maconha ali no paranaue.", 2, 8);
 				break;
 			case 5:
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (false, false, true, false, 0);
@@ -61,6 +64,8 @@ public class TrancaRuaAto01 : MonoBehaviour {
 				atorAnimator.SetInteger ("Ato", GetComponent<MetodosDaCutscene> ().PegarAto ());
 				atorAnimator.SetTrigger ("MudarAnimacao");
 				GetComponent<MetodosDaCutscene> ().IncrementarAto ();
+				GetComponent<MetodosDaCutscene> ().Falar ("Aaaahhh, mais você não vai fugir não seu resto de aborto.", 0, 6);
+
 				break;
 			case 9:
 				if (terreno.GetComponent<DadosDaFase>().atores[2].GetComponent<MetodosDaCutscene>().PegarAto () > 2) {

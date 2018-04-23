@@ -16,13 +16,9 @@ public class AbejideOlhando : MonoBehaviour {
 	public float aceleracaoZ;
 	public float newtonX; //força(newton) = massa(kg) * aceleração(m/s²)
 	public float newtonZ;
-	public float addNewtonAndando;
-	public float subNewtonAndando;
-	public float maxNewtonAndando;
-	public float maxNewtonCorrendo;
+	public float maisDevagar;
 	public float minPlayAndando = 0.5f; //Só pode disparar a animação de andando quando a velocidade do Abejide for menor que isso.
 	private float angulo;
-	public float distanciaTransicao;
 
 	private string andando;
 
@@ -53,12 +49,6 @@ public class AbejideOlhando : MonoBehaviour {
 			if (angulo > 45 && angulo <= 135) {
 				estaAndandoZ = true;
 				newtonZ = CalcularFisica (newtonZ, aceleracaoZ, false);
-				if (angulo > 135 - distanciaTransicao) {
-					//Debug.Log ("MATA");
-					trasicaoAngulo = true;
-					newtonX = CalcularFisica (newtonX, aceleracaoX, true);
-					//transform.Translate (1 * Time.deltaTime, 0, 0);
-				}
 			} else if (angulo > 135 && angulo <= 225) {
 				estaAndandoX = true;
 				newtonX = CalcularFisica (newtonX, aceleracaoX, true);
@@ -124,18 +114,18 @@ public class AbejideOlhando : MonoBehaviour {
 			}
 		}
 
-		aceleracaoX = (newtonX / (gameObject.GetComponent<AbejideAtaque>().PegarMassaTotal ()));
-		aceleracaoZ = (newtonZ / (gameObject.GetComponent<AbejideAtaque>().PegarMassaTotal ()));
-		gameObject.transform.Translate(aceleracaoX * Time.deltaTime, 0, aceleracaoZ * Time.deltaTime);
+//		aceleracaoX = (newtonX / (gameObject.GetComponent<DadosForcaResultante>().PegarMassaTotal ()));
+//		aceleracaoZ = (newtonZ / (gameObject.GetComponent<DadosForcaResultante>().PegarMassaTotal ()));
+		gameObject.transform.Translate((aceleracaoX / maisDevagar) * Time.deltaTime, 0, (aceleracaoZ / maisDevagar) * Time.deltaTime);
 
 		//-----------------------------------------------------------//
 
 		if (newtonZ > 0) {
 			abejideAnimator.SetBool ("AndandoParaTras", false);
 
-			andando = "Andando";
+			andando = "AndandoParaFrente";
 		} else if (newtonZ < 0) {
-			abejideAnimator.SetBool ("Andando", false);
+			abejideAnimator.SetBool ("AndandoParaFrente", false);
 
 			andando = "AndandoParaTras";
 		}
@@ -147,7 +137,7 @@ public class AbejideOlhando : MonoBehaviour {
 				abejideAnimator.SetBool (andando, true);
 			}
 		} else {
-			abejideAnimator.SetBool ("Andando", false);
+			abejideAnimator.SetBool ("AndandoParaFrente", false);
 			abejideAnimator.SetBool ("AndandoParaTras", false);
 		}
 
@@ -163,7 +153,7 @@ public class AbejideOlhando : MonoBehaviour {
 			andando = "AndandoNegativo";
 		}
 		if (estaAndandoX) {
-			abejideAnimator.SetBool ("Andando", false);
+			abejideAnimator.SetBool ("AndandoParaFrente", false);
 			abejideAnimator.SetBool ("AndandoParaTras", false);
 
 			if (!abejideAnimator.GetBool (andando)) {
@@ -179,48 +169,28 @@ public class AbejideOlhando : MonoBehaviour {
 
 	float CalcularFisica (float newton, float aceleracao, bool positivo) {
 		if (positivo) {
-			//Movimentção correndo.
-			if (Input.GetKey (KeyCode.LeftShift)) {
-				newton += (addNewtonAndando * 2);
+			if (newton <= GetComponent<DadosForcaResultante> ().maxNewtonAndando) {
+				newton += GetComponent<DadosForcaResultante> ().addNewtonAndando;
 
-				if (newton > maxNewtonAndando + maxNewtonCorrendo) {
-					newton = maxNewtonAndando + maxNewtonCorrendo;
-				}
-				//Movimentção andando.
-			} else {
-				if (newton <= maxNewtonAndando) {
-					newton += addNewtonAndando;
-
-					if (newton > maxNewtonAndando) {
-						newton = maxNewtonAndando;
-					}
+				if (newton > GetComponent<DadosForcaResultante> ().maxNewtonAndando) {
+					newton = GetComponent<DadosForcaResultante> ().maxNewtonAndando;
 				}
 			}
 
 			if (newton < 0) {
-				newton += (addNewtonAndando * 2);
+				newton += (GetComponent<DadosForcaResultante> ().addNewtonAndando * 2);
 			}
 		} else {
-			//Movimentção correndo.
-			if (Input.GetKey (KeyCode.LeftShift)) {
-				newton -= (addNewtonAndando * 2);
+			if (newton >= -GetComponent<DadosForcaResultante> ().maxNewtonAndando) {
+				newton -= GetComponent<DadosForcaResultante> ().addNewtonAndando;
 
-				if (newton < -(maxNewtonAndando + maxNewtonCorrendo)) {
-					newton = -(maxNewtonAndando + maxNewtonCorrendo);
-				}
-				//Movimentção andando.
-			} else {
-				if (newton >= -maxNewtonAndando) {
-					newton -= addNewtonAndando;
-
-					if (newton < -maxNewtonAndando) {
-						newton = -maxNewtonAndando;
-					}
+				if (newton < -GetComponent<DadosForcaResultante> ().maxNewtonAndando) {
+					newton = -GetComponent<DadosForcaResultante> ().maxNewtonAndando;
 				}
 			}
 
 			if (newton > 0) {
-				newton -= (addNewtonAndando * 2);
+				newton -= (GetComponent<DadosForcaResultante> ().addNewtonAndando * 2);
 			}
 		}
 
@@ -230,13 +200,13 @@ public class AbejideOlhando : MonoBehaviour {
 
 	float Desacelerar(float newton, float aceleracao) {
 		if (aceleracao > 0) {
-			newton -= subNewtonAndando;
+			newton -= GetComponent<DadosForcaResultante> ().subNewtonAndando;
 
 			if (newton < 0) {
 				newton = 0;
 			}
 		} else {
-			newton += subNewtonAndando;
+			newton += GetComponent<DadosForcaResultante> ().subNewtonAndando;
 
 			if (newton > 0) {
 				newton = 0;
