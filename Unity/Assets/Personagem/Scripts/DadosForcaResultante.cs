@@ -22,6 +22,8 @@ public class DadosForcaResultante : MonoBehaviour {
 	void Start () {
 		newtonAndando = 0;
 		newtonRodando = 0;
+
+		GetComponent<Rigidbody> ().mass = PegarMassaTotal ();
 	}
 
 	public float PegarMassaTotal () {

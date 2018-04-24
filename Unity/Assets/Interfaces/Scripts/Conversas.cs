@@ -4,7 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Conversas : MonoBehaviour {
-	
+
+	public Canvas conversas;
+	private Transform rostoMostrar;
+	public Camera cameraRosto;
+	public Text nome;
+
 	public bool limparTexto;
 
 	public float tempoVidaTexto;
@@ -12,21 +17,26 @@ public class Conversas : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		GetComponent<Text> ().text = "";
-
 		limparTexto = false;
 
 		tempoVidaTexto = 0;
 		maxTempoVidaTexto = 0;
+
+		cameraRosto.enabled = true;
+		conversas.enabled = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (conversas.enabled == true) {
+			cameraRosto.transform.position = rostoMostrar.position;
+			cameraRosto.transform.eulerAngles = rostoMostrar.eulerAngles;
+		}
 		//Tira a mensagem após seu tempo de vida acabar.
 		if (limparTexto) {
 			tempoVidaTexto += Time.deltaTime;
 			if (tempoVidaTexto >= maxTempoVidaTexto) {
-				GetComponent<Text> ().text = "";
+				conversas.enabled = false;
 				limparTexto = false;
 			}
 		}
@@ -44,5 +54,9 @@ public class Conversas : MonoBehaviour {
 
 		tempoVidaTexto = 0;
 		limparTexto = true;
+	}
+
+	public void MudarRostoMostrar (Transform rostoMostrar) {
+		this.rostoMostrar = rostoMostrar;
 	}
 }

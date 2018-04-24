@@ -54,7 +54,7 @@
      <Compile Include="Assets\Cenario\Camera\Scripts\Cutscene\CameraAto01.cs" />
      <Compile Include="Assets\Cenario\Scripts\DadosDaFase.cs" />
      <Compile Include="Assets\Cenario\Scripts\EsconderObjeto.cs" />
-     <Compile Include="Assets\Interfaces\HUD\Scripts\Conversas.cs" />
+     <Compile Include="Assets\Interfaces\Scripts\Conversas.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideAndando.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideAtaque.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideMagia.cs" />

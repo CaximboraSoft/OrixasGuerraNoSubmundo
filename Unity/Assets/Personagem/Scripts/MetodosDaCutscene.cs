@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MetodosDaCutscene : MonoBehaviour {
 
 	public Transform boca;
+	public Transform rostoMostrar;
 	private Transform objeto;
 	public Transform seta;
 	private Transform posicao;
@@ -24,6 +25,7 @@ public class MetodosDaCutscene : MonoBehaviour {
 	private bool eixoX;
 	private bool eixoY;
 	private bool eixoZ;
+	private bool mostrarEsteRosto;
 
 	private float distanciaX;
 	private float distanciaY;
@@ -57,6 +59,7 @@ public class MetodosDaCutscene : MonoBehaviour {
 	private int indiceRotacoes;
 	public int ato;
 
+	public string nome;
 	public string menssagem;
 	public string posicoesNome;
 
@@ -112,6 +115,12 @@ public class MetodosDaCutscene : MonoBehaviour {
 			if (tempoMudarTexto >= maxTempoMudarTexto) {
 				boca.GetComponent<Text> ().text = menssagem;
 				mudarTexto = false;
+				boca.GetComponent<Conversas> ().nome.text = nome;
+				boca.GetComponent<Conversas> ().conversas.enabled = true;
+
+				if (mostrarEsteRosto) {
+					boca.GetComponent<Conversas> ().MudarRostoMostrar (rostoMostrar);
+				}
 			}
 		}
 	}
@@ -467,12 +476,14 @@ public class MetodosDaCutscene : MonoBehaviour {
 	/// <param name="maxTempoMudarTexto">Max tempo mudar texto.</param>
 	/// <param name="maxTempoVidaTexto">Max tempo vida texto.</param>
 	/// <param name="esperarAcabar">If set to <c>true</c> esperar acabar.</param>
-	public void Falar (string menssagem, float maxTempoMudarTexto, float maxTempoVidaTexto) {
+	public void Falar (string menssagem, string nome, float maxTempoMudarTexto, float maxTempoVidaTexto, bool mostrarEsteRosto) {
+		this.nome = nome;
 		this.menssagem = menssagem;
 		this.maxTempoMudarTexto = maxTempoMudarTexto;
 
 		mudarTexto = true;
 
+		this.mostrarEsteRosto = mostrarEsteRosto;
 		boca.GetComponent<Conversas> ().MudarTempoLimparTexto(maxTempoMudarTexto + maxTempoVidaTexto);
 	}
 

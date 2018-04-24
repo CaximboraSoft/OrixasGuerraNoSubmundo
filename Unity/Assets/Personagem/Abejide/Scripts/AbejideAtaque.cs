@@ -51,7 +51,6 @@ public class AbejideAtaque : MonoBehaviour {
 		tempoCombo = 0;
 		tempoMagia = 0;
 
-		abejideCamera = Camera.main;
 		abejideCamera.transform.eulerAngles = new Vector3 (50, 0 ,0);
 
 		abejideAnimator = GameObject.Find ("AbejideMesh").GetComponent<Animator> ();
@@ -142,6 +141,7 @@ public class AbejideAtaque : MonoBehaviour {
 
 			if (!animacaoState.IsTag ("Atacando")) {
 				if (abejideAnimator.GetFloat ("AceleracaoAndando") >= 0.4f && !estaAtaqueAndando) {
+					tempoAtaqueAndando = 0;
 					estaAtaqueAndando = true;
 					abejideAnimator.SetTrigger ("AtacandoCorrendo");
 

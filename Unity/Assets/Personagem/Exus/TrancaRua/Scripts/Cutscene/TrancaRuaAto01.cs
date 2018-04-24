@@ -12,12 +12,16 @@ public class TrancaRuaAto01 : MonoBehaviour {
 	private float tempoEspera;
 	private float maxTempoEspera;
 
+	private string nome;
+
 	// Use this for initialization
 	void Start () {
 		atorAnimator.runtimeAnimatorController = controllerCutscene as RuntimeAnimatorController;
 
 		tempoEspera = 10;
 		maxTempoEspera = 0;
+
+		nome = "Tranca Rua:";
 	}
 	
 	// Update is called once per frame
@@ -30,7 +34,7 @@ public class TrancaRuaAto01 : MonoBehaviour {
 			case 0:
 				if (terreno.GetComponent<DadosDaFase>().atores[0].GetComponent<MetodosDaCutscene>().PegarAto () > 1) {
 					GetComponent<MetodosDaCutscene> ().IncrementarAto ();
-					GetComponent<MetodosDaCutscene> ().Falar ("Oh fã do felixo feto, a maconha aumentou de preço, vai custar 500 conto.", 2, 8);
+					GetComponent<MetodosDaCutscene> ().Falar ("Oh fã do felixo feto, a maconha aumentou de preço, vai custar 500 conto.", nome, 2, 8, true);
 				}
 				break;
 			case 1:
@@ -43,11 +47,12 @@ public class TrancaRuaAto01 : MonoBehaviour {
 				tempoEspera = 0;
 				maxTempoEspera = 2;
 				GetComponent<MetodosDaCutscene> ().IncrementarAto ();
-				GetComponent<MetodosDaCutscene> ().Falar ("...", 0, 2);
+				GetComponent<MetodosDaCutscene> ().boca.GetComponent<Conversas> ().MudarRostoMostrar(terreno.GetComponent<DadosDaFase> ().atores[0].GetComponent<MetodosDaCutscene> ().rostoMostrar);
+				GetComponent<MetodosDaCutscene> ().Falar ("...", terreno.GetComponent<DadosDaFase> ().atores[0].GetComponent<AbejideAto01> ().PegarNome (), 0, 2, false);
 				break;
 			case 4:
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoRotacao (false, true, 0);
-				GetComponent<MetodosDaCutscene> ().Falar ("Pera ai, esqueci de pegar a maconha ali no paranaue.", 2, 8);
+				GetComponent<MetodosDaCutscene> ().Falar ("Pera ai, esqueci de pegar a maconha ali no paranaue.", nome, 2, 8, true);
 				break;
 			case 5:
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (false, false, true, false, 0);
@@ -64,7 +69,7 @@ public class TrancaRuaAto01 : MonoBehaviour {
 				atorAnimator.SetInteger ("Ato", GetComponent<MetodosDaCutscene> ().PegarAto ());
 				atorAnimator.SetTrigger ("MudarAnimacao");
 				GetComponent<MetodosDaCutscene> ().IncrementarAto ();
-				GetComponent<MetodosDaCutscene> ().Falar ("Aaaahhh, mais você não vai fugir não seu resto de aborto.", 0, 6);
+				GetComponent<MetodosDaCutscene> ().Falar ("Aaaahhh, mais você não vai fugir não seu resto de aborto.", nome, 0, 6, true);
 
 				break;
 			case 9:

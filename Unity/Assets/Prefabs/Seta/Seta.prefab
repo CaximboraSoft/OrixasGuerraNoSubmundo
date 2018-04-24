@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4083181962219254}
   - component: {fileID: 33153309583427084}
   - component: {fileID: 23050626362826790}
-  - component: {fileID: 95506033727252966}
   - component: {fileID: 114921554568670222}
   m_Layer: 0
   m_Name: Seta
@@ -84,23 +83,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1577896583083288}
   m_Mesh: {fileID: 4300002, guid: 9c2784e379157d447ad13984f8f20418, type: 3}
---- !u!95 &95506033727252966
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1577896583083288}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 9c2784e379157d447ad13984f8f20418, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114921554568670222
 MonoBehaviour:
   m_ObjectHideFlags: 1
