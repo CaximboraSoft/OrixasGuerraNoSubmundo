@@ -1,12 +1,10 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Personagem\Scripts\MetodosDaCutscene.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Personagem\Abejide\Scripts\AbejideAtaque.cs">
     <Files>
-      <File FileName="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" Line="27" Column="19" />
-      <File FileName="Assets\Personagem\Exus\SeteEncruzilhadas\Scripts\Cutscene\SeteEncruzilhadasAto01.cs" Line="24" Column="34" />
-      <File FileName="Assets\Personagem\Scripts\MetodosDaCutscene.cs" Line="67" Column="17" />
-      <File FileName="Assets\Interfaces\Scripts\Conversas.cs" Line="59" Column="31" />
-      <File FileName="Assets\Personagem\Exus\TrancaRua\Scripts\Cutscene\TrancaRuaAto01.cs" Line="24" Column="22" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\AbejideAtaque.cs" Line="305" Column="21" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\AbejideAndando.cs" Line="38" Column="78" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\AbejideOlhando.cs" Line="62" Column="6" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

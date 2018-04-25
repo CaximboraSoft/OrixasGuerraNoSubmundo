@@ -44,23 +44,22 @@ public class AbejideOlhando : MonoBehaviour {
 		trasicaoAngulo = false;
 
 		angulo = transform.eulerAngles.y;
-			
-		if (Input.GetKey (KeyCode.LeftArrow)) {
+
+		if (Input.GetKey (KeyCode.UpArrow)) {
 			if (angulo > 45 && angulo <= 135) {
-				estaAndandoZ = true;
-				newtonZ = CalcularFisica (newtonZ, aceleracaoZ, false);
-			} else if (angulo > 135 && angulo <= 225) {
-				estaAndandoX = true;
-				newtonX = CalcularFisica (newtonX, aceleracaoX, true);
-			} else if (angulo > 225 && angulo < 315) {
-				estaAndandoZ = true;
-				newtonZ = CalcularFisica (newtonZ, aceleracaoZ, true);
-			} else {
 				estaAndandoX = true;
 				newtonX = CalcularFisica (newtonX, aceleracaoX, false);
+			} else if (angulo > 135 && angulo <= 225) {
+				estaAndandoZ = true;
+				newtonZ = CalcularFisica (newtonZ, aceleracaoZ, false);
+			} else if (angulo > 225 && angulo < 315) {
+				estaAndandoX = true;
+				newtonX = CalcularFisica (newtonX, aceleracaoX, true);
+			} else {
+				estaAndandoZ = true;
+				newtonZ = CalcularFisica (newtonZ, aceleracaoZ, true);
 			}
-		} 
-		if (Input.GetKey (KeyCode.RightArrow)) {
+		}  if (Input.GetKey (KeyCode.RightArrow)) {
 			if (angulo > 45 && angulo <= 135) {
 				estaAndandoZ = true;
 				newtonZ = CalcularFisica (newtonZ, aceleracaoZ, true);
@@ -73,20 +72,6 @@ public class AbejideOlhando : MonoBehaviour {
 			} else {
 				estaAndandoX = true;
 				newtonX = CalcularFisica (newtonX, aceleracaoX, true);
-			}
-		} if (Input.GetKey (KeyCode.UpArrow)) {
-			if (angulo > 45 && angulo <= 135) {
-				estaAndandoX = true;
-				newtonX = CalcularFisica (newtonX, aceleracaoX, false);
-			} else if (angulo > 135 && angulo <= 225) {
-				estaAndandoZ = true;
-				newtonZ = CalcularFisica (newtonZ, aceleracaoZ, false);
-			} else if (angulo > 225 && angulo < 315) {
-				estaAndandoX = true;
-				newtonX = CalcularFisica (newtonX, aceleracaoX, true);
-			} else {
-				estaAndandoZ = true;
-				newtonZ = CalcularFisica (newtonZ, aceleracaoZ, true);
 			}
 		} if (Input.GetKey (KeyCode.DownArrow)) {
 			if (angulo > 45 && angulo <= 135) {
@@ -102,7 +87,21 @@ public class AbejideOlhando : MonoBehaviour {
 				estaAndandoZ = true;
 				newtonZ = CalcularFisica (newtonZ, aceleracaoZ, false);
 			}
-		}
+		} if (Input.GetKey (KeyCode.LeftArrow)) {
+			if (angulo > 45 && angulo <= 135) {
+				estaAndandoZ = true;
+				newtonZ = CalcularFisica (newtonZ, aceleracaoZ, false);
+			} else if (angulo > 135 && angulo <= 225) {
+				estaAndandoX = true;
+				newtonX = CalcularFisica (newtonX, aceleracaoX, true);
+			} else if (angulo > 225 && angulo < 315) {
+				estaAndandoZ = true;
+				newtonZ = CalcularFisica (newtonZ, aceleracaoZ, true);
+			} else {
+				estaAndandoX = true;
+				newtonX = CalcularFisica (newtonX, aceleracaoX, false);
+			}
+		} 
 
 		if (!trasicaoAngulo) {
 			//Desacelera o Abejie quando quando o jogador não estiver mais apertando a tecla que movimenta no eixo Z.

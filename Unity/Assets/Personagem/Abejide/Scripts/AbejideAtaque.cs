@@ -25,9 +25,20 @@ public class AbejideAtaque : MonoBehaviour {
 	private AnimatorStateInfo animacaoState;
 
 	private bool estaAtaqueAndando;
+	private bool estaAtaqueParado;
 	private bool olhandoInimigo;
 	private bool jogouMagia;
+	/*
+	 * 0 Frente;
+	 * 1 Direita;
+	 * 2 Baixo;
+	 * 3 Esquerda;
+	 */
 
+	public bool[] direcaoAtaque = new bool[4];
+
+	public float tempoAndandoAtaque;
+	public float maxTempoAndandoAtaque;
 	private float tempoCombo;
 	public float maxTempoCombo;
 	private float tempoAtaqueAndando;
@@ -40,16 +51,22 @@ public class AbejideAtaque : MonoBehaviour {
 	public float distanciaAngulo;
 
 	void Start () {
+		for (int linha = 0; linha < direcaoAtaque.Length; linha++) {
+			direcaoAtaque [linha] = false;
+		}
+
 		AtivarCodigo ();
 	}
 
 	public void AtivarCodigo () {
+		estaAtaqueParado = false;
 		estaAtaqueAndando = false;
 		olhandoInimigo = false;
 		jogouMagia = false;
 
 		tempoCombo = 0;
 		tempoMagia = 0;
+		tempoAndandoAtaque = maxTempoAndandoAtaque;
 
 		abejideCamera.transform.eulerAngles = new Vector3 (50, 0 ,0);
 
@@ -140,37 +157,77 @@ public class AbejideAtaque : MonoBehaviour {
 			tempoCombo = 0;
 
 			if (!animacaoState.IsTag ("Atacando")) {
-				if (abejideAnimator.GetFloat ("AceleracaoAndando") >= 0.4f && !estaAtaqueAndando) {
+				if (abejideAnimator.GetFloat ("AceleracaoAndando") != 0f && !estaAtaqueAndando && !estaAtaqueParado) {
+					abejideAnimator.SetFloat ("AceleracaoAndando",  0);
+					abejideAnimator.SetBool ("Atacando", true);
 					tempoAtaqueAndando = 0;
 					estaAtaqueAndando = true;
 					abejideAnimator.SetTrigger ("AtacandoCorrendo");
-
-				} else if (!abejideAnimator.GetBool ("Atacando")) {
+				} else if (!estaAtaqueParado && !estaAtaqueAndando) {
+					estaAtaqueParado = true;
 					abejideAnimator.SetBool ("Atacando", true);
 				}
 			}
+
+			if (estaAtaqueParado && tempoAndandoAtaque >= maxTempoAndandoAtaque) {
+				for (int linha = 0; linha < direcaoAtaque.Length; linha++) {
+					direcaoAtaque [linha] = false;
+				}
+				tempoAndandoAtaque = 0;
+				GetComponent<DadosForcaResultante> ().MudarNewtonAndando (0);
+
+				DirecarAtaque (transform.eulerAngles.y);
+			}
 		}
 
-		if (estaAtaqueAndando) {
+		//Faz o personagem andar um pouco para o lado que o jogador estiver apertando segundo a seta quando ele estiver atacando.
+		if (estaAtaqueParado && tempoAndandoAtaque < maxTempoAndandoAtaque) {
+			tempoAndandoAtaque += Time.deltaTime;
+
+			GetComponent<DadosForcaResultante> ().AddNewtonAndando ();
+			abejideAnimator.SetFloat ("AceleracaoAndando",  (GetComponent<DadosForcaResultante>().PegarAceleracaoAndando ()));
+
+			if (direcaoAtaque[0]) {
+				transform.Translate(0, 0, abejideAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime);
+			} else if (direcaoAtaque[2]) {
+				transform.Translate(0, 0, -abejideAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime);
+			}
+			if (direcaoAtaque[1]) {
+				transform.Translate(abejideAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime, 0, 0);
+			} else if (direcaoAtaque[3]) {
+				transform.Translate(-abejideAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime, 0, 0);
+			}
+
+		//Sistema para o Abejide correr um pouco com a espada apos ele apertar para atacar quando o mesmo estiver andando.
+		} else if (estaAtaqueAndando) {
 			tempoAtaqueAndando += Time.deltaTime;
+
 			if (tempoAtaqueAndando > maxTempoAtaqueAndando) {
 				GetComponent<DadosForcaResultante> ().SubNewtonAndando (1);
+				//Faz o Abejide parar mais rapido quando sua ele estiver correndo.
 				if (GetComponent<DadosForcaResultante> ().PegarNewtonAndando () > GetComponent<DadosForcaResultante> ().maxNewtonAndando) {
 					GetComponent<DadosForcaResultante> ().SubNewtonAndando (1);
 				}
 
 				if (GetComponent<DadosForcaResultante> ().PegarNewtonAndando() == 0) {
+					//Passa o novo angulo para o estilo de movimentação que estiver ativom pois pode acontecer que no meio desse ataque o Abejide mude de angulo.
+					if (olhandoInimigo) {
+					} else {
+						GetComponent<AbejideAndando> ().MudarAngulo (transform.eulerAngles.y);
+					}
 					estaAtaqueAndando = false;
+					abejideAnimator.SetBool ("Atacando", false);
 				}
 			} else {
 				GetComponent<DadosForcaResultante> ().AddNewtonAndando ();
 			}
-
-			abejideAnimator.SetFloat ("AceleracaoAndando",  (GetComponent<DadosForcaResultante>().PegarAceleracaoAndando ()));
-			transform.Translate(0, 0, abejideAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime);
+			transform.Translate(0, 0, GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando () * Time.deltaTime);
 		}
 
-		if (tempoCombo > maxTempoCombo) {
+		if (tempoCombo > maxTempoCombo && estaAtaqueParado) {
+			GetComponent<DadosForcaResultante> ().MudarNewtonAndando (0);
+			abejideAnimator.SetFloat ("AceleracaoAndando",  0);
+			estaAtaqueParado = false;
 			abejideAnimator.SetBool ("Atacando", false);
 		}
 	}
@@ -198,6 +255,58 @@ public class AbejideAtaque : MonoBehaviour {
 
 		//Atualiza a variavel que quarda a massa da arma atual que Abejide esta usando.
 		GetComponent<DadosForcaResultante> ().armaMassa = armas [novaArma].GetComponent<Arma> ().massa;
+	}
+
+	private void DirecarAtaque (float angulo) {
+		//Sai do metodo caso o jogador esteja apertando duas teclas oposto de movimento, pois uma vai acabar anulando o movimento da outra.
+		if (Input.GetKey (KeyCode.LeftArrow) && Input.GetKey (KeyCode.RightArrow)) {
+			return;
+		} else if (Input.GetKey (KeyCode.UpArrow) && Input.GetKey (KeyCode.DownArrow)) {
+			return;
+		}
+
+		if (Input.GetKey (KeyCode.UpArrow)) {
+			if (angulo > 45 && angulo <= 135) {
+				direcaoAtaque [3] = true;
+			} else if (angulo > 135 && angulo <= 225) {
+				direcaoAtaque [2] = true;
+			} else if (angulo > 225 && angulo < 315) {
+				direcaoAtaque [1] = true;
+			} else {
+				direcaoAtaque [0] = true;
+			}
+		} if (Input.GetKey (KeyCode.RightArrow)) {
+			if (angulo > 45 && angulo <= 135) {
+				direcaoAtaque [0] = true;
+			} else if (angulo > 135 && angulo <= 225) {
+				direcaoAtaque [3] = true;
+			} else if (angulo > 225 && angulo < 315) {
+				direcaoAtaque [2] = true;
+			} else {
+				direcaoAtaque [1] = true;
+			}
+		} if (Input.GetKey (KeyCode.DownArrow)) {
+			if (angulo > 45 && angulo <= 135) {
+				direcaoAtaque [1] = true;
+			} else if (angulo > 135 && angulo <= 225) {
+				direcaoAtaque [0] = true;
+			} else if (angulo > 225 && angulo < 315) {
+				direcaoAtaque [3] = true;
+			} else {
+				direcaoAtaque [2] = true;
+			}
+		} if (Input.GetKey (KeyCode.LeftArrow)) {
+			if (angulo > 45 && angulo <= 135) {
+				direcaoAtaque [2] = true;
+			} else if (angulo > 135 && angulo <= 225) {
+				direcaoAtaque [1] = true;//estaAndandoX = true;
+				//newtonX = CalcularFisica (newtonX, aceleracaoX, true);
+			} else if (angulo > 225 && angulo < 315) {
+				direcaoAtaque [0] = true;
+			} else {
+				direcaoAtaque [3] = true;
+			}
+		} 
 	}
 
 	public bool TempoComboMaiorQueLimite () {
