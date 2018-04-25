@@ -2630,7 +2630,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Sieg_Andando
+  m_Name: 0_Andando
   m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
@@ -2867,7 +2867,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Sieg_Espada
+  m_Name: 0_Espada
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -3297,7 +3297,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Sieg_Correndo
+  m_Name: 0_Correndo
   m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
