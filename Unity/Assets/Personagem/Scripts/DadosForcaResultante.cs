@@ -31,20 +31,20 @@ public class DadosForcaResultante : MonoBehaviour {
 	}
 
 	/*--------------------- newtom andando ---------------------*/
-	public void AddNewtonAndando () {
+	public void AddNewtonAndando (float dividirMaxNewtom) {
 		newtonAndando += addNewtonAndando;
 
-		if (newtonAndando > maxNewtonAndando) {
+		if (newtonAndando > (maxNewtonAndando / dividirMaxNewtom)) {
 
 			newtonAndando -= subNewtonAndando;
-			if (newtonAndando < maxNewtonAndando) {
-				newtonAndando = maxNewtonAndando;
+			if (newtonAndando < (maxNewtonAndando / dividirMaxNewtom)) {
+				newtonAndando =( maxNewtonAndando / dividirMaxNewtom);
 			}
 		}
 	}
 
-	public void AddNewtonCorrendo () {
-		newtonAndando += addNewtonAndando;
+	public void AddNewtonCorrendo (float vezes) {
+		newtonAndando += (addNewtonAndando * vezes);
 
 		if (newtonAndando > maxNewtonCorrendo + maxNewtonAndando) {
 			newtonAndando = maxNewtonCorrendo + maxNewtonAndando;

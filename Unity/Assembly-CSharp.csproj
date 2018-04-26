@@ -61,6 +61,7 @@
      <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideOlhando.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\Arma.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" />
+     <Compile Include="Assets\Personagem\Abejide\Teste\Lixo.cs" />
      <Compile Include="Assets\Personagem\Esqueleto\Scripts\Cutscene\EsqueletoAto01.cs" />
      <Compile Include="Assets\Personagem\Esqueleto\Scripts\Esqueleto.cs" />
      <Compile Include="Assets\Personagem\Exus\SeteEncruzilhadas\Scripts\Cutscene\SeteEncruzilhadasAto01.cs" />

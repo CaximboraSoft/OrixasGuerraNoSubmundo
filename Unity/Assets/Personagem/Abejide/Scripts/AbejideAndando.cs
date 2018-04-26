@@ -12,9 +12,12 @@ using UnityEngine.UI;
 public class AbejideAndando : MonoBehaviour {
 
 	public Text message;
-	private Animator abejideAnimator;
-	private AnimatorStateInfo animacaoState;
+	public Animator corpoAnimator;
+	public Animator peAnimator;
+	private AnimatorStateInfo corpoState;
+	private AnimatorStateInfo peState;
 
+	//private bool estaCorrendo;
 	private bool estaAndando;
 	private bool estaRodando;
 
@@ -23,21 +26,34 @@ public class AbejideAndando : MonoBehaviour {
 	private float angulo;
 	private float chegarAngulo;
 
+	private float diferenca;
+
 	// Use this for initialization
 	void Awake () {
 		estaRodando = false;
+		//estaCorrendo = false;
 
-		abejideAnimator = GameObject.Find ("AbejideMesh").GetComponent<Animator> ();
+		corpoAnimator = GameObject.Find ("AbejideMesh").GetComponent<Animator> ();
 	}
 
 	// Update is called once per frame
 	void Update () {
-		animacaoState = abejideAnimator.GetCurrentAnimatorStateInfo (0);
+		corpoState = corpoAnimator.GetCurrentAnimatorStateInfo (0);
+		peState = peAnimator.GetCurrentAnimatorStateInfo (0);
 
 		estaAndando = false;
-		if ((animacaoState.IsTag ("Andando") || animacaoState.IsTag ("Parado")) && GetComponent<AbejideAtaque>().TempoComboMaiorQueLimite ()) {
+		if ((corpoState.IsTag ("Andando") || corpoState.IsTag ("Parado")) && GetComponent<AbejideAtaque> ().TempoComboMaiorQueLimite ()) {
 			MoverRodarAbejide ();
-			CalcularFisica ();
+			CalcularFisica (1);
+
+			//Sicroniza a animação do pé com o corpo caso eles não estejam mais alinhados.
+			diferenca = Mathf.Abs(corpoState.normalizedTime - peState.normalizedTime);
+			if (diferenca > 0.15f && corpoState.IsTag ("Andando")) {
+				peAnimator.Play ("Andando", 0 , corpoState.normalizedTime);
+			}
+		} else if (GetComponent<AbejideAtaque> ().EstaAtacandoAndando ()) {
+			MoverRodarAbejide ();
+			CalcularFisica (2);
 		}
 	}
 
@@ -52,102 +68,103 @@ public class AbejideAndando : MonoBehaviour {
 			 *ficar maior que 180, quer dizer que o novo angulo do Abejide tem que ser negativo e é isso que este elseif faz, deixa
 			 * o angulo negativo, pois o código só funciona sem bugs com angulos entre -180 e 180.
 			 */
-			} else if (angulo > chegarAngulo + 180) {
-				angulo -= 360;
-			}
+		} else if (angulo > chegarAngulo + 180) {
+			angulo -= 360;
+		}
 
 
-			if (Input.GetKey (KeyCode.LeftArrow)) {
-				estaAndando = true;
+		if (Input.GetKey (KeyCode.LeftArrow)) {
+			estaAndando = true;
 
-				if (Input.GetKey (KeyCode.UpArrow)) {
-					chegarAngulo = -45;
-					RotacionarAbejide ();
-				} else if (Input.GetKey (KeyCode.DownArrow)) {
-					chegarAngulo = -135;
-					RotacionarAbejide ();
-				} else {
-					/*
-				 * Se o jogador apertar para Abejide virar para a esquerda, é feito uma decisão para saber se o menor
-				 * caminho para chegar em -90 graus é girando para a esquerda ou para a direita, entãi se a rotação
-				 * estiver acima de 90, quer dizer que para ele rotacionar ate chegar em -90, o caminho mais rapido
-				 * é por baixo, então é necessario subtrair 360 do angulo atual, pois depois que o angulo chega em 180 passa
-				 * automaticamente para -180 e vise versa.
-				 */
-					chegarAngulo = -90;
-					RotacionarAbejide ();
-				}
-			} else if (Input.GetKey (KeyCode.RightArrow)) {
-				estaAndando = true;
-
-				if (Input.GetKey (KeyCode.UpArrow)) {
-					chegarAngulo = 45;
-					RotacionarAbejide ();
-				} else if (Input.GetKey (KeyCode.DownArrow)) {
-					chegarAngulo = 135;
-					RotacionarAbejide ();
-				} else {
-					chegarAngulo = 90;
-					RotacionarAbejide ();
-				}
-			} else if (Input.GetKey (KeyCode.UpArrow)) {
-				estaAndando = true;
-
-				chegarAngulo = 0;
+			if (Input.GetKey (KeyCode.UpArrow)) {
+			
+				chegarAngulo = -45;
 				RotacionarAbejide ();
 			} else if (Input.GetKey (KeyCode.DownArrow)) {
-				estaAndando = true;
-			
+				chegarAngulo = -135;
+				RotacionarAbejide ();
+			} else {
 				/*
-				 * A roração para baixo não tem como usar o metodo 'RotacionarAbejide()' para rotacionar, pois após o angulo
-				 * passar de -180, ele tem que vira 180 para não bugar o codigo e depois que ele passa de 180 tem que virar
-				 * -180, isso se deve ao fato de quando se rotaciona o Objeto do cenario, se for para a esquerda a toração
-				 * é negativa e se for para a direita a rotação é positiva, então precisa existir uma transição no número 180.
-				 */
-				if (angulo < 0) {
-					/*
-					 * Serve para resolver um bug, pois quando o jogador aperta rapidamente a seta da direita e esquerda, o if
-					 * lá em cima que impede que o angulo passe do -180 e 180 entra, então é necessario desfazer essa soma de
-					 * ajuste de angulo, por que é muito rapido o processo e acaba ajustando o angulo sem ser necessario.
-					 */
-					if (angulo < -180) {
-						angulo += 720;
-					}
+			 * Se o jogador apertar para Abejide virar para a esquerda, é feito uma decisão para saber se o menor
+			 * caminho para chegar em -90 graus é girando para a esquerda ou para a direita, entãi se a rotação
+			 * estiver acima de 90, quer dizer que para ele rotacionar ate chegar em -90, o caminho mais rapido
+			 * é por baixo, então é necessario subtrair 360 do angulo atual, pois depois que o angulo chega em 180 passa
+			 * automaticamente para -180 e vise versa.
+			 */
+				chegarAngulo = -90;
+				RotacionarAbejide ();
+			}
+		} else if (Input.GetKey (KeyCode.RightArrow)) {
+			estaAndando = true;
 
-				angulo -= GetComponent<DadosForcaResultante> ().PegarAceleracaoRodando ();
-					chegarAngulo = -180;
-					if (angulo < -180) {
-						angulo = -180;
-						estaRodando = false;
-					}
-					if (angulo != -180) {
-						estaRodando = true;
-					}
-				} else {
-					/*
-				 * Serve para resolver um bug, pois quando o jogador aperta rapidamente a seta da direita e esquerda, igual
-				 * o mesmo if que esta na desição do angulo negativo
-				 */
-					if (angulo > 180) {
-						angulo -= 720;
-					}
+			if (Input.GetKey (KeyCode.UpArrow)) {
+				chegarAngulo = 45;
+				RotacionarAbejide ();
+			} else if (Input.GetKey (KeyCode.DownArrow)) {
+				chegarAngulo = 135;
+				RotacionarAbejide ();
+			} else {
+				chegarAngulo = 90;
+				RotacionarAbejide ();
+			}
+		} else if (Input.GetKey (KeyCode.UpArrow)) {
+			estaAndando = true;
 
-				angulo += GetComponent<DadosForcaResultante> ().PegarAceleracaoRodando ();
-					chegarAngulo = 180;
-					if (angulo > 180) {
-						angulo = 180;
-						estaRodando = false;
-					}
-					if (angulo != 180) {
-						estaRodando = true;
-					}
+			chegarAngulo = 0;
+			RotacionarAbejide ();
+		} else if (Input.GetKey (KeyCode.DownArrow)) {
+			estaAndando = true;
+		
+			/*
+			 * A roração para baixo não tem como usar o metodo 'RotacionarAbejide()' para rotacionar, pois após o angulo
+			 * passar de -180, ele tem que vira 180 para não bugar o codigo e depois que ele passa de 180 tem que virar
+			 * -180, isso se deve ao fato de quando se rotaciona o Objeto do cenario, se for para a esquerda a toração
+			 * é negativa e se for para a direita a rotação é positiva, então precisa existir uma transição no número 180.
+			 */
+			if (angulo < 0) {
+				/*
+				 * Serve para resolver um bug, pois quando o jogador aperta rapidamente a seta da direita e esquerda, o if
+				 * lá em cima que impede que o angulo passe do -180 e 180 entra, então é necessario desfazer essa soma de
+				 * ajuste de angulo, por que é muito rapido o processo e acaba ajustando o angulo sem ser necessario.
+				 */
+				if (angulo < -180) {
+					angulo += 720;
 				}
-			} else if (estaRodando) {
-				estaRodando = false;
+
+			angulo -= GetComponent<DadosForcaResultante> ().PegarAceleracaoRodando ();
+				chegarAngulo = -180;
+				if (angulo < -180) {
+					angulo = -180;
+					estaRodando = false;
+				}
+				if (angulo != -180) {
+					estaRodando = true;
+				}
+			} else {
+				/*
+			 * Serve para resolver um bug, pois quando o jogador aperta rapidamente a seta da direita e esquerda, igual
+			 * o mesmo if que esta na desição do angulo negativo
+			 */
+				if (angulo > 180) {
+					angulo -= 720;
+				}
+
+			angulo += GetComponent<DadosForcaResultante> ().PegarAceleracaoRodando ();
+				chegarAngulo = 180;
+				if (angulo > 180) {
+					angulo = 180;
+					estaRodando = false;
+				}
+				if (angulo != 180) {
+					estaRodando = true;
+				}
+			}
+		} else if (estaRodando) {
+			estaRodando = false;
 		}
 	}
 
-	void CalcularFisica () {
+	void CalcularFisica (float dividirMaxNewtom) {
 		//Rotação do Abejide
 		if (estaRodando) {
 			GetComponent<DadosForcaResultante> ().AddNewtonRodando ();
@@ -157,21 +174,22 @@ public class AbejideAndando : MonoBehaviour {
 
 		//Movimentção correndo.
 		if (Input.GetKey (KeyCode.LeftShift)) {
-			GetComponent<DadosForcaResultante> ().AddNewtonCorrendo ();
+			GetComponent<DadosForcaResultante> ().AddNewtonCorrendo (1.2f);
 		//Movimentção andando.
 		} else {
 			if (estaAndando) {
-				GetComponent<DadosForcaResultante> ().AddNewtonAndando ();
+				GetComponent<DadosForcaResultante> ().AddNewtonAndando (dividirMaxNewtom);
 			//Desaceleração.
-			} else if (abejideAnimator.GetFloat ("AceleracaoAndando") != 0) {
+			} else if (corpoAnimator.GetFloat ("AceleracaoAndando") != 0) {
 				GetComponent<DadosForcaResultante> ().SubNewtonAndando (1);
 			}
 		}
-		
-		abejideAnimator.SetFloat ("AceleracaoAndando",  (GetComponent<DadosForcaResultante>().PegarAceleracaoAndando ()));
+
+		corpoAnimator.SetFloat ("AceleracaoAndando",  (GetComponent<DadosForcaResultante>().PegarAceleracaoAndando ()));
+		peAnimator.SetFloat ("AceleracaoAndando",  (GetComponent<DadosForcaResultante>().PegarAceleracaoAndando ()));
 
 		transform.eulerAngles = new Vector3 (0, angulo, 0);
-		transform.Translate(0, 0, abejideAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime);
+		transform.Translate(0, 0, corpoAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime);
 	}
 
 	/// <summary>

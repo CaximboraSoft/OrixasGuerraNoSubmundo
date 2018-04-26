@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class AbejideOlhando : MonoBehaviour {
 
-	private Animator abejideAnimator;
-	private AnimatorStateInfo animacaoState;
+	public Animator corpoAnimator;
+	public Animator peAnimator;
+	private AnimatorStateInfo corpoState;
 
 	public bool estaAndandoZ;
 	public bool estaAndandoX;
@@ -19,21 +20,20 @@ public class AbejideOlhando : MonoBehaviour {
 	public float maisDevagar;
 	public float minPlayAndando = 0.5f; //Só pode disparar a animação de andando quando a velocidade do Abejide for menor que isso.
 	private float angulo;
-
-	private string andando;
+	private float divisorMaxNewtom;
 
 	// Use this for initialization
 	void Awake () {
 		trasicaoAngulo = false;
 
-		abejideAnimator = GameObject.Find ("AbejideMesh").GetComponent<Animator> ();
+		divisorMaxNewtom = 1.5f;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		animacaoState = abejideAnimator.GetCurrentAnimatorStateInfo (0);
+		corpoState = corpoAnimator.GetCurrentAnimatorStateInfo (0);
 
-		if (animacaoState.IsTag ("Andando") || animacaoState.IsTag ("Parado")) {
+		if (corpoState.IsTag ("Andando") || corpoState.IsTag ("Parado")) {
 			MoverAbejide ();
 		}
 	}
@@ -114,55 +114,38 @@ public class AbejideOlhando : MonoBehaviour {
 			}
 		}
 
-//		aceleracaoX = (newtonX / (gameObject.GetComponent<DadosForcaResultante>().PegarMassaTotal ()));
-//		aceleracaoZ = (newtonZ / (gameObject.GetComponent<DadosForcaResultante>().PegarMassaTotal ()));
+		aceleracaoX = (newtonX / (gameObject.GetComponent<DadosForcaResultante>().PegarMassaTotal ()));
+		aceleracaoZ = (newtonZ / (gameObject.GetComponent<DadosForcaResultante>().PegarMassaTotal ()));
 		gameObject.transform.Translate((aceleracaoX / maisDevagar) * Time.deltaTime, 0, (aceleracaoZ / maisDevagar) * Time.deltaTime);
 
 		//-----------------------------------------------------------//
 
-		if (newtonZ > 0) {
-			abejideAnimator.SetBool ("AndandoParaTras", false);
 
-			andando = "AndandoParaFrente";
-		} else if (newtonZ < 0) {
-			abejideAnimator.SetBool ("AndandoParaFrente", false);
-
-			andando = "AndandoParaTras";
-		}
 		if (estaAndandoZ) {
-			abejideAnimator.SetBool ("AndandoNegativo", false);
-			abejideAnimator.SetBool ("AndandoPositivo", false);
-
-			if (!abejideAnimator.GetBool (andando)) {
-				abejideAnimator.SetBool (andando, true);
+			if (newtonZ > 0) {
+				corpoAnimator.SetInteger ("DirecaoAtaque", 1);
+			} else {
+				corpoAnimator.SetInteger ("DirecaoAtaque", 3);
+			}
+		} else if (estaAndandoX) {
+			if (newtonX > 0) {
+				corpoAnimator.SetInteger ("DirecaoAtaque", 2);
+			} else {
+				corpoAnimator.SetInteger ("DirecaoAtaque", 4);
 			}
 		} else {
-			abejideAnimator.SetBool ("AndandoParaFrente", false);
-			abejideAnimator.SetBool ("AndandoParaTras", false);
+			corpoAnimator.SetInteger ("DirecaoAtaque", 0);
 		}
 
-		//-----------------------------------------------------------//
-
-		if (newtonX > 0) {
-			abejideAnimator.SetBool ("AndandoNegativo", false);
-
-			andando = "AndandoPositivo";
-		} else if (newtonX < 0) {
-			abejideAnimator.SetBool ("AndandoPositivo", false);
-
-			andando = "AndandoNegativo";
-		}
-		if (estaAndandoX) {
-			abejideAnimator.SetBool ("AndandoParaFrente", false);
-			abejideAnimator.SetBool ("AndandoParaTras", false);
-
-			if (!abejideAnimator.GetBool (andando)) {
-				abejideAnimator.SetBool (andando, true);
-			}
+		if (aceleracaoX != 0) {
+			corpoAnimator.SetFloat ("AceleracaoAndando", Mathf.Abs(aceleracaoX));
 		} else {
-			abejideAnimator.SetBool ("AndandoPositivo", false);
-			abejideAnimator.SetBool ("AndandoNegativo", false);
+			corpoAnimator.SetFloat ("AceleracaoAndando", Mathf.Abs(aceleracaoZ));
 		}
+
+		peAnimator.SetBool ("Atacando", true);
+		peAnimator.SetInteger ("DirecaoAtaque", corpoAnimator.GetInteger("DirecaoAtaque"));
+		peAnimator.SetFloat ("AceleracaoAndando", corpoAnimator.GetFloat("AceleracaoAndando"));
 
 		//-----------------------------------------------------------//
 	}
@@ -172,20 +155,20 @@ public class AbejideOlhando : MonoBehaviour {
 			if (newton <= GetComponent<DadosForcaResultante> ().maxNewtonAndando) {
 				newton += GetComponent<DadosForcaResultante> ().addNewtonAndando;
 
-				if (newton > GetComponent<DadosForcaResultante> ().maxNewtonAndando) {
-					newton = GetComponent<DadosForcaResultante> ().maxNewtonAndando;
+				if (newton > GetComponent<DadosForcaResultante> ().maxNewtonAndando / divisorMaxNewtom) {
+					newton = GetComponent<DadosForcaResultante> ().maxNewtonAndando / divisorMaxNewtom;
 				}
 			}
 
 			if (newton < 0) {
-				newton += (GetComponent<DadosForcaResultante> ().addNewtonAndando * 2);
+				newton += (GetComponent<DadosForcaResultante> ().addNewtonAndando * divisorMaxNewtom);
 			}
 		} else {
-			if (newton >= -GetComponent<DadosForcaResultante> ().maxNewtonAndando) {
-				newton -= GetComponent<DadosForcaResultante> ().addNewtonAndando;
+			if (newton >= -GetComponent<DadosForcaResultante> ().maxNewtonAndando / divisorMaxNewtom) {
+				newton -= GetComponent<DadosForcaResultante> ().addNewtonAndando / divisorMaxNewtom;
 
-				if (newton < -GetComponent<DadosForcaResultante> ().maxNewtonAndando) {
-					newton = -GetComponent<DadosForcaResultante> ().maxNewtonAndando;
+				if (newton < -GetComponent<DadosForcaResultante> ().maxNewtonAndando / divisorMaxNewtom) {
+					newton = -GetComponent<DadosForcaResultante> ().maxNewtonAndando / divisorMaxNewtom;
 				}
 			}
 
@@ -216,3 +199,42 @@ public class AbejideOlhando : MonoBehaviour {
 		return newton;
 	}
 }
+
+
+/*
+		//Faz o personagem andar um pouco para o lado que o jogador estiver apertando segundo a seta quando ele estiver atacando.
+if (estaAtaqueParado) {
+	DirecarAtaque (transform.eulerAngles.y);
+
+	if (velhaDirecaoAtaque != direcaoAtaque) {
+		peAnimator.SetFloat ("AceleracaoAndando", 0);
+		GetComponent<DadosForcaResultante> ().MudarNewtonAndando (0);
+	}
+
+	//Se estiver sendo um ataque de movimento vai entrar neste <if>.
+	if (direcaoAtaque != 0) {
+		//Então a aceleração de movimento vai ser atribuita para o <animator controller>, pos a animação de andando é disparada comforme a velocidade do Abejide.
+		GetComponent<DadosForcaResultante> ().AddNewtonAndando ();
+		peAnimator.SetFloat ("AceleracaoAndando", (GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando ()));
+		//Caso não seja uma animação de ataque andando, o aceleração do <animator controller> é zerada.
+
+		//Faz a movimentação de acordo com a seta e angulo que foi pegada no metodo <DirecarAtaque>.
+		switch (direcaoAtaque) {
+		case 1: //Move para frente.
+			transform.Translate (0, 0, peAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime);
+			break;
+		case 2: //Move para direita.
+			transform.Translate (peAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime, 0, 0);
+			break;
+		case 3: //Move para tras.
+			transform.Translate (0, 0, -peAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime);
+			break;
+		case 4: //Move para esquerda.
+			transform.Translate (-peAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime, 0, 0);
+			break;
+		}
+	} else {
+		GetComponent<DadosForcaResultante> ().SubNewtonAndando (1);
+		peAnimator.SetFloat ("AceleracaoAndando", (GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando ()));
+	}
+	//Sistema para o Abejide correr um pouco com a espada apos ele apertar para atacar quando o mesmo estiver andando.*/

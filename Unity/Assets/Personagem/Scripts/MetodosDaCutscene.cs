@@ -221,9 +221,9 @@ public class MetodosDaCutscene : MonoBehaviour {
 			//Faz o ator andar.
 
 			if (correndo) {
-				GetComponent<DadosForcaResultante> ().AddNewtonCorrendo ();
+				GetComponent<DadosForcaResultante> ().AddNewtonCorrendo (2);
 			} else {
-				GetComponent<DadosForcaResultante> ().AddNewtonAndando ();
+				GetComponent<DadosForcaResultante> ().AddNewtonAndando (1);
 			}
 
 			if (transform.position.x < posicao.position.x) {
@@ -259,9 +259,9 @@ public class MetodosDaCutscene : MonoBehaviour {
 		if (!acabouAtuacao) {
 			//Faz o ator andar.
 			if (correndo) {
-				GetComponent<DadosForcaResultante> ().AddNewtonCorrendo ();
+				GetComponent<DadosForcaResultante> ().AddNewtonCorrendo (2);
 			} else {
-				GetComponent<DadosForcaResultante> ().AddNewtonAndando ();
+				GetComponent<DadosForcaResultante> ().AddNewtonAndando (1);
 			}
 
 			transform.Translate (0, 0, (GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando ()) * Time.deltaTime);
