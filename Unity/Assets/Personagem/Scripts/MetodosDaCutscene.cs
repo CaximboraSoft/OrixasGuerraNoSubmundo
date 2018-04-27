@@ -69,13 +69,13 @@ public class MetodosDaCutscene : MonoBehaviour {
 		newton = 0;
 		tipoDeAtuacao = 0;
 		indicePosicoes = 0;
-		indiceRotacoes = 0;
+		indiceRotacoes = -1;
 		tempoMudarTexto = 0;
 		maxTempoMudarTexto = 0;
 
 		objeto = GameObject.Find(posicoesNome + " (" + indicePosicoes.ToString () + ")").GetComponent<Transform> ();
 		transform.position = objeto.position;
-		transform.eulerAngles = new Vector3 (transform.eulerAngles.x, rotacoes[0], transform.eulerAngles.z);
+		transform.eulerAngles = objeto.eulerAngles;
 
 		estaAtuando = false;
 		mudarTexto = false;
@@ -395,6 +395,13 @@ public class MetodosDaCutscene : MonoBehaviour {
 		acabouAtuacao = false;
 		estaAtuando = true;
 	}
+	public void ComecarAtuacaoTeleporte () {
+		indicePosicoes++;
+		posicao = GameObject.Find(posicoesNome + " (" + indicePosicoes.ToString () + ")").GetComponent<Transform> ();
+		transform.eulerAngles = posicao.eulerAngles;
+		transform.position = posicao.position;
+		ato++;
+	}
 
 	/// <summary>
 	/// Método que prepara o ator para começar a andar de lado.
@@ -518,5 +525,9 @@ public class MetodosDaCutscene : MonoBehaviour {
 
 	public void IncrementarAto() {
 		ato++;
+	}
+
+	public void MudarAtor(int valor) {
+		ato = valor;
 	}
 }

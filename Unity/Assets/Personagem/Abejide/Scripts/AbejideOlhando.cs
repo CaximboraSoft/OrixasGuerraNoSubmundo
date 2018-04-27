@@ -8,6 +8,7 @@ public class AbejideOlhando : MonoBehaviour {
 	public Animator corpoAnimator;
 	public Animator peAnimator;
 	private AnimatorStateInfo corpoState;
+	private AnimatorStateInfo peState;
 
 	public bool estaAndandoZ;
 	public bool estaAndandoX;
@@ -21,6 +22,7 @@ public class AbejideOlhando : MonoBehaviour {
 	public float minPlayAndando = 0.5f; //Só pode disparar a animação de andando quando a velocidade do Abejide for menor que isso.
 	private float angulo;
 	private float divisorMaxNewtom;
+	private float diferenca;
 
 	// Use this for initialization
 	void Awake () {
@@ -32,9 +34,15 @@ public class AbejideOlhando : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		corpoState = corpoAnimator.GetCurrentAnimatorStateInfo (0);
+		peState = peAnimator.GetCurrentAnimatorStateInfo (0);
 
-		if (corpoState.IsTag ("Andando") || corpoState.IsTag ("Parado")) {
-			MoverAbejide ();
+		MoverAbejide ();
+		if (peState.IsTag ("Andando")) {
+			//Sicroniza a animação do pé com o corpo caso eles não estejam mais alinhados.
+			diferenca = Mathf.Abs (corpoState.normalizedTime - peState.normalizedTime);
+			if (diferenca > 0.15f) {
+				peAnimator.Play ("0_Andando", 0, corpoState.normalizedTime);
+			}
 		}
 	}
 
@@ -199,42 +207,3 @@ public class AbejideOlhando : MonoBehaviour {
 		return newton;
 	}
 }
-
-
-/*
-		//Faz o personagem andar um pouco para o lado que o jogador estiver apertando segundo a seta quando ele estiver atacando.
-if (estaAtaqueParado) {
-	DirecarAtaque (transform.eulerAngles.y);
-
-	if (velhaDirecaoAtaque != direcaoAtaque) {
-		peAnimator.SetFloat ("AceleracaoAndando", 0);
-		GetComponent<DadosForcaResultante> ().MudarNewtonAndando (0);
-	}
-
-	//Se estiver sendo um ataque de movimento vai entrar neste <if>.
-	if (direcaoAtaque != 0) {
-		//Então a aceleração de movimento vai ser atribuita para o <animator controller>, pos a animação de andando é disparada comforme a velocidade do Abejide.
-		GetComponent<DadosForcaResultante> ().AddNewtonAndando ();
-		peAnimator.SetFloat ("AceleracaoAndando", (GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando ()));
-		//Caso não seja uma animação de ataque andando, o aceleração do <animator controller> é zerada.
-
-		//Faz a movimentação de acordo com a seta e angulo que foi pegada no metodo <DirecarAtaque>.
-		switch (direcaoAtaque) {
-		case 1: //Move para frente.
-			transform.Translate (0, 0, peAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime);
-			break;
-		case 2: //Move para direita.
-			transform.Translate (peAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime, 0, 0);
-			break;
-		case 3: //Move para tras.
-			transform.Translate (0, 0, -peAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime);
-			break;
-		case 4: //Move para esquerda.
-			transform.Translate (-peAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime, 0, 0);
-			break;
-		}
-	} else {
-		GetComponent<DadosForcaResultante> ().SubNewtonAndando (1);
-		peAnimator.SetFloat ("AceleracaoAndando", (GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando ()));
-	}
-	//Sistema para o Abejide correr um pouco com a espada apos ele apertar para atacar quando o mesmo estiver andando.*/

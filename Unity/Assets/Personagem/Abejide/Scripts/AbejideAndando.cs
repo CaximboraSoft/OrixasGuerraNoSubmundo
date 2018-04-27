@@ -22,7 +22,6 @@ public class AbejideAndando : MonoBehaviour {
 	private bool estaRodando;
 
 	public float minPlayAndando = 0.5f; //Só pode disparar a animação de andando quando a velocidade do Abejide for menor que isso.
-
 	private float angulo;
 	private float chegarAngulo;
 
@@ -31,7 +30,6 @@ public class AbejideAndando : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		estaRodando = false;
-		//estaCorrendo = false;
 
 		corpoAnimator = GameObject.Find ("AbejideMesh").GetComponent<Animator> ();
 	}
@@ -47,13 +45,19 @@ public class AbejideAndando : MonoBehaviour {
 			CalcularFisica (1);
 
 			//Sicroniza a animação do pé com o corpo caso eles não estejam mais alinhados.
-			diferenca = Mathf.Abs(corpoState.normalizedTime - peState.normalizedTime);
+			diferenca = Mathf.Abs (corpoState.normalizedTime - peState.normalizedTime);
 			if (diferenca > 0.15f && corpoState.IsTag ("Andando")) {
-				peAnimator.Play ("Andando", 0 , corpoState.normalizedTime);
+				peAnimator.Play ("Andando", 0, corpoState.normalizedTime);
 			}
-		} else if (GetComponent<AbejideAtaque> ().EstaAtacandoAndando ()) {
+		} else if (GetComponent<AbejideAtaque> ().EstaAtacandoParadoAndando ()) {
 			MoverRodarAbejide ();
 			CalcularFisica (2);
+		} else if (corpoAnimator.GetFloat("AceleracaoAndando") != 0 && !GetComponent<AbejideAtaque> ().PegarEstaAtaqueAndando ()) {
+			GetComponent<DadosForcaResultante> ().SubNewtonAndando (1);
+			corpoAnimator.SetFloat ("AceleracaoAndando", GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando());
+			peAnimator.SetFloat ("AceleracaoAndando", (corpoAnimator.GetFloat("AceleracaoAndando")));
+
+			transform.Translate(0, 0, corpoAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime);
 		}
 	}
 

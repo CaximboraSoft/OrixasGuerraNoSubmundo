@@ -22,8 +22,8 @@ public class AbejideAtaque : MonoBehaviour {
 	public GameObject mao;
 	public Camera abejideCamera;
 	//Como o corpo é separado das pernas, são necesarios duas variaveis para controlar as animação das partes separadas.
-	public RuntimeAnimatorController controllerAndando;
-	public RuntimeAnimatorController controllerOlhando;
+	public RuntimeAnimatorController corpoController;
+	public RuntimeAnimatorController peController;
 	private AnimatorStateInfo corpoState;
 
 	private bool estaAtaqueAndando;
@@ -32,7 +32,6 @@ public class AbejideAtaque : MonoBehaviour {
 	private bool jogouMagia;
 	private bool sentidoHorario;
 
-	private float tempoAndandoAtaque;
 	public float maxTempoAndandoAtaque;
 	private float tempoCombo;
 	public float maxTempoCombo;
@@ -42,10 +41,9 @@ public class AbejideAtaque : MonoBehaviour {
 	//Salva a distancia do eixo z entra a câmera e o jogador, para que ela sempre fique nesta distancia quando Abejide se mover
 	public float distanceCameraZ;
 	public float distanceCameraY;
-	public float distanciaAngulo;
 	private float anguloInicial;
 	private float anguloChegar;
-	public float angulo;
+	private float angulo;
 	/*
 	 * 0 Parado
 	 * 1 Frente;
@@ -53,7 +51,7 @@ public class AbejideAtaque : MonoBehaviour {
 	 * 3 Baixo;
 	 * 4 Esquerda;
 	 */
-	public int direcaoAtaque;
+	private int direcaoAtaque;
 
 	void Start () {
 		direcaoAtaque = 0;
@@ -69,11 +67,11 @@ public class AbejideAtaque : MonoBehaviour {
 
 		tempoCombo = 0;
 		tempoMagia = 0;
-		tempoAndandoAtaque = maxTempoAndandoAtaque;
 
 		abejideCamera.transform.eulerAngles = new Vector3 (50, 0 ,0);
 
-		corpoAnimator.runtimeAnimatorController = controllerAndando as RuntimeAnimatorController;
+		corpoAnimator.runtimeAnimatorController = corpoController as RuntimeAnimatorController;
+		peAnimator.runtimeAnimatorController = peController as RuntimeAnimatorController;
 
 		GetComponent<DadosForcaResultante> ().armaMassa = armas [corpoAnimator.GetInteger ("ArmaAtual")].GetComponent<Arma> ().massa;
 		armas [corpoAnimator.GetInteger("ArmaAtual")].GetComponent<Renderer> ().enabled = true;
@@ -151,7 +149,7 @@ public class AbejideAtaque : MonoBehaviour {
 			//Se o jogador não estiver executando a animação de ataque após aperar <z>, quer dizer que o jogador vai começar o combo agora.
 			if (!corpoState.IsTag ("Atacando")) {
 				//Caso o jogador esteja andando e ataquem, Abejide vai dar uma investida.
-				if (corpoAnimator.GetFloat ("AceleracaoAndando") != 0f && !estaAtaqueAndando && !estaAtaqueParado) {
+				if (corpoAnimator.GetFloat ("AceleracaoAndando") != 0f && !estaAtaqueAndando && !estaAtaqueParado && !olhandoInimigo) {
 					corpoAnimator.SetBool ("Atacando", true);
 					peAnimator.SetBool ("Atacando", true);
 					tempoAtaqueAndando = 0;
@@ -206,9 +204,6 @@ public class AbejideAtaque : MonoBehaviour {
 		//Se o jogador não ficar apertando <z>, depois de um tempo o loop de ataque acaba e o Abejide volta ao seu estado parado.
 		tempoCombo += Time.deltaTime;
 		if (tempoCombo > maxTempoCombo && estaAtaqueParado) {
-			GetComponent<DadosForcaResultante> ().MudarNewtonAndando (0);
-			corpoAnimator.SetFloat ("AceleracaoAndando", 0);
-			peAnimator.SetFloat ("AceleracaoAndando", 0);
 			estaAtaqueParado = false;
 			corpoAnimator.SetBool ("Atacando", false);
 			peAnimator.SetBool ("Atacando", false);
@@ -311,10 +306,10 @@ public class AbejideAtaque : MonoBehaviour {
 		transform.eulerAngles = new Vector3 (transform.eulerAngles.x, anguloInicial + angulo, transform.eulerAngles.z);
 	}
 
-	public bool EstaAtacandoAndando () {
+	public bool EstaAtacandoParadoAndando () {
 		return direcaoAtaque != 0;
 	}
-
+	
 	public bool TempoComboMaiorQueLimite () {
 		return (tempoCombo > maxTempoCombo);
 	}

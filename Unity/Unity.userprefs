@@ -1,11 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Personagem\Abejide\Scripts\AbejideOlhando.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Personagem\Abejide\Scripts\AbejideAtaque.cs">
     <Files>
-      <File FileName="Assets\Personagem\Scripts\MetodosDaCutscene.cs" Line="285" Column="5" />
-      <File FileName="Assets\Personagem\Abejide\Scripts\AbejideAtaque.cs" Line="211" Column="6" />
-      <File FileName="Assets\Personagem\Abejide\Scripts\AbejideOlhando.cs" Line="221" Column="90" />
-      <File FileName="Assets\Personagem\Abejide\Scripts\AbejideAndando.cs" Line="177" Column="67" />
+      <File FileName="Assets\Personagem\Scripts\MetodosDaCutscene.cs" Line="530" Column="23" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\AbejideAtaque.cs" Line="23" Column="30" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\AbejideOlhando.cs" Line="44" Column="32" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\AbejideAndando.cs" Line="177" Column="4" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" Line="36" Column="6" />
+      <File FileName="Assets\Interfaces\Scripts\Conversas.cs" Line="32" Column="1" />
+      <File FileName="Assets\Personagem\Esqueleto\Scripts\Cutscene\EsqueletoAto01.cs" Line="48" Column="53" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

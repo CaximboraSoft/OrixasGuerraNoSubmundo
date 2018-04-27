@@ -31,7 +31,7 @@ public class EsqueletoAto01 : MonoBehaviour {
 			
 			switch (GetComponent<MetodosDaCutscene> ().PegarAto ()) {
 			case 0:
-				if (terreno.GetComponent<DadosDaFase> ().atores[0].GetComponent<MetodosDaCutscene> ().PegarAto () > 2) {
+				if (terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<MetodosDaCutscene> ().PegarAto () > 2) {
 					tempoEspera = 0;
 					maxTempoEspera = 1.3f;
 					GetComponent<MetodosDaCutscene> ().IncrementarAto ();
@@ -44,13 +44,10 @@ public class EsqueletoAto01 : MonoBehaviour {
 				atorAnimator.SetTrigger ("Impedir");
 				GetComponent<MetodosDaCutscene> ().IncrementarAto ();
 				break;
-			default:
-				//ato--;
-				/*
-				GetComponent<Ato01> ().enabled = false;
-				GetComponent<MetodosDaCutscene> ().enabled = false;
-				GetComponent<AbejideAtaque> ().enabled = true;
-				GetComponent<AbejideAndando> ().enabled = true;*/
+			case 3:
+				if (terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<AbejideAto01> ().enabled == false) {
+					Destroy (gameObject);
+				}
 				break;
 			}
 		} else {

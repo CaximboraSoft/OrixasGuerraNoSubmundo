@@ -57,12 +57,15 @@ public class SeteEncruzilhadasAto01 : MonoBehaviour {
 				atorAnimator.GetComponent<Collider> ().enabled = false;
 				GetComponent<Rigidbody> ().useGravity = false;
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoMoverNoEixoY (2.7f, false, true, false, 1, 0);
-				GetComponent<MetodosDaCutscene> ().Falar ("isso é o que você pensa, por que eu sou seu pai...", nome, 1, 5, true);
+				GetComponent<MetodosDaCutscene> ().Falar ("isso é o que você pensa, por que eu sou seu pai...", nome, 0, 5, true);
 				break;
 			case 6:
 				GetComponent<MetodosDaCutscene> ().IncrementarAto ();
 				break;
-			default:
+			case 7:
+				if (terreno.GetComponent<DadosDaFase> ().atores[0].GetComponent<AbejideAto01> ().enabled == false) {
+					Destroy (gameObject);
+				}
 				break;
 			}
 		} else {

@@ -6,8 +6,10 @@ public class AbejideAto01 : MonoBehaviour {
 
 	public Canvas hud;
 	public GameObject terreno;
-	public Animator atorAnimator;
-	public RuntimeAnimatorController controllerCutscene;
+	public Animator corpoAnimator;
+	public Animator peAnimator;
+	public RuntimeAnimatorController corpoController;
+	public RuntimeAnimatorController peController;
 
 	private float tempoEspera;
 	private float maxTempoEspera;
@@ -17,8 +19,9 @@ public class AbejideAto01 : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		hud.enabled = false;
-		atorAnimator.runtimeAnimatorController = controllerCutscene as RuntimeAnimatorController;
-		atorAnimator.GetComponent<Collider> ().enabled = false;
+		corpoAnimator.runtimeAnimatorController = corpoController as RuntimeAnimatorController;
+		peAnimator.runtimeAnimatorController = peController as RuntimeAnimatorController;
+		GetComponent<Collider> ().enabled = false;
 		GetComponent<Rigidbody> ().useGravity = false;
 
 		tempoEspera = 10;
@@ -29,7 +32,12 @@ public class AbejideAto01 : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		atorAnimator.SetFloat ("NewtonAndando", GetComponent<DadosForcaResultante> ().PegarNewtonAndando ());
+		if (Input.GetKey (KeyCode.Space)) {
+			//GetComponent<MetodosDaCutscene> ().MudarAtor (10);
+		}
+
+		corpoAnimator.SetFloat ("AceleracaoAndando", GetComponent<DadosForcaResultante> ().PegarNewtonAndando ());
+		peAnimator.SetFloat ("AceleracaoAndando", GetComponent<DadosForcaResultante> ().PegarNewtonAndando ());
 
 		if (!GetComponent<MetodosDaCutscene> ().PegarEstaAtuando () && tempoEspera > maxTempoEspera) {
 			
@@ -39,7 +47,7 @@ public class AbejideAto01 : MonoBehaviour {
 				GetComponent<MetodosDaCutscene> ().Falar ("Eae veio tarado, tô chegando e quero a minha maconha.", nome, 2, 9, true);
 				break;
 			case 1:
-				atorAnimator.GetComponent<Collider> ().enabled = true;
+				GetComponent<Collider> ().enabled = true;
 				GetComponent<Rigidbody> ().useGravity = true;
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoOlharParaObjeto (terreno.GetComponent<DadosDaFase> ().atores [1], true, false);
 				break;
@@ -50,14 +58,15 @@ public class AbejideAto01 : MonoBehaviour {
 				break;
 			case 3:
 				if (terreno.GetComponent<DadosDaFase> ().atores [1].GetComponent<MetodosDaCutscene> ().PegarAto () > 8) {
-					atorAnimator.SetTrigger ("Paralizar");
+					corpoAnimator.SetTrigger ("Paralizar");
+					peAnimator.SetTrigger ("Paralizar");
 					tempoEspera = 0;
 					maxTempoEspera = 2.5f;
 					GetComponent<MetodosDaCutscene> ().IncrementarAto ();
 				}
 				break;
 			case 4:
-				atorAnimator.GetComponent<Collider> ().enabled = false;
+				GetComponent<Collider> ().enabled = false;
 				GetComponent<Rigidbody> ().useGravity = false;
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoMoverNoEixoY (0.7f, true, false, false, 1, 0);
 				break;
@@ -81,20 +90,19 @@ public class AbejideAto01 : MonoBehaviour {
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoSeguirOutroAtor (terreno.GetComponent<DadosDaFase> ().atores [2], true, true, true);
 				break;
 			case 10:
-				transform.position = new Vector3 (287.86f, 1.47f, 266.84f);
-				transform.eulerAngles = new Vector3 (0, 0, 0);
 				GetComponent<AbejideAtaque> ().AtivarCodigo ();
 				GetComponent<AbejideAtaque> ().enabled = true;
 				GetComponent<AbejideAndando> ().enabled = true;
-				atorAnimator.GetComponent<Collider> ().enabled = true;
+				GetComponent<Collider> ().enabled = true;
 				GetComponent<Rigidbody> ().useGravity = true;
-
 				hud.enabled = true;
+				GetComponent<MetodosDaCutscene> ().boca.GetComponent<Conversas> ().conversas.enabled = false;
+				GetComponent<MetodosDaCutscene> ().boca.GetComponent<Conversas> ().enabled = false;
+				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoTeleporte();
+				break;
+			case 11:
 				GetComponent<AbejideAto01> ().enabled = false;
 				GetComponent<MetodosDaCutscene> ().enabled = false;
-				break;
-			default:
-				
 				break;
 			}
 		} else {

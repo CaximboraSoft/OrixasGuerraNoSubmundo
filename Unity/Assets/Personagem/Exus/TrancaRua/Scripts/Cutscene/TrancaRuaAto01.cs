@@ -70,7 +70,6 @@ public class TrancaRuaAto01 : MonoBehaviour {
 				atorAnimator.SetTrigger ("MudarAnimacao");
 				GetComponent<MetodosDaCutscene> ().IncrementarAto ();
 				GetComponent<MetodosDaCutscene> ().Falar ("Aaaahhh, mais você não vai fugir não seu resto de aborto.", nome, 0, 6, true);
-
 				break;
 			case 9:
 				if (terreno.GetComponent<DadosDaFase>().atores[2].GetComponent<MetodosDaCutscene>().PegarAto () > 2) {
@@ -86,13 +85,10 @@ public class TrancaRuaAto01 : MonoBehaviour {
 			case 12:
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoRotacao (true, false, 0);
 				break;
-			default:
-				//ato--;
-				/*
-				GetComponent<Ato01> ().enabled = false;
-				GetComponent<MetodosDaCutscene> ().enabled = false;
-				GetComponent<AbejideAtaque> ().enabled = true;
-				GetComponent<AbejideAndando> ().enabled = true;*/
+			case 13:
+				if (terreno.GetComponent<DadosDaFase> ().atores[0].GetComponent<AbejideAto01> ().enabled == false) {
+					Destroy (gameObject);
+				}
 				break;
 			}
 		} else {
