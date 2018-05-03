@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /*
  * Aqui tem a mecânicas:
@@ -12,6 +13,7 @@ using UnityEngine;
 
 public class AbejideAtaque : MonoBehaviour {
 
+	public Slider estaminaSlider;
 	public Transform seta;
 	public Transform inimigo;
 	public Animator corpoAnimator;
@@ -31,7 +33,13 @@ public class AbejideAtaque : MonoBehaviour {
 	private bool olhandoInimigo;
 	private bool jogouMagia;
 	private bool sentidoHorario;
+	private bool perdeEstamina;
 
+	private float estamina;
+	public float addEstamina;
+	public float subEstaminaAtacando;
+	public float subEstaminaCorrendo;
+	public float maxEstamina;
 	public float maxTempoAndandoAtaque;
 	private float tempoCombo;
 	public float maxTempoCombo;
@@ -52,14 +60,25 @@ public class AbejideAtaque : MonoBehaviour {
 	 * 4 Esquerda;
 	 */
 	private int direcaoAtaque;
+	private int animacaoID;
 
 	void Start () {
+		animacaoID = 0;
 		direcaoAtaque = 0;
 
+		perdeEstamina = false;
+
 		AtivarCodigo ();
+
+		//APAGAR ISSO
+		subEstaminaCorrendo = 0;
 	}
 
 	public void AtivarCodigo () {
+		abejideCamera.GetComponent<CameraAto01> ().enabled = false;
+		abejideCamera.GetComponent<Animator> ().enabled = false;
+		abejideCamera.fieldOfView = 60f;
+
 		estaAtaqueParado = false;
 		estaAtaqueAndando = false;
 		olhandoInimigo = false;
@@ -68,6 +87,8 @@ public class AbejideAtaque : MonoBehaviour {
 		tempoCombo = 0;
 		tempoMagia = 0;
 
+		estamina = maxEstamina;
+		estaminaSlider.maxValue = maxEstamina;
 		abejideCamera.transform.eulerAngles = new Vector3 (50, 0 ,0);
 
 		corpoAnimator.runtimeAnimatorController = corpoController as RuntimeAnimatorController;
@@ -78,10 +99,19 @@ public class AbejideAtaque : MonoBehaviour {
 		for (int linha = 1; linha < armas.Length; linha++) {
 			armas [linha].GetComponent<Renderer> ().enabled = false;
 		}
+
+		GetComponent<AbejideAtaque> ().enabled = true;
 	}
 
 	// Update is called once per frame
 	void Update () {
+		if (estamina < maxEstamina && tempoCombo > maxTempoCombo * 2 && corpoAnimator.GetFloat("AceleracaoAndando") < 1.2f) {
+			estamina += addEstamina;
+		} else if (corpoAnimator.GetFloat("AceleracaoAndando") > 1.3f) {
+			estamina -= subEstaminaCorrendo;
+		}
+		estaminaSlider.value = estamina;
+
 		if (gameObject.GetComponent<AbejideOlhando> ().enabled) {
 			transform.LookAt (new Vector3(inimigo.position.x, transform.position.y, inimigo.position.z));
 		} else if (olhandoInimigo && !gameObject.GetComponent<AbejideOlhando> ().enabled) {
@@ -143,6 +173,16 @@ public class AbejideAtaque : MonoBehaviour {
 	}
 
 	void Atacar() {
+		if (estaAtaqueParado) {
+			if (!perdeEstamina) {
+				perdeEstamina = true;
+				estamina -= subEstaminaAtacando;
+				animacaoID = corpoState.fullPathHash;
+			} else if (animacaoID != corpoState.fullPathHash) {
+				perdeEstamina = false;
+			}
+		}
+
 		if (Input.GetKeyDown (KeyCode.Z)) {
 			tempoCombo = 0;
 
@@ -156,6 +196,7 @@ public class AbejideAtaque : MonoBehaviour {
 					estaAtaqueAndando = true;
 					corpoAnimator.SetTrigger ("AtaqueAndando");
 					peAnimator.SetTrigger ("AtaqueAndando");
+					estamina -= subEstaminaAtacando;
 				//Se não for a invezdida, quer dizer que o Abejide esta parado, enão vai executar os ataques dele parado.
 				} else if (!estaAtaqueParado && !estaAtaqueAndando) {
 					estaAtaqueParado = true;
@@ -204,6 +245,8 @@ public class AbejideAtaque : MonoBehaviour {
 		//Se o jogador não ficar apertando <z>, depois de um tempo o loop de ataque acaba e o Abejide volta ao seu estado parado.
 		tempoCombo += Time.deltaTime;
 		if (tempoCombo > maxTempoCombo && estaAtaqueParado) {
+			animacaoID = 0;
+			perdeEstamina = false;
 			estaAtaqueParado = false;
 			corpoAnimator.SetBool ("Atacando", false);
 			peAnimator.SetBool ("Atacando", false);
@@ -290,13 +333,13 @@ public class AbejideAtaque : MonoBehaviour {
 		GetComponent<DadosForcaResultante> ().AddNewtonRodando ();
 
 		if (sentidoHorario) {
-			angulo += (GetComponent<DadosForcaResultante> ().PegarNewtonRodando () / 160);
+			angulo += (GetComponent<DadosForcaResultante> ().PegarNewtonRodando () / 45);
 
 			if (angulo + anguloChegar > 360) {
 				gameObject.GetComponent<AbejideOlhando> ().enabled = true;
 			}
 		} else {
-			angulo -= (GetComponent<DadosForcaResultante> ().PegarNewtonRodando ()) / 160;
+			angulo -= (GetComponent<DadosForcaResultante> ().PegarNewtonRodando ()) / 45;
 
 			if (angulo + anguloChegar < 0) {
 				gameObject.GetComponent<AbejideOlhando> ().enabled = true;
@@ -304,6 +347,10 @@ public class AbejideAtaque : MonoBehaviour {
 		}
 
 		transform.eulerAngles = new Vector3 (transform.eulerAngles.x, anguloInicial + angulo, transform.eulerAngles.z);
+	}
+
+	public float PegarEstamina () {
+		return estamina;
 	}
 
 	public bool EstaAtacandoParadoAndando () {

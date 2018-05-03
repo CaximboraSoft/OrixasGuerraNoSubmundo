@@ -395,12 +395,17 @@ public class MetodosDaCutscene : MonoBehaviour {
 		acabouAtuacao = false;
 		estaAtuando = true;
 	}
+
 	public void ComecarAtuacaoTeleporte () {
 		indicePosicoes++;
 		posicao = GameObject.Find(posicoesNome + " (" + indicePosicoes.ToString () + ")").GetComponent<Transform> ();
 		transform.eulerAngles = posicao.eulerAngles;
 		transform.position = posicao.position;
 		ato++;
+	}
+
+	public void MudarIndicePosicao (int valor) {
+		indicePosicoes = valor;
 	}
 
 	/// <summary>
@@ -529,5 +534,9 @@ public class MetodosDaCutscene : MonoBehaviour {
 
 	public void MudarAtor(int valor) {
 		ato = valor;
+	}
+
+	public float PegarAnguloDaPosicao() {
+		return objeto.transform.eulerAngles.y;
 	}
 }

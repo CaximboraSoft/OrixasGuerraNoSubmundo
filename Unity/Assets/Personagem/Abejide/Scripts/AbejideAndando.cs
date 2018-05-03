@@ -27,6 +27,12 @@ public class AbejideAndando : MonoBehaviour {
 
 	private float diferenca;
 
+	public void AtivarCodigo () {
+		angulo = transform.eulerAngles.y;
+
+		GetComponent<AbejideAndando> ().enabled = true;
+	}
+
 	// Use this for initialization
 	void Awake () {
 		estaRodando = false;
@@ -51,7 +57,7 @@ public class AbejideAndando : MonoBehaviour {
 			}
 		} else if (GetComponent<AbejideAtaque> ().EstaAtacandoParadoAndando ()) {
 			MoverRodarAbejide ();
-			CalcularFisica (2);
+			CalcularFisica (1.5f);
 		} else if (corpoAnimator.GetFloat("AceleracaoAndando") != 0 && !GetComponent<AbejideAtaque> ().PegarEstaAtaqueAndando ()) {
 			GetComponent<DadosForcaResultante> ().SubNewtonAndando (1);
 			corpoAnimator.SetFloat ("AceleracaoAndando", GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando());
@@ -175,18 +181,18 @@ public class AbejideAndando : MonoBehaviour {
 		} else if (!estaRodando) {
 			GetComponent<DadosForcaResultante> ().MudarNewtonRodando (0);
 		}
-
-		//Movimentção correndo.
-		if (Input.GetKey (KeyCode.LeftShift)) {
-			GetComponent<DadosForcaResultante> ().AddNewtonCorrendo (1.2f);
-		//Movimentção andando.
-		} else {
-			if (estaAndando) {
+		
+		if (estaAndando) {
+			//Movimentção correndo.
+			if (Input.GetKey (KeyCode.LeftShift) && GetComponent<AbejideAtaque> ().PegarEstamina () > 0) {
+				GetComponent<DadosForcaResultante> ().AddNewtonCorrendo (1.2f);
+			//Movimentção andando.
+			} else {
 				GetComponent<DadosForcaResultante> ().AddNewtonAndando (dividirMaxNewtom);
-			//Desaceleração.
-			} else if (corpoAnimator.GetFloat ("AceleracaoAndando") != 0) {
-				GetComponent<DadosForcaResultante> ().SubNewtonAndando (1);
 			}
+		//Desaceleração.
+		} else if (corpoAnimator.GetFloat ("AceleracaoAndando") != 0) {
+			GetComponent<DadosForcaResultante> ().SubNewtonAndando (1);
 		}
 
 		corpoAnimator.SetFloat ("AceleracaoAndando",  (GetComponent<DadosForcaResultante>().PegarAceleracaoAndando ()));

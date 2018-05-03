@@ -28,11 +28,15 @@ public class TrancaRuaAto01 : MonoBehaviour {
 	void Update () {
 		atorAnimator.SetFloat ("NewtonAndando", GetComponent<DadosForcaResultante> ().PegarNewtonAndando ());
 
+		if (terreno.GetComponent<DadosDaFase> ().atores[0].GetComponent<AbejideAto01> ().enabled == false) {
+			Destroy (gameObject);
+		}
+
 		if (!GetComponent<MetodosDaCutscene> ().PegarEstaAtuando () && tempoEspera > maxTempoEspera) {
 
 			switch (GetComponent<MetodosDaCutscene> ().PegarAto ()) {
 			case 0:
-				if (terreno.GetComponent<DadosDaFase>().atores[0].GetComponent<MetodosDaCutscene>().PegarAto () > 1) {
+				if (terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<MetodosDaCutscene> ().PegarAto () > 1) {
 					GetComponent<MetodosDaCutscene> ().IncrementarAto ();
 					GetComponent<MetodosDaCutscene> ().Falar ("Oh fã do felixo feto, a maconha aumentou de preço, vai custar 500 conto.", nome, 2, 8, true);
 				}
@@ -47,8 +51,8 @@ public class TrancaRuaAto01 : MonoBehaviour {
 				tempoEspera = 0;
 				maxTempoEspera = 2;
 				GetComponent<MetodosDaCutscene> ().IncrementarAto ();
-				GetComponent<MetodosDaCutscene> ().boca.GetComponent<Conversas> ().MudarRostoMostrar(terreno.GetComponent<DadosDaFase> ().atores[0].GetComponent<MetodosDaCutscene> ().rostoMostrar);
-				GetComponent<MetodosDaCutscene> ().Falar ("...", terreno.GetComponent<DadosDaFase> ().atores[0].GetComponent<AbejideAto01> ().PegarNome (), 0, 2, false);
+				GetComponent<MetodosDaCutscene> ().boca.GetComponent<Conversas> ().MudarRostoMostrar (terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<MetodosDaCutscene> ().rostoMostrar);
+				GetComponent<MetodosDaCutscene> ().Falar ("...", terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<AbejideAto01> ().PegarNome (), 0, 2, false);
 				break;
 			case 4:
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoRotacao (false, true, 0);
@@ -72,7 +76,7 @@ public class TrancaRuaAto01 : MonoBehaviour {
 				GetComponent<MetodosDaCutscene> ().Falar ("Aaaahhh, mais você não vai fugir não seu resto de aborto.", nome, 0, 6, true);
 				break;
 			case 9:
-				if (terreno.GetComponent<DadosDaFase>().atores[2].GetComponent<MetodosDaCutscene>().PegarAto () > 2) {
+				if (terreno.GetComponent<DadosDaFase> ().atores [2].GetComponent<MetodosDaCutscene> ().PegarAto () > 2) {
 					GetComponent<MetodosDaCutscene> ().IncrementarAto ();
 				}
 				break;
@@ -84,11 +88,6 @@ public class TrancaRuaAto01 : MonoBehaviour {
 				break;
 			case 12:
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoRotacao (true, false, 0);
-				break;
-			case 13:
-				if (terreno.GetComponent<DadosDaFase> ().atores[0].GetComponent<AbejideAto01> ().enabled == false) {
-					Destroy (gameObject);
-				}
 				break;
 			}
 		} else {

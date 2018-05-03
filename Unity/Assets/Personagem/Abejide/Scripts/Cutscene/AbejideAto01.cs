@@ -33,7 +33,8 @@ public class AbejideAto01 : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKey (KeyCode.Space)) {
-			//GetComponent<MetodosDaCutscene> ().MudarAtor (10);
+			GetComponent<MetodosDaCutscene> ().MudarEstaAtuando (false);
+			GetComponent<MetodosDaCutscene> ().MudarAtor (10);
 		}
 
 		corpoAnimator.SetFloat ("AceleracaoAndando", GetComponent<DadosForcaResultante> ().PegarNewtonAndando ());
@@ -90,17 +91,17 @@ public class AbejideAto01 : MonoBehaviour {
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoSeguirOutroAtor (terreno.GetComponent<DadosDaFase> ().atores [2], true, true, true);
 				break;
 			case 10:
+				GetComponent<MetodosDaCutscene> ().MudarIndicePosicao (2);
+				GetComponent<DadosForcaResultante> ().MudarNewtonAndando (0);
+				GetComponent<DadosForcaResultante> ().MudarNewtonRodando (0);
+				GetComponent<AbejideAndando> ().AtivarCodigo ();
 				GetComponent<AbejideAtaque> ().AtivarCodigo ();
-				GetComponent<AbejideAtaque> ().enabled = true;
-				GetComponent<AbejideAndando> ().enabled = true;
 				GetComponent<Collider> ().enabled = true;
 				GetComponent<Rigidbody> ().useGravity = true;
 				hud.enabled = true;
+				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoTeleporte ();
 				GetComponent<MetodosDaCutscene> ().boca.GetComponent<Conversas> ().conversas.enabled = false;
 				GetComponent<MetodosDaCutscene> ().boca.GetComponent<Conversas> ().enabled = false;
-				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoTeleporte();
-				break;
-			case 11:
 				GetComponent<AbejideAto01> ().enabled = false;
 				GetComponent<MetodosDaCutscene> ().enabled = false;
 				break;

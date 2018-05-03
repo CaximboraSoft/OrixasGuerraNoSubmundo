@@ -21,14 +21,12 @@ public class AbejideOlhando : MonoBehaviour {
 	public float maisDevagar;
 	public float minPlayAndando = 0.5f; //Só pode disparar a animação de andando quando a velocidade do Abejide for menor que isso.
 	private float angulo;
-	private float divisorMaxNewtom;
+	public float divisorMaxNewtom;
 	private float diferenca;
 
 	// Use this for initialization
 	void Awake () {
 		trasicaoAngulo = false;
-
-		divisorMaxNewtom = 1.5f;
 	}
 	
 	// Update is called once per frame

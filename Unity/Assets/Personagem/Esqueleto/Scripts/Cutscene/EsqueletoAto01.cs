@@ -27,6 +27,10 @@ public class EsqueletoAto01 : MonoBehaviour {
 	void Update () {
 		atorAnimator.SetFloat ("NewtonAndando", GetComponent<DadosForcaResultante> ().PegarNewtonAndando ());
 
+		if (terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<AbejideAto01> ().enabled == false) {
+			Destroy (gameObject);
+		}
+
 		if (!GetComponent<MetodosDaCutscene> ().PegarEstaAtuando () && tempoEspera > maxTempoEspera) {
 			
 			switch (GetComponent<MetodosDaCutscene> ().PegarAto ()) {
@@ -43,11 +47,6 @@ public class EsqueletoAto01 : MonoBehaviour {
 			case 2:
 				atorAnimator.SetTrigger ("Impedir");
 				GetComponent<MetodosDaCutscene> ().IncrementarAto ();
-				break;
-			case 3:
-				if (terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<AbejideAto01> ().enabled == false) {
-					Destroy (gameObject);
-				}
 				break;
 			}
 		} else {

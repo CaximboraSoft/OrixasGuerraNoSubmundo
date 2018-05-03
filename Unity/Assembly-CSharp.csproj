@@ -67,6 +67,7 @@
      <Compile Include="Assets\Personagem\Exus\TrancaRua\Scripts\Cutscene\TrancaRuaAto01.cs" />
      <Compile Include="Assets\Personagem\Scripts\DadosForcaResultante.cs" />
      <Compile Include="Assets\Personagem\Scripts\MetodosDaCutscene.cs" />
+     <Compile Include="Assets\Testes\MovimentacaoTeste.cs" />
      <None Include="Assets\Personagem\Shader\Armas Shaded.shader" />
      <None Include="Assets\Personagem\Shader\Examples\Diffuse Simple.shader" />
      <None Include="Assets\Personagem\Shader\Examples\NewSurfaceShader.shader" />

@@ -28,11 +28,15 @@ public class SeteEncruzilhadasAto01 : MonoBehaviour {
 	void Update () {
 		atorAnimator.SetFloat ("NewtonAndando", GetComponent<DadosForcaResultante> ().PegarNewtonAndando ());
 
+		if (terreno.GetComponent<DadosDaFase> ().atores[0].GetComponent<AbejideAto01> ().enabled == false) {
+			Destroy (gameObject);
+		}
+
 		if (!GetComponent<MetodosDaCutscene> ().PegarEstaAtuando () && tempoEspera > maxTempoEspera) {
 
 			switch (GetComponent<MetodosDaCutscene> ().PegarAto ()) {
 			case 0:
-				if (terreno.GetComponent<DadosDaFase>().atores[0].GetComponent<MetodosDaCutscene>().PegarAto () > 7) {
+				if (terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<MetodosDaCutscene> ().PegarAto () > 7) {
 					tempoEspera = 0;
 					maxTempoEspera = 2;
 					GetComponent<MetodosDaCutscene> ().IncrementarAto ();
@@ -50,8 +54,8 @@ public class SeteEncruzilhadasAto01 : MonoBehaviour {
 				break;
 			case 4:
 				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoRotacao (false, false, 3); //Indice 1
-				GetComponent<MetodosDaCutscene> ().boca.GetComponent<Conversas> ().MudarRostoMostrar(terreno.GetComponent<DadosDaFase> ().atores[0].GetComponent<MetodosDaCutscene> ().rostoMostrar);
-				GetComponent<MetodosDaCutscene> ().Falar ("Cara, a minha família já morreu de overdose de maconha a muito tempo atrás.", terreno.GetComponent<DadosDaFase> ().atores[0].GetComponent<AbejideAto01> ().PegarNome (), 0, 6, false);
+				GetComponent<MetodosDaCutscene> ().boca.GetComponent<Conversas> ().MudarRostoMostrar (terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<MetodosDaCutscene> ().rostoMostrar);
+				GetComponent<MetodosDaCutscene> ().Falar ("Cara, a minha família já morreu de overdose de maconha a muito tempo atrás.", terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<AbejideAto01> ().PegarNome (), 0, 6, false);
 				break;
 			case 5:
 				atorAnimator.GetComponent<Collider> ().enabled = false;
@@ -61,11 +65,6 @@ public class SeteEncruzilhadasAto01 : MonoBehaviour {
 				break;
 			case 6:
 				GetComponent<MetodosDaCutscene> ().IncrementarAto ();
-				break;
-			case 7:
-				if (terreno.GetComponent<DadosDaFase> ().atores[0].GetComponent<AbejideAto01> ().enabled == false) {
-					Destroy (gameObject);
-				}
 				break;
 			}
 		} else {
