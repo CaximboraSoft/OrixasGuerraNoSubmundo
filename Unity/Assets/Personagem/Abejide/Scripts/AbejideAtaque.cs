@@ -69,9 +69,6 @@ public class AbejideAtaque : MonoBehaviour {
 		perdeEstamina = false;
 
 		AtivarCodigo ();
-
-		//APAGAR ISSO
-		subEstaminaCorrendo = 0;
 	}
 
 	public void AtivarCodigo () {
@@ -105,6 +102,10 @@ public class AbejideAtaque : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetKeyDown (KeyCode.P)) {
+			estamina = maxEstamina;
+		}
+
 		if (estamina < maxEstamina && tempoCombo > maxTempoCombo * 2 && corpoAnimator.GetFloat("AceleracaoAndando") < 1.2f) {
 			estamina += addEstamina;
 		} else if (corpoAnimator.GetFloat("AceleracaoAndando") > 1.3f) {

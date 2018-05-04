@@ -6,7 +6,7 @@ public class MovimentacaoTeste : MonoBehaviour {
 
 	Rigidbody corpo;
 
-	Vector3 movimento;
+//	Vector3 movimento;
 
 	public float forca = 0;
 
@@ -17,7 +17,7 @@ public class MovimentacaoTeste : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		movimento = new Vector3 (0, 0, 1 * Time.deltaTime);
+		//movimento = new Vector3 (0, 0, 1 * Time.deltaTime);
 
 		if (Input.GetKey(KeyCode.W)) {
 			corpo.AddForce (transform.forward * forca);

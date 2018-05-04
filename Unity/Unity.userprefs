@@ -1,11 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Personagem\Abejide\Scripts\AbejideOlhando.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Personagem\Shader\Armas Shaded.shader">
     <Files>
       <File FileName="Assets\Personagem\Scripts\DadosForcaResultante.cs" Line="6" Column="2" />
       <File FileName="Assets\Personagem\Abejide\Scripts\AbejideOlhando.cs" Line="17" Column="27" />
-      <File FileName="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" Line="98" Column="52" />
-      <File FileName="Assets\Personagem\Scripts\MetodosDaCutscene.cs" Line="399" Column="37" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" Line="1" Column="1" />
+      <File FileName="Assets\Personagem\Scripts\MetodosDaCutscene.cs" Line="1" Column="1" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\AbejideAndando.cs" Line="193" Column="19" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\AbejideAtaque.cs" Line="105" Column="34" />
+      <File FileName="Assets\Personagem\Shader\Personagem Shaded.shader" Line="3" Column="3" />
+      <File FileName="Assets\Personagem\Shader\Armas Shaded.shader" Line="21" Column="24" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -69,11 +69,13 @@
      <Compile Include="Assets\Personagem\Scripts\MetodosDaCutscene.cs" />
      <Compile Include="Assets\Testes\MovimentacaoTeste.cs" />
      <None Include="Assets\Personagem\Shader\Armas Shaded.shader" />
+     <None Include="Assets\Personagem\Shader\Armas Shaded NormalMap.shader" />
      <None Include="Assets\Personagem\Shader\Examples\Diffuse Simple.shader" />
      <None Include="Assets\Personagem\Shader\Examples\NewSurfaceShader.shader" />
      <None Include="Assets\Personagem\Shader\Examples\Tint Final Color.shader" />
      <None Include="Assets\Personagem\Shader\Examples\Diffuse Bump.shader" />
      <None Include="Assets\Personagem\Shader\Personagem Shaded.shader" />
+     <None Include="Assets\Personagem\Shader\Personagem Shaded NormalMap.shader" />
      <None Include="Assets\Personagem\Shader\Examples\Detail.shader" />
      <None Include="Assets\Personagem\Shader\Examples\Diffuse Texture.shader" />
      <None Include="Assets\Personagem\Shader\Examples\Rim.shader" />
