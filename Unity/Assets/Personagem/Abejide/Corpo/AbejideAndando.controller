@@ -167,7 +167,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: AceleracaoAndando
-    m_EventTreshold: 1.2
+    m_EventTreshold: 1.7
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102931080581163584}
   m_Solo: 0
@@ -791,7 +791,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 4
     m_ConditionEvent: AceleracaoAndando
-    m_EventTreshold: 1.3
+    m_EventTreshold: 1.8
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102334013195424290}
   m_Solo: 0
@@ -1052,7 +1052,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: 0_Ataque03
-  m_Speed: 1.4
+  m_Speed: 1.25
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101329654133142410}
@@ -1079,7 +1079,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: 0_Andando
-  m_Speed: 2
+  m_Speed: 2.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101401175669722008}
@@ -1271,7 +1271,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: 0_Ataque04
-  m_Speed: 1.4
+  m_Speed: 1.25
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101531652314014738}
@@ -1298,7 +1298,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: 0_Ataque01
-  m_Speed: 1.4
+  m_Speed: 1.25
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101009270815689062}
@@ -1351,7 +1351,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: 0_Ataque02
-  m_Speed: 1.4
+  m_Speed: 1.2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101794007128709732}

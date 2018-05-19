@@ -27,7 +27,7 @@ public class EsqueletoAto01 : MonoBehaviour {
 	void Update () {
 		atorAnimator.SetFloat ("NewtonAndando", GetComponent<DadosForcaResultante> ().PegarNewtonAndando ());
 
-		if (terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<AbejideAto01> ().enabled == false) {
+		if (terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<MetodosDaCutscene> ().enabled == false) {
 			Destroy (gameObject);
 		}
 
@@ -35,9 +35,9 @@ public class EsqueletoAto01 : MonoBehaviour {
 			
 			switch (GetComponent<MetodosDaCutscene> ().PegarAto ()) {
 			case 0:
-				if (terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<MetodosDaCutscene> ().PegarAto () > 2) {
+				if (terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<MetodosDaCutscene> ().PegarAto () > 3) {
 					tempoEspera = 0;
-					maxTempoEspera = 1.3f;
+					maxTempoEspera = 0.3f;
 					GetComponent<MetodosDaCutscene> ().IncrementarAto ();
 				}
 				break;

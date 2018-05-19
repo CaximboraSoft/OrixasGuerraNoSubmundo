@@ -12,7 +12,9 @@ public class SeteEncruzilhadasAto01 : MonoBehaviour {
 	private float tempoEspera;
 	private float maxTempoEspera;
 
-	private string nome;
+	private string fala;
+
+	private int sat;
 
 	// Use this for initialization
 	void Start () {
@@ -21,14 +23,16 @@ public class SeteEncruzilhadasAto01 : MonoBehaviour {
 		tempoEspera = 10;
 		maxTempoEspera = 0;
 
-		nome = "Exu sete encruzilhadas:";
+		GetComponent<MetodosDaCutscene> ().MudarNome("Exu sete encruzilhadas:");
+
+		sat = terreno.GetComponent<DadosDaFase> ().sat;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		atorAnimator.SetFloat ("NewtonAndando", GetComponent<DadosForcaResultante> ().PegarNewtonAndando ());
 
-		if (terreno.GetComponent<DadosDaFase> ().atores[0].GetComponent<AbejideAto01> ().enabled == false) {
+		if (terreno.GetComponent<DadosDaFase> ().atores[0].GetComponent<MetodosDaCutscene> ().enabled == false) {
 			Destroy (gameObject);
 		}
 
@@ -36,34 +40,58 @@ public class SeteEncruzilhadasAto01 : MonoBehaviour {
 
 			switch (GetComponent<MetodosDaCutscene> ().PegarAto ()) {
 			case 0:
-				if (terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<MetodosDaCutscene> ().PegarAto () > 7) {
-					tempoEspera = 0;
-					maxTempoEspera = 2;
-					GetComponent<MetodosDaCutscene> ().IncrementarAto ();
+				if (terreno.GetComponent<DadosDaFase> ().atores[1].GetComponent<MetodosDaCutscene> ().PegarAto () > 2) {
+					fala = "Não substime o garoto, não esqueça que este jovem levou Olodumare ao limite, meu caro.";
+					GetComponent<MetodosDaCutscene> ().Falar (fala, GetComponent<MetodosDaCutscene> ().PegarNome (), 0, 5 * sat, true);
 				}
 				break;
 			case 1:
-				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (false, false, true, false, 0);
-				GetComponent<MetodosDaCutscene> ().Falar ("Oh seu lixo filho do satanas, deixa esse neguinho comigo, vou matar ele e toda a sua familia.", nome, 0, 8, true);
+				if (terreno.GetComponent<DadosDaFase> ().atores [1].GetComponent<MetodosDaCutscene> ().PegarAto () > 6) {
+					fala = "Eu vou começar, pois tenho preferência em idade.";
+					GetComponent<MetodosDaCutscene> ().Falar (fala, GetComponent<MetodosDaCutscene> ().PegarNome (), 2, 5 * sat, true);
+					tempoEspera = 0;
+					maxTempoEspera = 4.5f * sat;
+				}
 				break;
 			case 2:
-				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (true, false, true, false, 0);
+				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (false, false, true, false, 0);
 				break;
 			case 3:
-				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (false, false, false, false, 0);
+				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (true, false, false, false, 0);
 				break;
 			case 4:
-				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoRotacao (false, false, 3); //Indice 1
-				GetComponent<MetodosDaCutscene> ().boca.GetComponent<Conversas> ().MudarRostoMostrar (terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<MetodosDaCutscene> ().rostoMostrar);
-				GetComponent<MetodosDaCutscene> ().Falar ("Cara, a minha família já morreu de overdose de maconha a muito tempo atrás.", terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<AbejideAto01> ().PegarNome (), 0, 6, false);
+				if (terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<MetodosDaCutscene> ().PegarAto () > 6) {
+					fala = "É melhor que tu fiques por bem, meu jovem. ja causou problemas de mais para nós, não brimques com a nossa paciência.";
+					GetComponent<MetodosDaCutscene> ().Falar (fala, GetComponent<MetodosDaCutscene> ().PegarNome (), 3, 9.5f, true);
+				}
 				break;
 			case 5:
-				atorAnimator.GetComponent<Collider> ().enabled = false;
-				GetComponent<Rigidbody> ().useGravity = false;
-				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoMoverNoEixoY (2.7f, false, true, false, 1, 0);
-				GetComponent<MetodosDaCutscene> ().Falar ("isso é o que você pensa, por que eu sou seu pai...", nome, 0, 5, true);
+				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (true, false, false, false, 2.3f);
 				break;
 			case 6:
+				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoRotacao (false, false, 0);
+				break;
+			case 7:
+				fala = "Faça isso de novo, e você pagará um preço ainda maior do que aquele que temos em mente.";
+				GetComponent<MetodosDaCutscene> ().Falar (fala, GetComponent<MetodosDaCutscene> ().PegarNome (), 0, 6 * sat, true);
+				tempoEspera = 0;
+				maxTempoEspera = 6.1f * sat;
+				break;
+			case 8:
+				fala = "Ja sei para onde vamos ir meu jovem, mas acho qe você não achará meu reino tão agradável quanto eu...";
+				GetComponent<MetodosDaCutscene> ().Falar (fala, GetComponent<MetodosDaCutscene> ().PegarNome (), 0, 7 * sat, true);
+				tempoEspera = 0;
+				maxTempoEspera = 8 * sat;
+				break;
+			case 9:
+				GetComponent<MetodosDaCutscene> ().IncrementarAto ();
+				break;
+			case 10:
+				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoMoverNoEixoY (4.2f, false, false, false, 3, 0);
+				GetComponent<Collider> ().enabled = false;
+				GetComponent<Rigidbody> ().useGravity = false;
+				break;
+			case 11:
 				GetComponent<MetodosDaCutscene> ().IncrementarAto ();
 				break;
 			}

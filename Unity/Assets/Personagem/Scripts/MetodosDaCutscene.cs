@@ -43,6 +43,7 @@ public class MetodosDaCutscene : MonoBehaviour {
 	private float vezes;
 	public float tempoMudarTexto;
 	public float maxTempoMudarTexto;
+	public float maxTempoVidaTexto;
 
 	/*
 	 * 0 faz nada.
@@ -55,8 +56,8 @@ public class MetodosDaCutscene : MonoBehaviour {
 	 *   21 faz o ator apontar para um objeto
 	 */
 	private int tipoDeAtuacao;
-	private int indicePosicoes;
-	private int indiceRotacoes;
+	public int indicePosicoes;
+	public int indiceRotacoes;
 	public int ato;
 
 	public string nome;
@@ -120,6 +121,7 @@ public class MetodosDaCutscene : MonoBehaviour {
 
 				if (mostrarEsteRosto) {
 					boca.GetComponent<Conversas> ().MudarRostoMostrar (rostoMostrar);
+					boca.GetComponent<Conversas> ().MudarTempoLimparTexto(maxTempoVidaTexto);
 				}
 			}
 		}
@@ -492,11 +494,12 @@ public class MetodosDaCutscene : MonoBehaviour {
 		this.nome = nome;
 		this.menssagem = menssagem;
 		this.maxTempoMudarTexto = maxTempoMudarTexto;
+		this.maxTempoVidaTexto = maxTempoVidaTexto;
 
 		mudarTexto = true;
 
 		this.mostrarEsteRosto = mostrarEsteRosto;
-		boca.GetComponent<Conversas> ().MudarTempoLimparTexto(maxTempoMudarTexto + maxTempoVidaTexto);
+		ato++;
 	}
 
 	public void MoverNosEixosXZ (float distanciaX, float distanciaZ, bool manterNewtonAndando, float maxTempoEspera) {
@@ -538,5 +541,13 @@ public class MetodosDaCutscene : MonoBehaviour {
 
 	public float PegarAnguloDaPosicao() {
 		return objeto.transform.eulerAngles.y;
+	}
+
+	public void MudarNome(string valor) {
+		nome = valor;
+	}
+
+	public string PegarNome() {
+		return nome;
 	}
 }

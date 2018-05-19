@@ -52,7 +52,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Cenario\Camera\Scripts\Cutscene\CameraAto01.cs" />
+     <Compile Include="Assets\Cenario\Scripts\CameraDetectarColisao.cs" />
      <Compile Include="Assets\Cenario\Scripts\DadosDaFase.cs" />
+     <Compile Include="Assets\Cenario\Scripts\DeixarTransparente.cs" />
      <Compile Include="Assets\Cenario\Scripts\EsconderObjeto.cs" />
      <Compile Include="Assets\Interfaces\Scripts\Conversas.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideAndando.cs" />
@@ -61,6 +63,7 @@
      <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideOlhando.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\Arma.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" />
+     <Compile Include="Assets\Personagem\Coadjuvantes\Scripts\Coadjuvantes.cs" />
      <Compile Include="Assets\Personagem\Esqueleto\Scripts\Cutscene\EsqueletoAto01.cs" />
      <Compile Include="Assets\Personagem\Esqueleto\Scripts\Esqueleto.cs" />
      <Compile Include="Assets\Personagem\Exus\SeteEncruzilhadas\Scripts\Cutscene\SeteEncruzilhadasAto01.cs" />
@@ -72,6 +75,7 @@
      <None Include="Assets\Personagem\Shader\Armas Shaded NormalMap.shader" />
      <None Include="Assets\Personagem\Shader\Examples\Diffuse Simple.shader" />
      <None Include="Assets\Personagem\Shader\Examples\NewSurfaceShader.shader" />
+     <None Include="Assets\Personagem\Shader\Tranparente.shader" />
      <None Include="Assets\Personagem\Shader\Examples\Tint Final Color.shader" />
      <None Include="Assets\Personagem\Shader\Examples\Diffuse Bump.shader" />
      <None Include="Assets\Personagem\Shader\Personagem Shaded.shader" />
@@ -79,6 +83,7 @@
      <None Include="Assets\Personagem\Shader\Examples\Detail.shader" />
      <None Include="Assets\Personagem\Shader\Examples\Diffuse Texture.shader" />
      <None Include="Assets\Personagem\Shader\Examples\Rim.shader" />
+     <None Include="Assets\Personagem\Shader\Teste.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

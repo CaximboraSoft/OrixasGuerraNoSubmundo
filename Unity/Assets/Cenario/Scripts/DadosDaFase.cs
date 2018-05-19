@@ -10,6 +10,8 @@ public class DadosDaFase : MonoBehaviour {
 	public float inimigosNormais = 0;
 	public float inimigosNormaisAtacando = 0;
 
+	public int sat;
+
 	// Use this for initialization
 	void Start () {
 		

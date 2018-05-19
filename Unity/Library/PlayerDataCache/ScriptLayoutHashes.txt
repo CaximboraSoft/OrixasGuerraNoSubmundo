@@ -107,7 +107,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 3f32f08a64daf40b09ed864d96fe3840 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransform
 73843688b51256aed059f049c540bca8 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformChild
 528ea1fd7c01796fc60c4e2f172ea229 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformVisualizer
-af755b8e8b3eb6889e5927b54ca33f59 Assembly-CSharp.dll:.AbejideAtaque
+073fd82978883bd6f76aff75c01aac22 Assembly-CSharp.dll:.AbejideAtaque
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 322cb40e1e282f28af980cbef7922a90 UnityEngine.Analytics.dll:UnityEngine.Analytics.AnalyticsEventTracker
 dc07d7ad69b399a46e92c483bf1c04ca UnityEngine.Analytics.dll:UnityEngine.Analytics.AnalyticsTracker
@@ -155,4 +155,4 @@ b397aa314b042ae4f34dd2d1444b2df4 Assembly-CSharp.dll:.AbejideMagia
 1ff004fe9f84b92380cca231b7f51dc8 Assembly-CSharp.dll:.AbejideAto01
 3297892c27a8f0106e50da453a15f307 Assembly-CSharp.dll:.TrancaRuaAto01
 a860e3a2894124a7be7c6965a3d52038 Assembly-CSharp.dll:.DadosForcaResultante
-de22b3596c3ebd37f4c25b2480b29c21 Assembly-CSharp.dll:.AbejideAndando
+a753a6361e30c31f05d7178ec4f3d4e0 Assembly-CSharp.dll:.AbejideAndando

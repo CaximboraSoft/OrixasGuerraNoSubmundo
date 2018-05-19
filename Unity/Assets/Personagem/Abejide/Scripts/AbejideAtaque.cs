@@ -37,6 +37,7 @@ public class AbejideAtaque : MonoBehaviour {
 
 	private float estamina;
 	public float addEstamina;
+	public float addEstaminaParado;
 	public float subEstaminaAtacando;
 	public float subEstaminaCorrendo;
 	public float maxEstamina;
@@ -52,6 +53,8 @@ public class AbejideAtaque : MonoBehaviour {
 	private float anguloInicial;
 	private float anguloChegar;
 	private float angulo;
+	private float animacaoVelocidade;
+
 	/*
 	 * 0 Parado
 	 * 1 Frente;
@@ -102,16 +105,44 @@ public class AbejideAtaque : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		/******************** CHEATS< TIRAR NO PROJETO FINAL DO JOGO ********************/
 		if (Input.GetKeyDown (KeyCode.P)) {
 			estamina = maxEstamina;
 		}
+		if (Input.GetKey (KeyCode.O)) {
+			estamina = 0;
+		}
+		if (Input.GetKey (KeyCode.I)) {
+			GetComponent<DadosForcaResultante> ().MudarNewtonAndando (2000);
+		}
+		if (Input.GetKey (KeyCode.U)) {
+			GetComponent<DadosForcaResultante> ().MudarNewtonAndando (6000);
+		}
+	if (Input.GetKeyUp (KeyCode.I) || Input.GetKeyUp (KeyCode.U)) {
+			GetComponent<DadosForcaResultante> ().MudarNewtonAndando (0);
+		}
+		/******************** CHEATS< TIRAR NO PROJETO FINAL DO JOGO ********************/
 
-		if (estamina < maxEstamina && tempoCombo > maxTempoCombo * 2 && corpoAnimator.GetFloat("AceleracaoAndando") < 1.2f) {
+		//Muda a valocidade da animção.
+		animacaoVelocidade = 1 + (estamina * 0.15f);
+		corpoAnimator.speed = animacaoVelocidade;
+		peAnimator.speed = animacaoVelocidade;
+
+		//Recupera estamina quando o jogador não estiver correndo ou atcando.
+		if (estamina < maxEstamina && tempoCombo > maxTempoCombo * 2 && corpoAnimator.GetFloat("AceleracaoAndando") < 1.8f) {
 			estamina += addEstamina;
-		} else if (corpoAnimator.GetFloat("AceleracaoAndando") > 1.3f) {
+
+			if (corpoAnimator.GetFloat("AceleracaoAndando") < 0.2f) {
+				estamina += addEstaminaParado;
+			}
+		//Perde estamina quando o Abejide estiver correndo.
+		} else if (corpoAnimator.GetFloat("AceleracaoAndando") > 1.7f) {
 			estamina -= subEstaminaCorrendo;
 		}
-		estaminaSlider.value = estamina;
+		if (estamina < 0) { //Pode acontecer da estamina ficar negativa, então é necessatio tomar este cuidado em especial.
+			estamina = 0;
+		}
+		estaminaSlider.value = estamina; //Passa a estamina para o HUD da tela.
 
 		if (gameObject.GetComponent<AbejideOlhando> ().enabled) {
 			transform.LookAt (new Vector3(inimigo.position.x, transform.position.y, inimigo.position.z));
@@ -224,7 +255,7 @@ public class AbejideAtaque : MonoBehaviour {
 					GetComponent<DadosForcaResultante> ().SubNewtonAndando (1);
 				}
 
-				if (GetComponent<DadosForcaResultante> ().PegarNewtonAndando() == 0) {
+				if (GetComponent<DadosForcaResultante> ().PegarNewtonAndando() <= 70) {
 					//Passa o novo angulo para o estilo de movimentação que estiver ativom pois pode acontecer que no meio desse ataque o Abejide mude de angulo.
 					if (olhandoInimigo) {
 					} else {

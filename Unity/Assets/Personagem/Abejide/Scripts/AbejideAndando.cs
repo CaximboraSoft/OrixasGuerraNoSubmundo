@@ -19,6 +19,7 @@ public class AbejideAndando : MonoBehaviour {
 
 	//private bool estaCorrendo;
 	private bool estaAndando;
+	private bool estaCorrendo;
 	private bool estaRodando;
 
 	public float minPlayAndando = 0.5f; //Só pode disparar a animação de andando quando a velocidade do Abejide for menor que isso.
@@ -26,6 +27,8 @@ public class AbejideAndando : MonoBehaviour {
 	private float chegarAngulo;
 
 	private float diferenca;
+
+	public float velocidade;
 
 	public void AtivarCodigo () {
 		angulo = transform.eulerAngles.y;
@@ -36,6 +39,7 @@ public class AbejideAndando : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		estaRodando = false;
+		estaCorrendo = false;
 
 		corpoAnimator = GameObject.Find ("AbejideMesh").GetComponent<Animator> ();
 	}
@@ -181,10 +185,17 @@ public class AbejideAndando : MonoBehaviour {
 		} else if (!estaRodando) {
 			GetComponent<DadosForcaResultante> ().MudarNewtonRodando (0);
 		}
-		
+
+		if (!estaCorrendo && Input.GetKeyDown (KeyCode.LeftShift)) {
+			estaCorrendo = true;
+		}
+		if (estaCorrendo && (Input.GetKeyUp (KeyCode.LeftShift) || GetComponent<AbejideAtaque> ().PegarEstamina () <= 0.1f)) {
+			estaCorrendo = false;
+		}
+
 		if (estaAndando) {
 			//Movimentção correndo.
-			if (Input.GetKey (KeyCode.LeftShift) && GetComponent<AbejideAtaque> ().PegarEstamina () > 0) {
+			if (estaCorrendo) {
 				GetComponent<DadosForcaResultante> ().AddNewtonCorrendo (1.2f);
 			//Movimentção andando.
 			} else {
@@ -195,11 +206,13 @@ public class AbejideAndando : MonoBehaviour {
 			GetComponent<DadosForcaResultante> ().SubNewtonAndando (1);
 		}
 
-		corpoAnimator.SetFloat ("AceleracaoAndando",  (GetComponent<DadosForcaResultante>().PegarAceleracaoAndando ()));
-		peAnimator.SetFloat ("AceleracaoAndando",  (GetComponent<DadosForcaResultante>().PegarAceleracaoAndando ()));
+		corpoAnimator.SetFloat ("AceleracaoAndando",  (GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando ()));
+		peAnimator.SetFloat ("AceleracaoAndando",  (GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando ()));
 
 		transform.eulerAngles = new Vector3 (0, angulo, 0);
-		transform.Translate(0, 0, corpoAnimator.GetFloat ("AceleracaoAndando") * Time.deltaTime);
+		velocidade = corpoAnimator.GetFloat ("AceleracaoAndando");
+		velocidade += (corpoAnimator.GetFloat ("AceleracaoAndando") * GetComponent<AbejideAtaque> ().PegarEstamina ());
+		transform.Translate(0, 0, velocidade* Time.deltaTime);
 	}
 
 	/// <summary>
