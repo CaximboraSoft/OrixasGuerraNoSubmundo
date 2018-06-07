@@ -5,42 +5,39 @@ using UnityEngine.UI;
 
 public class MetodosDaCutscene : MonoBehaviour {
 
+	private DadosMovimentacao meuDadosMovimentacao;
 	public Transform boca;
 	public Transform rostoMostrar;
 	private Transform objeto;
-	public Transform seta;
+	public Transform seta; //Guarda o angulo que o personagem tem que chegar, isso é dado segundo o método <LookAt>
 	private Transform posicao;
-	public float[] rotacoes;
+	private DadosDaFase meuDadosDaFase;
 	private float rotacao;
 
 	public bool mudarTexto; 
 	private bool cima;
 	private bool estaAtuando;
-	private bool sentidoHorario;
-	private bool chegouNoAngulo;
-	private bool correndo;
-	private bool manterNewtonAndando;
-	private bool manterNewtonRodando;
 	private bool acabouAtuacao;
 	private bool eixoX;
 	private bool eixoY;
 	private bool eixoZ;
 	private bool mostrarEsteRosto;
+	private bool detectarColisaoComDestino;
+	private bool manterAnimacaoAndando;
+	private bool manterDesativadaAGravidade;
 
 	private float distanciaX;
 	private float distanciaY;
 	private float distanciaZ;
 	private float distancia;
-	private float newton;
-	//private float newtonRodando;
 	private float hipotenusa;
 	private float cateto1;
 	private float cateto2;
-	private float angulo;
-	private float anguloInicial;
 	private float tempoEspera;
 	private float maxTempoEspera;
 	private float vezes;
+	private float velocidade;
+	private float velocidadeCrescente;
 	public float tempoMudarTexto;
 	public float maxTempoMudarTexto;
 	public float maxTempoVidaTexto;
@@ -57,7 +54,6 @@ public class MetodosDaCutscene : MonoBehaviour {
 	 */
 	private int tipoDeAtuacao;
 	public int indicePosicoes;
-	public int indiceRotacoes;
 	public int ato;
 
 	public string nome;
@@ -66,17 +62,15 @@ public class MetodosDaCutscene : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		meuDadosDaFase = GameObject.FindGameObjectWithTag ("Terra").GetComponent<DadosDaFase> ();
+		meuDadosMovimentacao = GetComponent<DadosMovimentacao> ();
+
 		ato = 0;
-		newton = 0;
 		tipoDeAtuacao = 0;
 		indicePosicoes = 0;
-		indiceRotacoes = -1;
 		tempoMudarTexto = 0;
 		maxTempoMudarTexto = 0;
-
-		objeto = GameObject.Find(posicoesNome + " (" + indicePosicoes.ToString () + ")").GetComponent<Transform> ();
-		transform.position = objeto.position;
-		transform.eulerAngles = objeto.eulerAngles;
+		velocidadeCrescente = 0;
 
 		estaAtuando = false;
 		mudarTexto = false;
@@ -98,14 +92,8 @@ public class MetodosDaCutscene : MonoBehaviour {
 			case 13:
 				MudarPosicaoDeLado ();
 				break;
-			case 14:
-				MudarPosicaoNosEixosXZ ();
-				break;
 			case 2:
 				MudarRotacao ();
-				break;
-			case 21:
-				ApontarParaObjeto ();
 				break;
 			}
 		}
@@ -127,10 +115,6 @@ public class MetodosDaCutscene : MonoBehaviour {
 		}
 	}
 
-	private void MudarPosicaoNosEixosXZ () {
-		
-	}
-
 	private void SeguirOutroAtor () {
 		if (eixoX) {
 			transform.position = new Vector3 (objeto.position.x - distanciaX, transform.position.y, transform.position.z);
@@ -145,25 +129,14 @@ public class MetodosDaCutscene : MonoBehaviour {
 
 	private void MoverNoEixoY() {
 		if (!acabouAtuacao) {
-			newton += GetComponent<DadosForcaResultante> ().addNewtonAndando;
-			if (correndo) {
-				if (newton > GetComponent<DadosForcaResultante> ().maxNewtonCorrendo) {
-					newton = GetComponent<DadosForcaResultante> ().maxNewtonCorrendo;
-				}
-			} else {
-				if (newton > GetComponent<DadosForcaResultante> ().maxNewtonAndando) {
-					newton = GetComponent<DadosForcaResultante> ().maxNewtonAndando;
-				}
-			}
-
 			if (cima) {
-				transform.Translate (0, (newton / GetComponent<DadosForcaResultante> ().PegarMassaTotal () * vezes) * Time.deltaTime, 0);
+				transform.Translate (0, velocidade * Time.deltaTime, 0);
 
 				if (transform.position.y > distancia) {
 					acabouAtuacao = true;
 				}
 			} else {
-				transform.Translate (0, -(newton / GetComponent<DadosForcaResultante> ().PegarMassaTotal () * vezes) * Time.deltaTime, 0);
+				transform.Translate (0, -velocidade* Time.deltaTime, 0);
 
 				if (transform.position.y < distancia) {
 					acabouAtuacao = true;
@@ -171,9 +144,11 @@ public class MetodosDaCutscene : MonoBehaviour {
 			}
 		} else {
 			if (tempoEspera >= maxTempoEspera) {
-				if (!manterNewtonAndando) {
-					newton = 0;
+				if (!manterDesativadaAGravidade) {
+					GetComponent<Collider> ().enabled = true;
+					GetComponent<Rigidbody> ().useGravity = true;
 				}
+
 				estaAtuando = false;
 			} else {
 				tempoEspera += Time.deltaTime;
@@ -182,31 +157,14 @@ public class MetodosDaCutscene : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Faz o ator apontar para o objeto que foi passado no método <ComecarAtuacaoOlharParaObjeto>
-	/// </summary>
-	private void ApontarParaObjeto() {
-		//Faz o personagem rotacionar.
-		if (!chegouNoAngulo) {
-			seta.LookAt (new Vector3 (posicao.position.x, seta.position.y, posicao.position.z));
-			rotacao = seta.eulerAngles.y - transform.eulerAngles.y;
-			if (rotacao < 0) {
-				rotacao += 360;
-			}
-			RodarAtor ();
-		} else {
-			transform.LookAt (new Vector3 (posicao.position.x, transform.position.y, posicao.position.z));
-		}
-	}
-
-	/// <summary>
 	/// Faz o ator rodar até chegar no angulo que foi passado no método <ComecarAtuacaoRotacao>
 	/// </summary>
 	private void MudarRotacao() {
 		if (!acabouAtuacao) {
-			RodarAtor ();
+			seta.eulerAngles = new Vector3 (0, rotacao, 0);
+			transform.rotation = Quaternion.Lerp (transform.rotation, seta.rotation, meuDadosMovimentacao.velocidadeRotacao * Time.deltaTime * vezes);
 
-			if (chegouNoAngulo) {
-				transform.eulerAngles = new Vector3 (transform.eulerAngles.x, rotacoes[indiceRotacoes], transform.eulerAngles.z);
+			if (Mathf.Abs(transform.eulerAngles.y - seta.eulerAngles.y) < 5) {
 				acabouAtuacao = true;
 			}
 		} else {
@@ -220,34 +178,8 @@ public class MetodosDaCutscene : MonoBehaviour {
 
 	private void MudarPosicaoDeLado () {
 		if (!acabouAtuacao) {
-			//Faz o ator andar.
-
-			if (correndo) {
-				GetComponent<DadosForcaResultante> ().AddNewtonCorrendo (2);
-			} else {
-				GetComponent<DadosForcaResultante> ().AddNewtonAndando (1);
-			}
-
-			if (transform.position.x < posicao.position.x) {
-				transform.Translate (-(GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando ()) * Time.deltaTime, 0, 0);
-			} else {
-				transform.Translate ((GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando ()) * Time.deltaTime, 0, 0);
-			}
-
-			cateto1 = transform.position.x - posicao.position.x;
-			cateto2 = transform.position.z - posicao.position.z;
-			hipotenusa = Mathf.Sqrt (Mathf.Pow (cateto1, 2) + Mathf.Pow (cateto2, 2));
-
-			if (hipotenusa < 0.4f) {
-				if (!manterNewtonAndando) {
-					GetComponent<DadosForcaResultante> ().MudarNewtonAndando (0);
-				}
-				if (!manterNewtonRodando) {
-					GetComponent<DadosForcaResultante> ().MudarNewtonRodando (0);
-				}
-				acabouAtuacao = true;
-			}
-				
+			velocidadeCrescente = Mathf.Lerp (velocidadeCrescente, velocidade, 1f * Time.deltaTime);
+			transform.Translate (velocidadeCrescente * Time.deltaTime, 0, 0);
 		} else {
 			if (tempoEspera >= maxTempoEspera) {
 				estaAtuando = false;
@@ -260,66 +192,26 @@ public class MetodosDaCutscene : MonoBehaviour {
 	private void MudarPosicaoAndando () {
 		if (!acabouAtuacao) {
 			//Faz o ator andar.
-			if (correndo) {
-				GetComponent<DadosForcaResultante> ().AddNewtonCorrendo (2);
-			} else {
-				GetComponent<DadosForcaResultante> ().AddNewtonAndando (1);
-			}
+			velocidadeCrescente = Mathf.Lerp (velocidadeCrescente, velocidade, 1f * Time.deltaTime);
+			transform.Translate (0, 0, velocidadeCrescente * Time.deltaTime);
 
-			transform.Translate (0, 0, (GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando ()) * Time.deltaTime);
+			seta.LookAt (new Vector3 (posicao.position.x, seta.position.y, posicao.position.z));
+			transform.rotation = Quaternion.Lerp (transform.rotation, seta.rotation, meuDadosMovimentacao.velocidadeRotacao * Time.deltaTime);
 
-			cateto1 = transform.position.x - posicao.position.x;
-			cateto2 = transform.position.z - posicao.position.z;
-			hipotenusa = Mathf.Sqrt (Mathf.Pow (cateto1, 2) + Mathf.Pow (cateto2, 2));
 
-			if (hipotenusa < 0.4f) {
-				if (!manterNewtonAndando) {
-					GetComponent<DadosForcaResultante> ().MudarNewtonAndando (0);
-				}
-				if (!manterNewtonRodando) {
-					GetComponent<DadosForcaResultante> ().MudarNewtonRodando (0);
-				}
-				acabouAtuacao = true;
-			}
-
-			//Faz o personagem rotacionar.
-			if (!chegouNoAngulo) {
-				seta.LookAt (new Vector3 (posicao.position.x, seta.position.y, posicao.position.z));
-				rotacao = seta.eulerAngles.y - transform.eulerAngles.y;
-				if (rotacao < 0) {
-					rotacao += 360;
-				}
-				RodarAtor ();
-			} else {
-				transform.LookAt (new Vector3 (posicao.position.x, transform.position.y, posicao.position.z));
-			}
 		} else {
 			if (tempoEspera >= maxTempoEspera) {
+				meuDadosMovimentacao.MudarBoolDoMeuAnimator("Andando", manterAnimacaoAndando);
+
+				if (!manterAnimacaoAndando) {
+					velocidadeCrescente = 0;
+				}
+
 				estaAtuando = false;
 			} else {
 				tempoEspera += Time.deltaTime;
 			}
 		}
-	}
-
-	private void RodarAtor () {
-		GetComponent<DadosForcaResultante> ().AddNewtonRodando ();
-
-		if (sentidoHorario) {
-			angulo += (GetComponent<DadosForcaResultante> ().PegarNewtonRodando () / 180);
-
-			if (angulo + rotacao > 360) {
-				chegouNoAngulo = true;
-			}
-		} else {
-			angulo -= (GetComponent<DadosForcaResultante> ().PegarNewtonRodando ()) / 180;
-
-			if (angulo + rotacao < 0) {
-				chegouNoAngulo = true;
-			}
-		}
-
-		transform.eulerAngles = new Vector3 (transform.eulerAngles.x, anguloInicial + angulo, transform.eulerAngles.z);
 	}
 
 	/// <summary>
@@ -328,16 +220,11 @@ public class MetodosDaCutscene : MonoBehaviour {
 	/// <param name="posicao">Posicao.</param>
 	/// <param name="sentidoHorario">If set to <c>true</c> sentido horario.</param>
 	/// <param name="manterNewtonRodando">If set to <c>true</c> manter newton rodando.</param>
-	public void ComecarAtuacaoOlharParaObjeto(Transform posicao, bool sentidoHorario, bool manterNewtonRodando) {
+	public void ComecarAtuacaoOlharParaObjeto (Transform posicao, bool sentidoHorario, bool manterNewtonRodando) {
 		this.posicao = posicao;
-		this.sentidoHorario = sentidoHorario;
-		this.manterNewtonRodando = manterNewtonRodando;
 
-		anguloInicial = transform.eulerAngles.y;
 		ato++;
-		angulo = 0;
 		tipoDeAtuacao = 21;
-		chegouNoAngulo = false;
 		estaAtuando = true;
 	}
 
@@ -348,23 +235,14 @@ public class MetodosDaCutscene : MonoBehaviour {
 	/// <param name="sentidoHorario">If set to <c>true</c> sentido horario.</param>
 	/// <param name="manterNewtonRodando">If set to <c>true</c> manter newton rodando.</param>
 	/// <param name="maxTempoEspera">Max tempo espera.</param>
-	public void ComecarAtuacaoRotacao (bool sentidoHorario, bool manterNewtonRodando, float maxTempoEspera) {
-		this.manterNewtonRodando = manterNewtonRodando;
-		this.sentidoHorario = sentidoHorario;
+	public void ComecarAtuacaoRotacao (float rotacao, float vezes, float maxTempoEspera) {
+		this.vezes = vezes;
 		this.maxTempoEspera = maxTempoEspera;
-		indiceRotacoes++;
-		rotacao = transform.eulerAngles.y - rotacoes[indiceRotacoes];
-
-		if (this.rotacao < 0) {
-			this.rotacao += 360;
-		}
+		this.rotacao = rotacao;
 
 		tempoEspera = 0;
 		ato++;
-		angulo = 0;
-		anguloInicial = transform.eulerAngles.y;
 		tipoDeAtuacao = 2;
-		chegouNoAngulo = false;
 		acabouAtuacao = false;
 		estaAtuando = true;
 	}
@@ -378,29 +256,26 @@ public class MetodosDaCutscene : MonoBehaviour {
 	/// <param name="manterNewtonAndando">If set to <c>true</c> manter newton andando.</param>
 	/// <param name="manterNewtonRodando">If set to <c>true</c> manter newton rodando.</param>
 	/// <param name="maxTempoEspera">Max tempo espera.</param>
-	public void ComecarAtuacaoPosicao (bool sentidoHorario, bool correndo, bool manterNewtonAndando, bool manterNewtonRodando, float maxTempoEspera) {
-		this.sentidoHorario = sentidoHorario;
-		this.correndo = correndo;
-		this.manterNewtonAndando = manterNewtonAndando;
-		this.manterNewtonRodando = manterNewtonRodando;
+	public void ComecarAtuacaoPosicao (float velocidade, bool manterAnimacaoAndando, bool correndo, float maxTempoEspera) {
+		this.velocidade = velocidade;
 		this.maxTempoEspera = maxTempoEspera;
+		this.manterAnimacaoAndando = manterAnimacaoAndando;
 
 		indicePosicoes++;
 		posicao = GameObject.Find(posicoesNome + " (" + indicePosicoes.ToString () + ")").GetComponent<Transform> ();
+		meuDadosMovimentacao.MudarBoolDoMeuAnimator("Andando", true);
+		meuDadosMovimentacao.MudarBoolDoMeuAnimator("Correndo", correndo);
 
-		anguloInicial = transform.eulerAngles.y;
 		ato++;
 		tempoEspera = 0;
-		angulo = 0;
 		tipoDeAtuacao = 1;
-		chegouNoAngulo = false;
 		acabouAtuacao = false;
 		estaAtuando = true;
 	}
 
 	public void ComecarAtuacaoTeleporte () {
 		indicePosicoes++;
-		posicao = GameObject.Find(posicoesNome + " (" + indicePosicoes.ToString () + ")").GetComponent<Transform> ();
+		posicao = GameObject.Find (posicoesNome + " (" + indicePosicoes.ToString () + ")").GetComponent<Transform> ();
 		transform.eulerAngles = posicao.eulerAngles;
 		transform.position = posicao.position;
 		ato++;
@@ -417,9 +292,8 @@ public class MetodosDaCutscene : MonoBehaviour {
 	/// <param name="manterNewtonAndando">If set to <c>true</c> manter newton andando.</param>
 	/// <param name="manterNewtonRodando">If set to <c>true</c> manter newton rodando.</param>
 	/// <param name="maxTempoEspera">Max tempo espera.</param>
-	public void ComecarAtuacaoPosicaoDeLado (bool correndo, bool manterNewtonAndando, bool manterNewtonRodando, float maxTempoEspera) {
-		this.correndo = correndo;
-		this.manterNewtonAndando = manterNewtonAndando;
+	public void ComecarAtuacaoPosicaoDeLado (float velocidade, float maxTempoEspera) {
+		this.velocidade = velocidade;
 		this.maxTempoEspera = maxTempoEspera;
 
 		indicePosicoes++;
@@ -427,8 +301,8 @@ public class MetodosDaCutscene : MonoBehaviour {
 
 		ato++;
 		tempoEspera = 0;
+		velocidadeCrescente = 0;
 		tipoDeAtuacao = 13;
-		chegouNoAngulo = false;
 		acabouAtuacao = false;
 		estaAtuando = true;
 	}
@@ -441,12 +315,14 @@ public class MetodosDaCutscene : MonoBehaviour {
 	/// <param name="correndo">If set to <c>true</c> correndo.</param>
 	/// <param name="vezes">Vezes.</param>
 	/// <param name="maxTempoEspera">Max tempo espera.</param>
-	public void ComecarAtuacaoMoverNoEixoY(float distancia, bool cima, bool correndo, bool manterNewtonAndando, float vezes, float maxTempoEspera) {
+	public void ComecarAtuacaoMoverNoEixoY(float distancia, bool cima, bool manterDesativadaAGravidade, float velocidade, float maxTempoEspera) {
+		GetComponent<Collider> ().enabled = false;
+		GetComponent<Rigidbody> ().useGravity = false;
+
 		this.maxTempoEspera = maxTempoEspera;
 		this.cima = cima;
-		this.correndo = correndo;
-		this.vezes = vezes;
-		this.manterNewtonAndando = manterNewtonAndando;
+		this.velocidade = velocidade;
+		this.manterDesativadaAGravidade = manterDesativadaAGravidade;
 
 		if (cima) {
 			this.distancia = transform.position.y + distancia;
@@ -503,7 +379,6 @@ public class MetodosDaCutscene : MonoBehaviour {
 	}
 
 	public void MoverNosEixosXZ (float distanciaX, float distanciaZ, bool manterNewtonAndando, float maxTempoEspera) {
-		this.manterNewtonAndando = manterNewtonAndando;
 		this.maxTempoEspera = maxTempoEspera;
 		this.distanciaX = distanciaX;
 		this.distanciaZ = distanciaZ;
@@ -549,5 +424,43 @@ public class MetodosDaCutscene : MonoBehaviour {
 
 	public string PegarNome() {
 		return nome;
+	}
+
+	public DadosMovimentacao PegarMeuDadosMovimentacao() {
+		return meuDadosMovimentacao;
+	}
+
+	void OnTriggerEnter(Collider collision) {
+		if (estaAtuando && collision.transform.name == posicao.name) {
+			acabouAtuacao = true;
+		}
+	}
+
+	public void PosicionarInicial () {
+		objeto = GameObject.Find (posicoesNome + " (" + indicePosicoes.ToString () + ")").GetComponent<Transform> ();
+		transform.position = objeto.position;
+		transform.eulerAngles = objeto.eulerAngles;
+	}
+
+	/// <summary>
+	/// Retorna o ato de um determinado ator ja passou do número desejado, no caso a referencia a ele éfeita pelo indice dele no jogo.
+	/// </summary>
+	/// <returns><c>true</c>, if ja passou do ato was atored, <c>false</c> otherwise.</returns>
+	/// <param name="indiceDoAtor">Indice do ator.</param>
+	/// <param name="numeroDoAto">Numero do ato.</param>
+	public bool AtorJaPassouDoAto (int indiceDoAtor, int numeroDoAto) {
+		return meuDadosDaFase.atores[indiceDoAtor].GetComponent<MetodosDaCutscene> ().PegarAto () > numeroDoAto;
+	}
+
+	/// <summary>
+	/// Retornar o transform do ator que esta no indice que foi passado.
+	/// </summary>
+	/// <returns>The ator.</returns>
+	public Transform PegarOutroAtor (int indice) {
+		return meuDadosDaFase.atores [indice];
+	}
+
+	public int PegarSat () {
+		return meuDadosDaFase.sat;
 	}
 }

@@ -211,9 +211,6 @@ GameObject:
   - component: {fileID: 33963578649452182}
   - component: {fileID: 136467805772165944}
   - component: {fileID: 23812674132265944}
-  - component: {fileID: 114894664709363898}
-  - component: {fileID: 114810238208980054}
-  - component: {fileID: 114160071499216896}
   m_Layer: 0
   m_Name: Abejide
   m_TagString: Abejide
@@ -1011,32 +1008,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dano: 0
-  massa: 40
   elemento: 0
---- !u!114 &114160071499216896
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1469675495045910}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e49f288fa137a14ca1add443293f2d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  message: {fileID: 0}
-  estaAndandoZ: 0
-  estaAndandoX: 0
-  aceleracaoX: 0
-  aceleracaoZ: 0
-  newtonX: 0
-  newtonZ: 0
-  addNewtonAndando: 2
-  subNewtonAndando: 6
-  maxNewtonAndando: 100
-  maxNewtonCorrendo: 150
-  minPlayAndando: 0.5
-  distanciaTransicao: 15
 --- !u!114 &114176287580482318
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1049,7 +1021,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dano: 0
-  massa: 10
   elemento: 0
 --- !u!114 &114464871923474498
 MonoBehaviour:
@@ -1063,7 +1034,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dano: 0
-  massa: 70
   elemento: 0
 --- !u!114 &114471276182187680
 MonoBehaviour:
@@ -1077,58 +1047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dano: 0
-  massa: 25
   elemento: 0
---- !u!114 &114810238208980054
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1469675495045910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e67cd77f191cd9140a6726822c4c5115, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  message: {fileID: 0}
-  cameraPosiiton: {fileID: 1100546382545974}
-  addNewtonAndando: 2
-  subNewtonAndando: 6
-  maxNewtonAndando: 200
-  maxNewtonCorrendo: 250
-  minPlayAndando: 0.5
-  addNewtonRotacao: 100
-  maxAceleracaoRotacao: 200
---- !u!114 &114894664709363898
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1469675495045910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3c900d3410026b4cbf382085efa41fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  seta: {fileID: 4644606183629632}
-  inimigo: {fileID: 0}
-  armas:
-  - {fileID: 1194017496983056}
-  - {fileID: 1785020147742352}
-  - {fileID: 1053467572664630}
-  - {fileID: 1994482378896530}
-  magias:
-  - {fileID: 1576316795648522, guid: cd3760070ae49a342a07f8712446846c, type: 2}
-  - {fileID: 1998989304272246, guid: 5c1f9de2fd037e045b24eaed2f7bfce0, type: 2}
-  - {fileID: 1021773834805530, guid: 555603fa25841674e9fb27a404b55d56, type: 2}
-  mao: {fileID: 1048678226130120}
-  abejideCamera: {fileID: 0}
-  maxTempoCombo: 0.4
-  maxTempoMagia:
-  - 0.7
-  - 0.5
-  - 0.9
-  massa: 75
 --- !u!136 &136467805772165944
 CapsuleCollider:
   m_ObjectHideFlags: 1

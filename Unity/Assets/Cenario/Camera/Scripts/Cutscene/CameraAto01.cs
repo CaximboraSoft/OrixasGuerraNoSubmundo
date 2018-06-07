@@ -47,7 +47,7 @@ public class CameraAto01 : MonoBehaviour {
 				}
 				break;
 			case 3:
-				if (terreno.GetComponent<DadosDaFase>().atores[0].GetComponent<AbejideAtaque>().enabled == true) {
+				if (terreno.GetComponent<DadosDaFase>().atores[0].GetComponent<Abejide>().enabled == true) {
 					atorAnimator.enabled = false;
 
 					GetComponent<CameraAto01> ().enabled = false;

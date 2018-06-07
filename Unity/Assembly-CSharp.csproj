@@ -52,24 +52,31 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Cenario\Camera\Scripts\Cutscene\CameraAto01.cs" />
+     <Compile Include="Assets\Cenario\Camera\Scripts\seguirJogador.cs" />
+     <Compile Include="Assets\Cenario\PrimeiroReino\Pedra\Scripts\FazerPedrasVoar.cs" />
+     <Compile Include="Assets\Cenario\PrimeiroReino\Pedra\Scripts\PedraGigante.cs" />
      <Compile Include="Assets\Cenario\Scripts\CameraDetectarColisao.cs" />
      <Compile Include="Assets\Cenario\Scripts\DadosDaFase.cs" />
      <Compile Include="Assets\Cenario\Scripts\DeixarTransparente.cs" />
      <Compile Include="Assets\Cenario\Scripts\EsconderObjeto.cs" />
      <Compile Include="Assets\Interfaces\Scripts\Conversas.cs" />
-     <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideAndando.cs" />
-     <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideAtaque.cs" />
+     <Compile Include="Assets\Personagem\Abejide\Scripts\Abejide.cs" />
+     <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideChao.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideMagia.cs" />
-     <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideOlhando.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\Arma.cs" />
+     <Compile Include="Assets\Personagem\Abejide\Scripts\ColocarDentro.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" />
+     <Compile Include="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto02.cs" />
      <Compile Include="Assets\Personagem\Coadjuvantes\Scripts\Coadjuvantes.cs" />
-     <Compile Include="Assets\Personagem\Esqueleto\Scripts\Cutscene\EsqueletoAto01.cs" />
-     <Compile Include="Assets\Personagem\Esqueleto\Scripts\Esqueleto.cs" />
      <Compile Include="Assets\Personagem\Exus\SeteEncruzilhadas\Scripts\Cutscene\SeteEncruzilhadasAto01.cs" />
+     <Compile Include="Assets\Personagem\Exus\SeteEncruzilhadas\Scripts\Cutscene\SeteEncruzilhadasAto02.cs" />
      <Compile Include="Assets\Personagem\Exus\TrancaRua\Scripts\Cutscene\TrancaRuaAto01.cs" />
-     <Compile Include="Assets\Personagem\Scripts\DadosForcaResultante.cs" />
+     <Compile Include="Assets\Personagem\InimigosNormais\Carcereiro\Script\Cutscene\CarcereiroAto01.cs" />
+     <Compile Include="Assets\Personagem\InimigosNormais\Esqueleto\Scripts\Cutscene\EsqueletoAto01.cs" />
+     <Compile Include="Assets\Personagem\InimigosNormais\Esqueleto\Scripts\Esqueleto.cs" />
+     <Compile Include="Assets\Personagem\Scripts\DadosMovimentacao.cs" />
      <Compile Include="Assets\Personagem\Scripts\MetodosDaCutscene.cs" />
+     <Compile Include="Assets\Personagem\Scripts\ObjetoMassa.cs" />
      <Compile Include="Assets\Testes\MovimentacaoTeste.cs" />
      <None Include="Assets\Personagem\Shader\Armas Shaded.shader" />
      <None Include="Assets\Personagem\Shader\Armas Shaded NormalMap.shader" />

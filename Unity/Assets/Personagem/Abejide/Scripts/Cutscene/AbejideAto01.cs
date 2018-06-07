@@ -4,117 +4,116 @@ using UnityEngine;
 
 public class AbejideAto01 : MonoBehaviour {
 
-	public Canvas hud;
-	public GameObject terreno;
-	public Animator corpoAnimator;
-	public Animator peAnimator;
-	public RuntimeAnimatorController corpoController;
-	public RuntimeAnimatorController peController;
+	public GameObject cutsceneObjetos;
+	private Animator corpoAnimator;
+	public RuntimeAnimatorController animacaoDaCurscene;
+	public PedraGigante pedraGigante;
+	private MetodosDaCutscene meuMetodosDaCutscene;
 
+	public float[] rotacoes;
+	private int indiceRotacoes;
 	private float tempoEspera;
 	private float maxTempoEspera;
 
-	private string fala;
-
 	private int sat;
+
+	private string fala;
 
 	// Use this for initialization
 	void Start () {
-		hud.enabled = false;
-		corpoAnimator.runtimeAnimatorController = corpoController as RuntimeAnimatorController;
-		peAnimator.runtimeAnimatorController = peController as RuntimeAnimatorController;
-		GetComponent<Collider> ().enabled = false;
-		GetComponent<Rigidbody> ().useGravity = false;
+		corpoAnimator = GetComponentInChildren<Animator> ();
+		corpoAnimator.runtimeAnimatorController = animacaoDaCurscene as RuntimeAnimatorController;
+
+		pedraGigante.transform.SetParent (transform);
+		pedraGigante.transform.localPosition = Vector3.zero;
 
 		tempoEspera = 10;
 		maxTempoEspera = 0;
 
-		GetComponent<MetodosDaCutscene> ().MudarNome("Abejide:");
-
-		sat = terreno.GetComponent<DadosDaFase> ().sat;
+		meuMetodosDaCutscene = GetComponent<MetodosDaCutscene> ();
+		meuMetodosDaCutscene.MudarNome("Abejide:");
+		GetComponent<MetodosDaCutscene> ().PosicionarInicial ();
 	}
 
 	// Update is called once per frame
 	void Update () {
+		sat = meuMetodosDaCutscene.PegarSat ();
+
 		if (Input.GetKey (KeyCode.Space)) {
 			GetComponent<MetodosDaCutscene> ().MudarEstaAtuando (false);
 			GetComponent<MetodosDaCutscene> ().MudarAtor (9);
 		}
 
-		corpoAnimator.SetFloat ("AceleracaoAndando", GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando ());
-		peAnimator.SetFloat ("AceleracaoAndando", GetComponent<DadosForcaResultante> ().PegarAceleracaoAndando ());
+		if (!meuMetodosDaCutscene.PegarEstaAtuando () && tempoEspera > maxTempoEspera) {
 
-		if (!GetComponent<MetodosDaCutscene> ().PegarEstaAtuando () && tempoEspera > maxTempoEspera) {
-			
-			switch (GetComponent<MetodosDaCutscene> ().PegarAto ()) {
+			switch (meuMetodosDaCutscene.PegarAto ()) {
 			case 0:
-				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoMoverNoEixoY (1.95f, true, true, false, 1, 0);
+				corpoAnimator.SetInteger ("IndiceGatilho", 0); //Pedrificado.
+				corpoAnimator.SetTrigger ("Gatilho");
+				meuMetodosDaCutscene.ComecarAtuacaoMoverNoEixoY (2f, true, false, 1, 0);
 				break;
 			case 1:
-				GetComponent<Collider> ().enabled = true;
-				GetComponent<Rigidbody> ().useGravity = true;
-				GetComponent<MetodosDaCutscene> ().IncrementarAto ();
+				meuMetodosDaCutscene.IncrementarAto ();
 				break;
 			case 2:
-				if (terreno.GetComponent<DadosDaFase> ().atores[1].GetComponent<MetodosDaCutscene> ().PegarAto () > 5) {
+				if (meuMetodosDaCutscene.AtorJaPassouDoAto (1, 6)) {
 					fala = "...";
-					GetComponent<MetodosDaCutscene> ().Falar(fala, GetComponent<MetodosDaCutscene> ().PegarNome (), 0, 3 * sat, true);
+					meuMetodosDaCutscene.Falar(fala, meuMetodosDaCutscene.PegarNome (), 0, 3 * sat, true);
 				}
 				break;
 			case 3:
-				if (terreno.GetComponent<DadosDaFase> ().atores [2].GetComponent<MetodosDaCutscene> ().PegarAto () > 3) {
+				if (meuMetodosDaCutscene.AtorJaPassouDoAto (2, 3)) {
 					fala = "Seu velho tolo!!!";
-					GetComponent<MetodosDaCutscene> ().Falar (fala, GetComponent<MetodosDaCutscene> ().PegarNome (), 0, 4 * sat, true);
+					meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 1, 4 * sat, true);
 					tempoEspera = 0;
-					maxTempoEspera = 3.5f * sat;
+					maxTempoEspera = 4.5f * sat;
+					pedraGigante.ExplodirPedras ();
 				}
 				break;
 			case 4: //Abejide começa a tentar fugir.
-				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (true, true, false, false, 0);
+				corpoAnimator.SetTrigger ("VoltarHaAndar");
+				meuMetodosDaCutscene.ComecarAtuacaoPosicao (2.5f, false, true, 0);
 				break;
 			case 5:
-				if (terreno.GetComponent<DadosDaFase> ().atores [1].GetComponent<MetodosDaCutscene> ().PegarAto () > 10) {
-					corpoAnimator.SetTrigger ("Paralizar");
-					peAnimator.SetTrigger ("Paralizar");
+				if (meuMetodosDaCutscene.AtorJaPassouDoAto (1, 10)) {
+					corpoAnimator.SetInteger ("IndiceGatilho", 1); //Paralizar andando no ar.
+					corpoAnimator.SetTrigger ("Gatilho");
 					tempoEspera = 0;
 					maxTempoEspera = 1f * sat;
-					GetComponent<MetodosDaCutscene> ().IncrementarAto ();
+					meuMetodosDaCutscene.IncrementarAto ();
 				}
 				break;
 			case 6:
-				GetComponent<Collider> ().enabled = false;
-				GetComponent<Rigidbody> ().useGravity = false;
-				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoMoverNoEixoY (2f, true, true, false, 2, 0);
+				meuMetodosDaCutscene.ComecarAtuacaoMoverNoEixoY (2f, true, true, 2, 0);
 				break;
 			case 7:
-				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (true, true, false, false, 0);
+				GetComponent<Collider> ().enabled = true;
+				meuMetodosDaCutscene.ComecarAtuacaoPosicao (2f, false, false, 0);
 				break;
 			case 8:
-				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoSeguirOutroAtor (terreno.GetComponent<DadosDaFase> ().atores[2], false, true, false);
+				meuMetodosDaCutscene.ComecarAtuacaoSeguirOutroAtor (meuMetodosDaCutscene.PegarOutroAtor(2), false, true, false);
 				break;
 			case 9:
-				Camera.main.GetComponent<CameraAto01> ().enabled = false;
-				Camera.main.GetComponent<Animator> ().enabled = false;
-				GetComponent<MetodosDaCutscene> ().boca.GetComponent<Conversas> ().conversas.enabled = false;
-				GetComponent<MetodosDaCutscene> ().boca.GetComponent<Conversas> ().enabled = false;
-				GetComponent<MetodosDaCutscene> ().MudarIndicePosicao (2);
-				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoTeleporte ();
-				GetComponent<MetodosDaCutscene> ().enabled = false;
-				GetComponent<Collider> ().enabled = true;
-				GetComponent<Rigidbody> ().useGravity = true;
+				CarcereiroAto01[] objTemp = FindObjectsOfType<CarcereiroAto01> ();
+				for (int i = 0; i < objTemp.Length; i++) {
+					objTemp [i].enabled = true;
+				}
 
-				hud.enabled = true;
-				GetComponent<AbejideAtaque> ().enabled = true;
-				GetComponent<AbejideAndando> ().enabled = true;
-				GetComponent<AbejideAtaque> ().AtivarCodigo ();
-				GetComponent<AbejideAndando> ().AtivarCodigo ();
+				Destroy (cutsceneObjetos);
+				Destroy (pedraGigante.gameObject);
+
+				GameObject.FindObjectOfType<SeteEncruzilhadasAto01> ().enabled = false;
+				GameObject.FindObjectOfType<SeteEncruzilhadasAto02> ().AtivarCodigo ();
+
+				GetComponent<AbejideAto01> ().enabled = false;
+				GetComponent<AbejideAto02> ().AtivarCodigo ();
 				break;
 			}
 
 		} else {
-			if (GetComponent<MetodosDaCutscene> ().PegarAto () == 9) {
-				if (terreno.GetComponent<DadosDaFase> ().atores [2].GetComponent<MetodosDaCutscene> ().PegarAto () > 11) {
-					GetComponent<MetodosDaCutscene> ().MudarEstaAtuando (false);
+			if (meuMetodosDaCutscene.PegarAto () == 9) {
+				if (meuMetodosDaCutscene.AtorJaPassouDoAto (2, 11)) {
+					meuMetodosDaCutscene.MudarEstaAtuando (false);
 				}
 			}
 

@@ -7,7 +7,7 @@ public class DeixarTransparente : MonoBehaviour {
 	private CameraDetectarColisao cameraDetectarColisaoScript;
 	private Renderer renderMaterial = new Renderer ();
 	private Shader shaderOriginal;
-	private Shader shaderTransparente;
+	public Shader shaderTransparente;
 
 	// Use this for initialization
 	void Start () {

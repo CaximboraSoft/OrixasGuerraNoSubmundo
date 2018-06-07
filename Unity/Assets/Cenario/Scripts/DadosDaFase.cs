@@ -6,7 +6,6 @@ public class DadosDaFase : MonoBehaviour {
 
 	public Transform[] atores;
 
-	public float gravidade = 9.8f;
 	public float inimigosNormais = 0;
 	public float inimigosNormaisAtacando = 0;
 

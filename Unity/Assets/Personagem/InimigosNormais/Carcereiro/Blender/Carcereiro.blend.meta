@@ -1,0 +1,394 @@
+fileFormatVersion: 2
+guid: d1cae88b9ffc55247952d598e92a9b7b
+timeCreated: 1527383786
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Amud
+    100004: Azagaia
+    100006: Bone_004
+    100008: Bone_005
+    100010: Bone_006
+    100012: Bone_007
+    100014: BoneCabeca
+    100016: BoneCorpo
+    100018: BoneEscudo
+    100020: BoneEspada
+    100022: BoneEsquerda
+    100024: BoneMaoDireita
+    100026: BonePeDireito
+    100028: BonePeEsquerdo
+    100030: BonePes
+    100032: Corpo
+    100034: DenteDeInkayamba
+    100036: Inimigo
+    100038: Khopesh
+    100040: Osso
+    100042: Plane
+    100044: Plane_001
+    100046: NaCaraNao
+    100048: Bone
+    400000: //RootNode
+    400002: Amud
+    400004: Azagaia
+    400006: Bone_004
+    400008: Bone_005
+    400010: Bone_006
+    400012: Bone_007
+    400014: BoneCabeca
+    400016: BoneCorpo
+    400018: BoneEscudo
+    400020: BoneEspada
+    400022: BoneEsquerda
+    400024: BoneMaoDireita
+    400026: BonePeDireito
+    400028: BonePeEsquerdo
+    400030: BonePes
+    400032: Corpo
+    400034: DenteDeInkayamba
+    400036: Inimigo
+    400038: Khopesh
+    400040: Osso
+    400042: Plane
+    400044: Plane_001
+    400046: NaCaraNao
+    400048: Bone
+    2100000: Material
+    2100002: Abejide_001
+    2100004: Abejide__Abejide_png
+    2100006: CaboEspadaQuebrada__EspadaQuebrada_png
+    2100008: EspadaQuebrada__EspadaQuebrada_png
+    2100010: Espada_Bastao__Bast_o_png
+    2100012: Espada_Inkayamba___Inkayamba_
+    2100014: Cabo_Azagaia___Azagaia
+    2100016: Espada_Azagaia___Azagaia
+    2100018: unnamed
+    2300000: Inimigo
+    2300002: Plane
+    3300000: Inimigo
+    3300002: Plane
+    4300000: Inimigo
+    4300002: Corpo
+    4300004: Khopesh
+    4300006: Amud
+    4300008: DenteDeInkayamba
+    4300010: Azagaia
+    4300012: Plane
+    4300014: Plane_001
+    4300016: NaCaraNao
+    7400000: 0_Frente
+    7400002: Azabaia_Parado
+    7400004: Azagaia_Ataques
+    7400006: Azagaia_Movendo
+    7400008: Bastao_Andando
+    7400010: Bastao_Ataques
+    7400012: Bastao_Parado
+    7400014: DenteDeInkayamba_Ataques
+    7400016: DenteDeInkayamba_Movendo
+    7400018: DenteDeInkayamba_Parado
+    7400020: 0_AtaqueAndando
+    7400022: Sieg_AtaquesMovendo
+    7400024: C_Andando
+    7400026: C_Parado
+    7400028: C_Correndo
+    7400030: 0_Caindo
+    7400032: 0_Subindo
+    7400034: 0_SeRecuperando
+    7400036: C_Ataque01
+    7400038: C_Ataque02
+    7400040: C_Ataque03
+    7400042: C_Ataque04
+    7400044: Paralizado
+    7400046: Pedrificado
+    7400048: 0_Esquiva
+    7400050: 0_Tras
+    7400052: 0_Esquerda
+    7400054: 0_Direita
+    7400056: 0_Crusificado
+    7400058: PerfuraPerfura
+    9500000: //RootNode
+    13700000: Amud
+    13700002: Azagaia
+    13700004: Corpo
+    13700006: DenteDeInkayamba
+    13700008: Khopesh
+    13700010: Plane_001
+    13700012: NaCaraNao
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: C_Parado
+      takeName: Sieg_Parado
+      firstFrame: 1
+      lastFrame: 34
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: C_Andando
+      takeName: Sieg_Movendo
+      firstFrame: 20
+      lastFrame: 70
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: C_Correndo
+      takeName: Sieg_Movendo
+      firstFrame: 80
+      lastFrame: 110
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: C_Ataque01
+      takeName: Sieg_Ataques
+      firstFrame: 1
+      lastFrame: 31
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: C_Ataque02
+      takeName: Sieg_Ataques
+      firstFrame: 40
+      lastFrame: 64
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: C_Ataque03
+      takeName: Sieg_Ataques
+      firstFrame: 70
+      lastFrame: 95
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: C_Ataque04
+      takeName: Sieg_Ataques
+      firstFrame: 100
+      lastFrame: 122
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.5
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

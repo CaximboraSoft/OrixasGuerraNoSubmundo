@@ -5,7 +5,6 @@ using UnityEngine;
 public class Arma : MonoBehaviour {
 	
 	public float dano = 0;
-	public float massa = 0;
 	//0 nenhum elemento | 1 água | 2 fogo | 3 terra
 	public int elemento = 0;
 

@@ -2,101 +2,132 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
+
 public class SeteEncruzilhadasAto01 : MonoBehaviour {
 
+	private MetodosDaCutscene meuMetodosDaCutscene;
 	public GameObject terreno;
 	public Animator atorAnimator;
 	public RuntimeAnimatorController controllerInicial;
 	public RuntimeAnimatorController controllerCutscene;
+	public Canvas canvasTelaPreta;
+	private Image telaPreta;
+	private Text texto;
 
+	public float[] rotacoes;
 	private float tempoEspera;
 	private float maxTempoEspera;
+	private float velocidade;
+
+	private int indiceRotacoes;
+	private int sat;
 
 	private string fala;
 
-	private int sat;
-
 	// Use this for initialization
 	void Start () {
+		CarcereiroAto01[] objTemp = FindObjectsOfType<CarcereiroAto01> ();
+		for (int i = 0; i < objTemp.Length; i++) {
+			objTemp [i].enabled = false;
+		}
+
 		atorAnimator.runtimeAnimatorController = controllerCutscene as RuntimeAnimatorController;
 
+		indiceRotacoes = 0;
 		tempoEspera = 10;
 		maxTempoEspera = 0;
+		velocidade = 1;
 
-		GetComponent<MetodosDaCutscene> ().MudarNome("Exu sete encruzilhadas:");
+		meuMetodosDaCutscene = GetComponent<MetodosDaCutscene> ();
+		meuMetodosDaCutscene.MudarNome("Exu sete encruzilhadas:");
+		meuMetodosDaCutscene.PosicionarInicial ();
 
-		sat = terreno.GetComponent<DadosDaFase> ().sat;
+		canvasTelaPreta.enabled = true;
+		telaPreta = canvasTelaPreta.GetComponentInChildren <Image> ();
+		texto = canvasTelaPreta.GetComponentInChildren <Text> ();
+		texto.text = "";
+		telaPreta.color = new Color (0, 0, 0, 1);
+
+		sat = meuMetodosDaCutscene.PegarSat ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		atorAnimator.SetFloat ("NewtonAndando", GetComponent<DadosForcaResultante> ().PegarNewtonAndando ());
+		if (!meuMetodosDaCutscene.PegarEstaAtuando () && tempoEspera > maxTempoEspera) {
 
-		if (terreno.GetComponent<DadosDaFase> ().atores[0].GetComponent<MetodosDaCutscene> ().enabled == false) {
-			Destroy (gameObject);
-		}
-
-		if (!GetComponent<MetodosDaCutscene> ().PegarEstaAtuando () && tempoEspera > maxTempoEspera) {
-
-			switch (GetComponent<MetodosDaCutscene> ().PegarAto ()) {
+			switch (meuMetodosDaCutscene.PegarAto ()) {
 			case 0:
-				if (terreno.GetComponent<DadosDaFase> ().atores[1].GetComponent<MetodosDaCutscene> ().PegarAto () > 2) {
+				if (meuMetodosDaCutscene.AtorJaPassouDoAto(1, 2)) {
 					fala = "Não substime o garoto, não esqueça que este jovem levou Olodumare ao limite, meu caro.";
-					GetComponent<MetodosDaCutscene> ().Falar (fala, GetComponent<MetodosDaCutscene> ().PegarNome (), 0, 5 * sat, true);
+					GetComponent<MetodosDaCutscene> ().Falar (fala, GetComponent<MetodosDaCutscene> ().PegarNome (), 0, 6 * sat, true);
 				}
 				break;
 			case 1:
-				if (terreno.GetComponent<DadosDaFase> ().atores [1].GetComponent<MetodosDaCutscene> ().PegarAto () > 6) {
+				if (meuMetodosDaCutscene.AtorJaPassouDoAto(1, 6)) {
 					fala = "Eu vou começar, pois tenho preferência em idade.";
-					GetComponent<MetodosDaCutscene> ().Falar (fala, GetComponent<MetodosDaCutscene> ().PegarNome (), 2, 5 * sat, true);
+					meuMetodosDaCutscene.Falar (fala, GetComponent<MetodosDaCutscene> ().PegarNome (), 2, 6 * sat, true);
 					tempoEspera = 0;
 					maxTempoEspera = 4.5f * sat;
 				}
 				break;
 			case 2:
-				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (false, false, true, false, 0);
+				meuMetodosDaCutscene.ComecarAtuacaoPosicao (velocidade, true, false, 0);
 				break;
 			case 3:
-				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (true, false, false, false, 0);
+				meuMetodosDaCutscene.ComecarAtuacaoPosicao (velocidade, false, false, 0);
 				break;
 			case 4:
-				if (terreno.GetComponent<DadosDaFase> ().atores [0].GetComponent<MetodosDaCutscene> ().PegarAto () > 6) {
+				if (meuMetodosDaCutscene.AtorJaPassouDoAto(0, 6)) {
 					fala = "É melhor que tu fiques por bem, meu jovem. ja causou problemas de mais para nós, não brimques com a nossa paciência.";
-					GetComponent<MetodosDaCutscene> ().Falar (fala, GetComponent<MetodosDaCutscene> ().PegarNome (), 3, 9.5f, true);
+					meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 3, 9.5f * sat, true);
 				}
 				break;
 			case 5:
-				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoPosicao (true, false, false, false, 2.3f);
+				meuMetodosDaCutscene.ComecarAtuacaoPosicao (velocidade, false, false, 2.3f);
 				break;
 			case 6:
-				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoRotacao (false, false, 0);
+				meuMetodosDaCutscene.ComecarAtuacaoRotacao (rotacoes [indiceRotacoes], velocidade, 0);
+				indiceRotacoes++;
 				break;
 			case 7:
 				fala = "Faça isso de novo, e você pagará um preço ainda maior do que aquele que temos em mente.";
-				GetComponent<MetodosDaCutscene> ().Falar (fala, GetComponent<MetodosDaCutscene> ().PegarNome (), 0, 6 * sat, true);
+				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 0, 6 * sat, true);
 				tempoEspera = 0;
 				maxTempoEspera = 6.1f * sat;
 				break;
 			case 8:
 				fala = "Ja sei para onde vamos ir meu jovem, mas acho qe você não achará meu reino tão agradável quanto eu...";
-				GetComponent<MetodosDaCutscene> ().Falar (fala, GetComponent<MetodosDaCutscene> ().PegarNome (), 0, 7 * sat, true);
+				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 0, 7 * sat, true);
 				tempoEspera = 0;
 				maxTempoEspera = 8 * sat;
 				break;
 			case 9:
-				GetComponent<MetodosDaCutscene> ().IncrementarAto ();
+				canvasTelaPreta.enabled = true;
+				meuMetodosDaCutscene.IncrementarAto ();
 				break;
 			case 10:
-				GetComponent<MetodosDaCutscene> ().ComecarAtuacaoMoverNoEixoY (4.2f, false, false, false, 3, 0);
+				meuMetodosDaCutscene.ComecarAtuacaoMoverNoEixoY (4.2f, false, false, 1.8f, 0);
 				GetComponent<Collider> ().enabled = false;
 				GetComponent<Rigidbody> ().useGravity = false;
 				break;
 			case 11:
-				GetComponent<MetodosDaCutscene> ().IncrementarAto ();
+				meuMetodosDaCutscene.IncrementarAto ();
 				break;
 			}
 		} else {
 			tempoEspera += Time.deltaTime;
+		}
+
+		//Faz a fade do preto para o transparente.
+		if (meuMetodosDaCutscene.PegarAto () < 3) {
+			telaPreta.color = new Color (0, 0, 0, Mathf.Lerp(telaPreta.color.a, 0, 0.6f * Time.deltaTime));
+
+			if (telaPreta.color.a < 0.02f) {
+				canvasTelaPreta.enabled = false;
+			}
+		} else if (meuMetodosDaCutscene.PegarAto () > 8) {
+			telaPreta.color = new Color (0, 0, 0, Mathf.Lerp(telaPreta.color.a, 1, 1.4f * Time.deltaTime));
 		}
 	}
 }
