@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4412336264881928}
   - component: {fileID: 33004489148745348}
   - component: {fileID: 23239822147526562}
-  - component: {fileID: 95576037000184328}
   - component: {fileID: 65582169953281822}
   - component: {fileID: 65092842175359080}
   - component: {fileID: 114548228146684708}
@@ -38,9 +37,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1766045787890514}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 451.2079, y: 0.31122193, z: 427.25726}
-  m_LocalScale: {x: 2.4639494, y: 2.4639509, z: 17.247663}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 725.811, y: -822.20013, z: 1.1999775}
+  m_LocalScale: {x: 13.366167, y: 13.366184, z: 93.56334}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -59,7 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 0f79f020e8ddbc241b2240d8759e632f, type: 2}
+  - {fileID: 2100000, guid: 5621a7eccaa126d4c91d0cb48faeb268, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110,23 +109,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 1.9319472, z: 0.5980406}
   m_Center: {x: -0, y: -0.5580706, z: 0.2872423}
---- !u!95 &95576037000184328
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1766045787890514}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 44ac01e62a7a0fe498baa74c297abae7, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114548228146684708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -138,3 +120,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 047be67e0adb9fd4a8b8ed2041885e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deixarTransparente: 0

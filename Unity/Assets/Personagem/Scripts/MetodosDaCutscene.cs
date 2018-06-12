@@ -24,7 +24,7 @@ public class MetodosDaCutscene : MonoBehaviour {
 	private bool mostrarEsteRosto;
 	private bool detectarColisaoComDestino;
 	private bool manterAnimacaoAndando;
-	private bool manterDesativadaAGravidade;
+	private bool manterDesativadaAhGravidade;
 
 	private float distanciaX;
 	private float distanciaY;
@@ -144,7 +144,7 @@ public class MetodosDaCutscene : MonoBehaviour {
 			}
 		} else {
 			if (tempoEspera >= maxTempoEspera) {
-				if (!manterDesativadaAGravidade) {
+				if (!manterDesativadaAhGravidade) {
 					GetComponent<Collider> ().enabled = true;
 					GetComponent<Rigidbody> ().useGravity = true;
 				}
@@ -200,9 +200,9 @@ public class MetodosDaCutscene : MonoBehaviour {
 
 
 		} else {
-			if (tempoEspera >= maxTempoEspera) {
-				meuDadosMovimentacao.MudarBoolDoMeuAnimator("Andando", manterAnimacaoAndando);
+			meuDadosMovimentacao.MudarBoolDoMeuAnimator("Andando", manterAnimacaoAndando);
 
+			if (tempoEspera >= maxTempoEspera) {
 				if (!manterAnimacaoAndando) {
 					velocidadeCrescente = 0;
 				}
@@ -315,14 +315,14 @@ public class MetodosDaCutscene : MonoBehaviour {
 	/// <param name="correndo">If set to <c>true</c> correndo.</param>
 	/// <param name="vezes">Vezes.</param>
 	/// <param name="maxTempoEspera">Max tempo espera.</param>
-	public void ComecarAtuacaoMoverNoEixoY(float distancia, bool cima, bool manterDesativadaAGravidade, float velocidade, float maxTempoEspera) {
+	public void ComecarAtuacaoMoverNoEixoY(float distancia, bool cima, bool manterDesativadaAhGravidade, float velocidade, float maxTempoEspera) {
 		GetComponent<Collider> ().enabled = false;
 		GetComponent<Rigidbody> ().useGravity = false;
 
 		this.maxTempoEspera = maxTempoEspera;
 		this.cima = cima;
 		this.velocidade = velocidade;
-		this.manterDesativadaAGravidade = manterDesativadaAGravidade;
+		this.manterDesativadaAhGravidade = manterDesativadaAhGravidade;
 
 		if (cima) {
 			this.distancia = transform.position.y + distancia;
@@ -431,7 +431,7 @@ public class MetodosDaCutscene : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider collision) {
-		if (estaAtuando && collision.transform.name == posicao.name) {
+		if (posicao != null && estaAtuando && collision.transform.name == posicao.name) {
 			acabouAtuacao = true;
 		}
 	}

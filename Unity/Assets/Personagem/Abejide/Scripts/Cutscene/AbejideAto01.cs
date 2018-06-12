@@ -31,7 +31,6 @@ public class AbejideAto01 : MonoBehaviour {
 		maxTempoEspera = 0;
 
 		meuMetodosDaCutscene = GetComponent<MetodosDaCutscene> ();
-		meuMetodosDaCutscene.MudarNome("Abejide:");
 		GetComponent<MetodosDaCutscene> ().PosicionarInicial ();
 	}
 
@@ -40,8 +39,12 @@ public class AbejideAto01 : MonoBehaviour {
 		sat = meuMetodosDaCutscene.PegarSat ();
 
 		if (Input.GetKey (KeyCode.Space)) {
-			GetComponent<MetodosDaCutscene> ().MudarEstaAtuando (false);
-			GetComponent<MetodosDaCutscene> ().MudarAtor (9);
+			if (pedraGigante != null) {
+				Destroy (pedraGigante.gameObject);
+			}
+				
+			GetComponent<AbejideAto02> ().PularCutscene ();
+			GetComponent<AbejideAto01> ().enabled = false;
 		}
 
 		if (!meuMetodosDaCutscene.PegarEstaAtuando () && tempoEspera > maxTempoEspera) {
@@ -63,6 +66,8 @@ public class AbejideAto01 : MonoBehaviour {
 				break;
 			case 3:
 				if (meuMetodosDaCutscene.AtorJaPassouDoAto (2, 3)) {
+					corpoAnimator.SetInteger ("IndiceGatilho", 2); //Quebra a pedra.
+					corpoAnimator.SetTrigger ("Gatilho");
 					fala = "Seu velho tolo!!!";
 					meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 1, 4 * sat, true);
 					tempoEspera = 0;
@@ -93,7 +98,7 @@ public class AbejideAto01 : MonoBehaviour {
 			case 8:
 				meuMetodosDaCutscene.ComecarAtuacaoSeguirOutroAtor (meuMetodosDaCutscene.PegarOutroAtor(2), false, true, false);
 				break;
-			case 9:
+			case 9: //Só entra qui quando o sete encruzilhaja ja tiver passado do chão.
 				CarcereiroAto01[] objTemp = FindObjectsOfType<CarcereiroAto01> ();
 				for (int i = 0; i < objTemp.Length; i++) {
 					objTemp [i].enabled = true;
