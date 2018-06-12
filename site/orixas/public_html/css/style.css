@@ -1,0 +1,95 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+a:link{
+    text-decoration: none;
+}
+a:active{
+    text-decoration: none;
+}
+a:visited{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
+body{
+    margin: 0;
+    padding: 0;
+    background-image: url(../imagens/body.jpg);
+}
+#container{
+    width: 1000px;
+    margin: 0 auto;
+}
+#topo{
+    width: 1000px;
+    height: 173px;
+    background-image: url(../imagens/topo.jpg);
+}
+#logo{
+    width: 422px;
+    height: 123px;
+    margin-left: 15px; 
+    background-image: url(../imagens/logo.png);
+}
+#social{
+    width: 132px;
+    height: 30px;
+    margin-left: 820px;
+    margin-top: 10px;
+    float: left;
+}
+#menu{
+    width: 1000px;
+    height: 50px;
+    background-color: #3a2302;
+}
+#menu ul{
+    font: 20px Arial;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#menu ul li{
+    padding: 13px 96px;
+    text-align: center;
+    float: left;
+}
+#menu ul li a{
+    color: #e3c583;
+    text-decoration: none;
+    display: block;
+}
+#menu ul li a:hover {
+    color: #fff;
+    cursor: pointer;
+}
+#principal{
+    width: 1000px;
+    height: 700px;
+    background-color: bisque;
+}
+#home{
+}
+#jogos{
+    display: none;
+}
+#sobre{
+    display: none;
+}
+#contato{
+    display: none;
+}
+#rodape{
+    width: 1000px;
+    height: 50px;
+    background-color: #3a2302;
+}
+#direitos{
+    text-align: center;
+    padding: 17px 0px;
+    font: 14px arial;
+    color: #e3c583;
+}
