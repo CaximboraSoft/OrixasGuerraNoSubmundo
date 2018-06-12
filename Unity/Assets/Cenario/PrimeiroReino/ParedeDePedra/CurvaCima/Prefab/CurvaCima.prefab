@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4751968862540494}
   - component: {fileID: 33202837641654970}
   - component: {fileID: 23140184679377496}
-  - component: {fileID: 95539770161816180}
   - component: {fileID: 65369015409124992}
   - component: {fileID: 65232354898487714}
   - component: {fileID: 114185556653932842}
@@ -38,13 +37,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1884003311065876}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 985.30005, y: -1093.4005, z: 1.2999687}
-  m_LocalScale: {x: -13.366224, y: 13.366228, z: 93.56355}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 1538.9, y: -839.3002, z: 1}
+  m_LocalScale: {x: -13.366242, y: 13.36623, z: 93.563614}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!23 &23140184679377496
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -59,7 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: db4f1946732ed0e4a8109bf2863f514f, type: 2}
+  - {fileID: 2100000, guid: 64d848a51ec5f7246b02ceab45a01e61, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110,23 +109,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 3.0982306, z: 0.59817505}
   m_Center: {x: 0, y: -1.1412122, z: 0.28730953}
---- !u!95 &95539770161816180
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1884003311065876}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 13b4ccdedae73f54b8cc63c814b837b1, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114185556653932842
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -138,3 +120,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 047be67e0adb9fd4a8b8ed2041885e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deixarTransparente: 0

@@ -58,7 +58,9 @@
      <Compile Include="Assets\Cenario\Scripts\CameraDetectarColisao.cs" />
      <Compile Include="Assets\Cenario\Scripts\DadosDaFase.cs" />
      <Compile Include="Assets\Cenario\Scripts\DeixarTransparente.cs" />
+     <Compile Include="Assets\Cenario\Scripts\DetectorDeixarTrasn.cs" />
      <Compile Include="Assets\Cenario\Scripts\EsconderObjeto.cs" />
+     <Compile Include="Assets\Cenario\Scripts\FPS.cs" />
      <Compile Include="Assets\Interfaces\Scripts\Conversas.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\Abejide.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideChao.cs" />
@@ -68,12 +70,12 @@
      <Compile Include="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto02.cs" />
      <Compile Include="Assets\Personagem\Coadjuvantes\Scripts\Coadjuvantes.cs" />
-     <Compile Include="Assets\Personagem\Exus\SeteEncruzilhadas\Scripts\Cutscene\SeteEncruzilhadasAto01.cs" />
-     <Compile Include="Assets\Personagem\Exus\SeteEncruzilhadas\Scripts\Cutscene\SeteEncruzilhadasAto02.cs" />
-     <Compile Include="Assets\Personagem\Exus\TrancaRua\Scripts\Cutscene\TrancaRuaAto01.cs" />
+     <Compile Include="Assets\Personagem\Exus\1 Exu Velho\Scripts\Cutscene\SeteEncruzilhadasAto01.cs" />
+     <Compile Include="Assets\Personagem\Exus\1 Exu Velho\Scripts\Cutscene\SeteEncruzilhadasAto02.cs" />
+     <Compile Include="Assets\Personagem\Exus\2 Exu Tranca-Tudo\Scripts\Cutscene\TrancaRuaAto01.cs" />
      <Compile Include="Assets\Personagem\InimigosNormais\Carcereiro\Script\Cutscene\CarcereiroAto01.cs" />
      <Compile Include="Assets\Personagem\InimigosNormais\Esqueleto\Scripts\Cutscene\EsqueletoAto01.cs" />
-     <Compile Include="Assets\Personagem\InimigosNormais\Esqueleto\Scripts\Esqueleto.cs" />
+     <Compile Include="Assets\Personagem\InimigosNormais\Scripts\InimigosNormais.cs" />
      <Compile Include="Assets\Personagem\Scripts\DadosMovimentacao.cs" />
      <Compile Include="Assets\Personagem\Scripts\MetodosDaCutscene.cs" />
      <Compile Include="Assets\Personagem\Scripts\ObjetoMassa.cs" />

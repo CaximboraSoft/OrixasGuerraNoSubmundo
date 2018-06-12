@@ -46,4 +46,22 @@ public class CarcereiroAto01 : MonoBehaviour {
 			}
 		}
 	}
+
+	public void AcabouCutscene () {
+		atorAnimator.runtimeAnimatorController = controllerOriginal as RuntimeAnimatorController;
+		GetComponent<MetodosDaCutscene> ().enabled = false;
+		GetComponent<InimigosNormais> ().enabled = true;
+		GetComponent<CarcereiroAto01> ().enabled = false;
+	}
+
+	public void PularCutscene () {
+		transform.rotation = Quaternion.Euler (new Vector3 (0, rotacoes[rotacoes.Length - 1], 0));
+		meuMetodosDaCutscene.MudarIndicePosicao (0);
+		meuMetodosDaCutscene.ComecarAtuacaoTeleporte ();
+
+		atorAnimator.runtimeAnimatorController = controllerOriginal as RuntimeAnimatorController;
+		GetComponent<MetodosDaCutscene> ().enabled = false;
+		GetComponent<InimigosNormais> ().enabled = true;
+		GetComponent<CarcereiroAto01> ().enabled = false;
+	}
 }

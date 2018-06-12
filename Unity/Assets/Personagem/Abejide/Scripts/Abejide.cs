@@ -14,13 +14,19 @@ public class Abejide : MonoBehaviour {
 	public AbejideChao meuAbejideChao;
 	private Vector3 angulo = Vector3.zero;
 	private Animator meuAnimator;
-	public Transform inimigo;
+	public Transform inimigoParaFocar;
+	private float distanciaDoInimigo = 0f;
 	public Transform seta;
+	public Transform satPosicaoFora;
 
-	public bool focandoInimigo;
+	public bool focandoInimigoAnimator;
+	private bool focandoInimigoLocal;
 	public bool estaMovendo;
-	private  bool esquivando;
+	public  bool esquivando;
 
+	public float maxDistanciaOlhando = 8f;
+	public float distanciaProcurarOutro = 2f;
+	public float tempoBuscarInimigo = 1f;
 	public float velocidadeEsquiva;
 	private float velocidadeAtacando;
 	private float tempoCombo;
@@ -32,19 +38,27 @@ public class Abejide : MonoBehaviour {
 	private float ultimaDistanciaDoChao;
 	private float tempoCalcularDistancia;
 	public float tempoParaAtacar; //Quarda o tempo que o jogodor tem que esperar par poder usar o ataque de andando
+	public float peDirecao = 0f;
+	private float direcaoAngulo; //Usada no método <PeDirecao>, pois não se pode usar uma variavel local em uma função de la
+	private float forcaDeMovimento;
+	private float tempoParaPoderPular;
 
 	private bool chegouNoAnguloDaEsquiva;
 	private float anguloDaEsquiva;
 
-	private int armaAtual;
+	private int armaAtual = 0;
 	private int andarVertical = 0;
 	private int andarHorizontal = 0;
-
-	public Vector3 velocidade;
 
 	private bool estouNoChao;
 	private bool estaAtaqueAndando;
 	public bool possoPular = true;
+
+	void Start () {
+		if (GetComponent<Abejide> ().enabled) {
+			AtivarCodigo ();
+		}
+	}
 
 	// Executa mesmo se o código estiver desatiado
 	public void AtivarCodigo () {
@@ -60,9 +74,7 @@ public class Abejide : MonoBehaviour {
 		estaMovendo = false;
 		estaAtaqueAndando = false;
 
-		armaAtual = 0;
-		armas [armaAtual].GetComponent<Renderer> ().enabled = true;
-		for (int linha = 1; linha < armas.Length; linha++) {
+		for (int linha = 0; linha < armas.Length; linha++) {
 			armas [linha].GetComponent<Renderer> ().enabled = false;
 		}
 
@@ -77,19 +89,15 @@ public class Abejide : MonoBehaviour {
 	void Update () {
 		SistemaDePulo ();
 
-		velocidade = meuDadosMovimentacao.PegarMeuRigidbody().velocity;
-
 		peStateInfo = meuAnimator.GetCurrentAnimatorStateInfo (0);
-		if (armaAtual + 1 < meuAnimator.layerCount) {
+		if (armaAtual + 1 < meuAnimator.layerCount - 1) {
 			armaStateInfo =  meuAnimator.GetCurrentAnimatorStateInfo (armaAtual + 1);
 		}
-		esquivaStateInfo = meuAnimator.GetCurrentAnimatorStateInfo (2);
+		esquivaStateInfo = meuAnimator.GetCurrentAnimatorStateInfo (meuAnimator.layerCount - 2);
 
-		if (!peStateInfo.IsTag("Recuperando") && !esquivaStateInfo.IsTag("Recuperando")) {
-			if (!focandoInimigo) {
+		if (!peStateInfo.IsTag ("Recuperando") && !esquivaStateInfo.IsTag ("Recuperando")) {
+			if (!focandoInimigoAnimator || esquivando) {
 				MovimentacaoLivre ();
-			} else {
-				MovimentacaoOlhando ();
 			}
 
 			Esquiva ();
@@ -99,9 +107,12 @@ public class Abejide : MonoBehaviour {
 					Atacar ();
 				}
 			}
+		} else {
+			forcaDeMovimento = 0f;
 		}
 
-		meuAnimator.SetBool ("FocandoInimigo", focandoInimigo);
+		meuAnimator.SetFloat ("PeDirecao", peDirecao);
+		meuAnimator.SetBool ("FocandoInimigo", focandoInimigoAnimator);
 		meuAnimator.SetBool ("EstouNoChao", estouNoChao);
 		meuAnimator.SetFloat ("VelocidadeAtacando", velocidadeAtacando);
 		if (estouNoChao) {
@@ -110,14 +121,48 @@ public class Abejide : MonoBehaviour {
 			meuAnimator.SetFloat ("Velocidade", 0);
 		}
 
-		if (Input.GetKeyDown (KeyCode.LeftAlt)) {
-			focandoInimigo = !focandoInimigo;
+		if (Input.GetKeyDown (KeyCode.V)) {
+			focandoInimigoLocal = !focandoInimigoLocal;
+			focandoInimigoAnimator = focandoInimigoLocal;
+
+			tempoBuscarInimigo = 1f;
+		}
+
+
+		if (focandoInimigoAnimator && inimigoParaFocar == null) {
+			focandoInimigoAnimator = false;
+		} else if (focandoInimigoLocal && inimigoParaFocar != null) {
+			if (distanciaDoInimigo < maxDistanciaOlhando - 1f) {
+				focandoInimigoAnimator = true;
+			}
+		}
+
+		tempoBuscarInimigo += Time.deltaTime;
+		if (focandoInimigoLocal && tempoBuscarInimigo > 0.5f) {
+			if (inimigoParaFocar == null) {
+				BuscarInimigoFocar ();
+			} else if (Vector3.Distance (transform.position, inimigoParaFocar.position) > distanciaProcurarOutro) {
+				BuscarInimigoFocar ();
+			}
+		}
+	}
+
+	void FixedUpdate () {
+		if (!focandoInimigoAnimator || esquivando) {
+			//Faz sempre o Abejide se mover para frente.
+			meuDadosMovimentacao.PegarMeuRigidbody ().AddForce (transform.forward * forcaDeMovimento, ForceMode.Force);
+		} else {
+			MovimentacaoOlhando ();
+		}
+
+		if (Input.GetKey (KeyCode.H)) {
+			meuDadosMovimentacao.PegarMeuRigidbody ().AddForce (transform.forward * forcaDeMovimento * 8f, ForceMode.Force);
 		}
 	}
 
 	void SistemaDePulo () {
 		//Faz o abejide pular
-		if (Input.GetKeyDown (KeyCode.Space) && possoPular && !peStateInfo.IsTag("Atacando")) {
+		if (Input.GetKeyDown (KeyCode.C) && possoPular && !armaStateInfo.IsTag("Atacando") && !esquivando) {
 			estouNoChao = false;
 			meuAnimator.SetBool ("Subindo", true);
 			meuAnimator.SetTrigger ("SubirOuDescer");
@@ -149,6 +194,7 @@ public class Abejide : MonoBehaviour {
 				if (meuAnimator.GetBool ("Subindo")) {
 					meuAnimator.SetBool ("Subindo", false);
 					meuAnimator.SetTrigger ("SubirOuDescer");
+					tempoParaPoderPular = 0f;
 				} else if (estouNoChao) {
 					meuAnimator.SetTrigger ("SubirOuDescer");
 					meuAnimator.SetBool ("Subindo", false);
@@ -159,7 +205,6 @@ public class Abejide : MonoBehaviour {
 
 			if (!estouNoChao && (meuAbejideChao.enabled && meuAbejideChao.bateuNoChao)) {
 				meuAbejideChao.enabled = false;
-				possoPular = true;
 				meuDadosMovimentacao.PegarMeuRigidbody().velocity = Vector3.zero;
 				estouNoChao = true;
 
@@ -168,17 +213,26 @@ public class Abejide : MonoBehaviour {
 					tempoParaAtacar = -0.2f;
 					estaAtaqueAndando = false;
 					meuAnimator.SetBool ("Atacando", false);
+					meuAnimator.SetBool ("Correndo", false);
 				}
 			}
 
+			if (!possoPular && estouNoChao) {
+				tempoParaPoderPular += Time.deltaTime;
+
+				if (tempoParaPoderPular > 0.3f) {
+					possoPular = true;
+				}
+			}
 			ultimaDistanciaDoChao = distanciaDoChao;
 		}
 	}
 
 	void Esquiva () {
-		if (Input.GetKeyDown (KeyCode.X) && !esquivando && estouNoChao && meuAnimator.GetFloat ("Velocidade") != 0f) {
+		if (Input.GetKeyDown (KeyCode.Space) && !esquivando && estouNoChao && meuAnimator.GetFloat ("Velocidade") != 0f) {
 			esquivando = true;
 			chegouNoAnguloDaEsquiva = false;
+			meuAnimator.SetBool ("Atacando", false);
 
 			if (Input.GetKey (KeyCode.UpArrow)) {
 				anguloDaEsquiva = 0;
@@ -196,22 +250,15 @@ public class Abejide : MonoBehaviour {
 		}
 
 		if (esquivando) {
-			float tempVelocidadeEsquiva = velocidadeEsquiva;
-
 			if (!chegouNoAnguloDaEsquiva) {
 				float tempoDeRotacao = meuDadosMovimentacao.velocidadeRotacao * 4f;
 				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (new Vector3 (0, anguloDaEsquiva, 0)), tempoDeRotacao * Time.deltaTime);
-				tempVelocidadeEsquiva /= 2f;
-
 
 			if (Mathf.Abs(anguloDaEsquiva - transform.eulerAngles.y) < 25 || (anguloDaEsquiva == 0 && transform.eulerAngles.y > 350)) {
 					meuAnimator.SetTrigger ("Esquivar");
 					chegouNoAnguloDaEsquiva = true;
 				}
 			}
-
-			//Faz sempre o Abejide se mover para frente.
-			meuDadosMovimentacao.PegarMeuRigidbody().AddForce (transform.forward * tempVelocidadeEsquiva, ForceMode.Force);
 		}
 	}
 
@@ -285,19 +332,20 @@ public class Abejide : MonoBehaviour {
 			estaMovendo = false;
 
 			if (!esquivando) {
-				float forcaDeMovimento = meuDadosMovimentacao.velocidadeAndando;
-
 				//Corre.
 				if (Input.GetKey (KeyCode.LeftShift)) {
 					tempoParaAtacar += Time.deltaTime;
 
 					meuAnimator.SetBool ("Correndo", true);
 					forcaDeMovimento = meuDadosMovimentacao.velocidadeCorrendo;
+				} else {
+					forcaDeMovimento = meuDadosMovimentacao.velocidadeAndando;
 
-				} else if (meuAnimator.GetBool ("Correndo")) {
-					meuAnimator.SetBool ("Correndo", false);
-				} else if (tempoParaAtacar != 0) {
-					tempoParaAtacar = 0;
+					if (meuAnimator.GetBool ("Correndo")) {
+						meuAnimator.SetBool ("Correndo", false);
+					} if (tempoParaAtacar != 0f) {
+						tempoParaAtacar = 0;
+					}
 				}
 
 				float tempoDeRotacao = meuDadosMovimentacao.velocidadeRotacao + meuDadosMovimentacao.PegarMeuRigidbody ().velocity.magnitude;
@@ -308,20 +356,22 @@ public class Abejide : MonoBehaviour {
 						tempoDeRotacao /= 2;
 					}
 				}
-
-				//Faz sempre o Abejide se mover para frente.
-				meuDadosMovimentacao.PegarMeuRigidbody ().AddForce (transform.forward * forcaDeMovimento, ForceMode.Force);
+				
 				//Faz o Abejide apontar para um angulo segundo as setas que o jogador pode esta apertando.
 				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (angulo), tempoDeRotacao * Time.deltaTime);
 			} else if (chegouNoAnguloDaEsquiva) {
 				float tempoDeRotacao = meuDadosMovimentacao.velocidadeRotacao * 1.2f;
 				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (angulo), tempoDeRotacao * Time.deltaTime);
+
+				forcaDeMovimento = velocidadeEsquiva;
 			}
+		} else {
+			forcaDeMovimento = 0f;
 		}
 	}
 
 	void MovimentacaoOlhando () {
-		seta.LookAt (inimigo);
+		seta.LookAt (inimigoParaFocar);
 
 		//Faz o abejide olhar suavemente para o inimigo focado
 		float tempoDeRotacao = meuDadosMovimentacao.velocidadeRotacao + meuDadosMovimentacao.PegarMeuRigidbody ().velocity.magnitude;
@@ -340,8 +390,23 @@ public class Abejide : MonoBehaviour {
 			vetorDeMovimento.Set (vetorDeMovimento.x - 1, 0, vetorDeMovimento.z);
 		}
 
+		float divisor = 1.1f;
+		if (vetorDeMovimento != Vector3.zero) {
+			if (Input.GetKey (KeyCode.LeftShift)) {
+				tempoParaAtacar += Time.deltaTime;
+
+				divisor = 0.8f;
+				meuAnimator.SetBool ("Correndo", true);
+			} else if (tempoParaAtacar != 0 || meuAnimator.GetBool ("Correndo")) {
+				tempoParaAtacar = 0;
+				meuAnimator.SetBool ("Correndo", false);
+			}
+		} else if (meuAnimator.GetBool ("Correndo")) {
+			meuAnimator.SetBool ("Correndo", false);
+		}
+
 		vetorDeMovimento.Normalize ();
-		meuDadosMovimentacao.PegarMeuRigidbody ().AddForce (vetorDeMovimento * (meuDadosMovimentacao.velocidadeAndando / 1.1f), ForceMode.Force);
+		meuDadosMovimentacao.PegarMeuRigidbody ().AddForce (vetorDeMovimento * (meuDadosMovimentacao.velocidadeAndando / divisor), ForceMode.Force);
 
 		AnimacaoMovimentacaoOlhando ();
 	}
@@ -394,7 +459,79 @@ public class Abejide : MonoBehaviour {
 			}
 		}
 
+		PeDirecao ();
+
 		meuAnimator.SetFloat ("AndarVertical", andarVertical);
 		meuAnimator.SetFloat ("AndarHorizontal", andarHorizontal);
+	}
+	
+	private void PeDirecao () {
+		float minhaRotacao = transform.eulerAngles.y;
+
+		/* Sempre faz a perna apontar para frente, isto é, na direção do inimigo focado
+		 * Como por exemplo, caso o jogador esteja em baixo do inimigo focado, as pernas do Abejide sempre vai ficar apoontando para frene;
+		 * Outro exemplo é caso o Abejide estiver na direita do inimigo focado, as pernas do Abejide sempre vai ficar apontando para a Esquerda.
+		 */
+		if (transform.eulerAngles.y > 135f && transform.eulerAngles.y < 225f) {
+			direcaoAngulo = 90f;
+
+			PeDirecaoDuasTeclas (22.5f, -22.5f);
+		} else if (transform.eulerAngles.y > 225f && transform.eulerAngles.y < 315f) {
+			direcaoAngulo = 45f;
+
+			PeDirecaoDuasTeclas (-22.5f, 22.5f);
+		} else if (transform.eulerAngles.y > 315f && transform.eulerAngles.y < 360f) {
+			direcaoAngulo = 0f;
+
+			PeDirecaoDuasTeclas (22.5f, -22.5f);
+		} else if (transform.eulerAngles.y > 0f && transform.eulerAngles.y < 45f) {
+			direcaoAngulo = 180f;
+		} else {
+			direcaoAngulo = 135f;
+
+			PeDirecaoDuasTeclas (-22.5f, 22.5f);
+		}
+		
+		peDirecao = Mathf.Lerp(peDirecao, 180f - (direcaoAngulo + (minhaRotacao / 2f)), 9f * Time.deltaTime);
+
+		if (Input.GetKeyDown (KeyCode.P)) {
+			transform.position = satPosicaoFora.position;
+		}
+	}
+
+	private void PeDirecaoDuasTeclas (float valor1, float valor2) {
+		if ((Input.GetKey (KeyCode.UpArrow) && Input.GetKey (KeyCode.LeftArrow)) ||
+			(Input.GetKey (KeyCode.DownArrow) && Input.GetKey (KeyCode.RightArrow))) {
+			direcaoAngulo += valor1;
+		} else if ((Input.GetKey (KeyCode.UpArrow) && Input.GetKey (KeyCode.RightArrow)) ||
+			(Input.GetKey (KeyCode.DownArrow) && Input.GetKey (KeyCode.LeftArrow))) {
+			direcaoAngulo += valor2;
+		}
+	}
+
+	private void BuscarInimigoFocar () {
+		GameObject[] inimigoTemp = GameObject.FindGameObjectsWithTag ("Inimigo");
+		if (inimigoTemp.Length != 0) {
+
+			int indiceMenorDistancia = 0;
+			float distanciaTemp;
+			distanciaDoInimigo = Vector3.Distance (transform.position, inimigoTemp [0].transform.position);
+
+			for (int i = 1; i < inimigoTemp.Length; i++) {
+				distanciaTemp = Vector3.Distance (transform.position, inimigoTemp [i].transform.position);
+
+				if (distanciaTemp < distanciaDoInimigo) {
+					distanciaDoInimigo = distanciaTemp;
+					indiceMenorDistancia = i;
+				}
+			}
+
+			if (distanciaDoInimigo < maxDistanciaOlhando) {
+				inimigoParaFocar = inimigoTemp [indiceMenorDistancia].GetComponent<Transform> ();
+				return;
+			}
+		}
+
+		inimigoParaFocar = null;
 	}
 }

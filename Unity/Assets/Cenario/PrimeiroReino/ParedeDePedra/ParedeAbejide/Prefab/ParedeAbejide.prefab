@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4473957348926858}
   - component: {fileID: 33240714446241166}
   - component: {fileID: 23673199901070482}
-  - component: {fileID: 95451311973056356}
   - component: {fileID: 65916213619466022}
   - component: {fileID: 114704851900812050}
   m_Layer: 0
@@ -97,23 +96,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.63861, y: 0.8474751, z: 0.5795111}
   m_Center: {x: -1.5917904, y: -1.5909195e-14, z: 0.27987754}
---- !u!95 &95451311973056356
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1721985559026876}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 7a8035c6d2d73b74e9e5855b5780265c, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114704851900812050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -125,3 +107,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 047be67e0adb9fd4a8b8ed2041885e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deixarTransparente: 0
