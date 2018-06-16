@@ -82,14 +82,7 @@ public class AbejideAto02 : MonoBehaviour {
 		}
 
 		if (pularCutscene && tempoEspera > maxTempoEspera) {
-			telaPreta.color = new Color (0, 0, 0, Mathf.Lerp(telaPreta.color.a, 0, 0.8f * Time.deltaTime));
-
-			GetComponent<Rigidbody> ().AddForce (new Vector3 (0, -100000, 0));
-
-			if (telaPreta.color.a < 0.3f) {
-				AcabouCutscene ();
-				
-			}
+			AcabouCutscene ();
 		} else {
 			if (!meuMetodosDaCutscene.PegarEstaAtuando () && tempoEspera > maxTempoEspera) {
 
@@ -120,14 +113,19 @@ public class AbejideAto02 : MonoBehaviour {
 					meuMetodosDaCutscene.IncrementarAto ();
 					break;
 				case 4:
-					telaPreta.color = new Color (0, 0, 0, Mathf.Lerp(telaPreta.color.a, 1, 0.5f * Time.deltaTime));
+					telaPreta.color = new Color (0, 0, 0, Mathf.Lerp(telaPreta.color.a, 0.7f, 0.5f * Time.deltaTime));
 
-					if (telaPreta.color.a >= 0.98f) {
-						telaPreta.color = new Color (0, 0, 0, 1);
-						texto.text = "Abejide: Será que a minha familia sofreu tanto assim? \n\nVoz desconhecida: Agora, creça garoto! nos livre dessa maldição.\n\n" +
-							"Abejide: Mão, pais, vocês estão vivos?";
+					if (telaPreta.color.a >= 0.68f) {
+						telaPreta.color = new Color (0, 0, 0, 0.7f);
+						texto.text = "Abejide (Pensativo) \n\nTodos que conheço faleceram, minha familia assasinada e meus companheiros brutalmente massacrados\n" +
+							"por um Orixa. E ainda por cima ter que arcar com o peso dessa tortura, mediante aos opressores Exus.\n" +
+							"Como o destino é cruel. Sera que minha familia sofreu tanto a esse ponto.\n\n" +
+							"Lembranças:\n\nUm vilarejo, um anciao, pai e mãe... presentes em um so momento.\n\n" +
+							"Todos:\n\nCresça garoto. Nos livre desssa maldição e livre-se de seu passado\n\nAbejide:\n\n" +
+							"Não deixarei que este seja o meu fim. Eles confiaram a mim a missão de matar essa linha estensa linha de Orixas e Exus\nque afrontam a " +
+							"humanidade tirando a sua liberdade.";
 						tempoEspera = 0;
-						maxTempoEspera = 5f * sat;
+						maxTempoEspera = 1f * sat; //Tempo bom: 45f
 						GetComponent<MetodosDaCutscene> ().IncrementarAto ();
 					}
 					break;
@@ -154,7 +152,7 @@ public class AbejideAto02 : MonoBehaviour {
 					GetComponent<Collider> ().enabled = true;
 					GetComponent<Rigidbody> ().useGravity = true;
 					tempoEspera = 0;
-					maxTempoEspera = 1f *sat;
+					maxTempoEspera = 0.75f;
 					meuMetodosDaCutscene.IncrementarAto ();
 					break;
 				case 8:
@@ -166,7 +164,7 @@ public class AbejideAto02 : MonoBehaviour {
 					break;
 				case 9:
 					if (meuMetodosDaCutscene.AtorJaPassouDoAto (2, 7)) {
-						fala = "Maconha, devolve a minha machona!!!!!!";
+						fala = "Não permitirei que sai impune";
 						meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 4, 3 * sat, true);
 						tempoEspera = 0;
 						maxTempoEspera = (4f + 3f) * sat;
@@ -193,7 +191,14 @@ public class AbejideAto02 : MonoBehaviour {
 		}
 	}
 
+	void FixedUpdate () {
+		if (meuMetodosDaCutscene.PegarAto () == 8) {
+			GetComponent<Rigidbody> ().AddForce (transform.up * -6000f);
+		}
+	}
+
 	private void AcabouCutscene () {
+		GetComponentInChildren<AbejideMao> ().enabled = true;
 		GetComponent<MetodosDaCutscene> ().enabled = false;
 
 		if (lanca != null) {
@@ -215,8 +220,6 @@ public class AbejideAto02 : MonoBehaviour {
 
 		corpoAnimator.runtimeAnimatorController = animacaoOriginal as RuntimeAnimatorController;
 
-		GetComponent<AbejideAto02> ().enabled = false;
-
 		if (!pularCutscene) {
 			CarcereiroAto01[] objTemp = FindObjectsOfType<CarcereiroAto01> ();
 			for (int i = 0; i < objTemp.Length; i++) {
@@ -225,6 +228,9 @@ public class AbejideAto02 : MonoBehaviour {
 		}
 
 		Destroy (cutsceneObjetos);
+
+		GameObject.FindObjectOfType<Lula> ().enabled = true;
+		GetComponent<AbejideAto02> ().enabled = false;
 	}
 
 	public void PularCutscene () {
@@ -235,10 +241,10 @@ public class AbejideAto02 : MonoBehaviour {
 			meuMetodosDaCutscene.ComecarAtuacaoTeleporte ();
 		}
 
-		telaPreta.color = new Color (0, 0, 0, 1);
+		telaPreta.color = new Color (0, 0, 0, 0);
 
 		pularCutscene = true;
-		canvasTelaPreta.enabled = true;
+		canvasTelaPreta.enabled = false;
 		texto.text = "";
 
 		conversas.enabled = false;
@@ -248,6 +254,11 @@ public class AbejideAto02 : MonoBehaviour {
 		CarcereiroAto01[] objTemp = FindObjectsOfType<CarcereiroAto01> ();
 		for (int i = 0; i < objTemp.Length; i++) {
 			objTemp [i].PularCutscene ();
+		}
+
+		InimigosNormais[] objInimigosNormais = FindObjectsOfType<InimigosNormais> ();
+		for (int i = 0; i < objInimigosNormais.Length; i++) {
+			objInimigosNormais [i].AtivarCodigo ();
 		}
 		
 		GetComponent<Collider> ().enabled = true;
@@ -259,5 +270,6 @@ public class AbejideAto02 : MonoBehaviour {
 
 		Destroy (GameObject.FindObjectOfType<SeteEncruzilhadasAto02> ().gameObject);
 		corpoAnimator.runtimeAnimatorController = animacaoOriginal as RuntimeAnimatorController;
+		transform.position = new Vector3 (transform.position.x, 0.2f, transform.position.z);
 	}
 }

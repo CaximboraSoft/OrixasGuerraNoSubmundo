@@ -10,6 +10,7 @@ public class Abejide : MonoBehaviour {
 	private AnimatorStateInfo peStateInfo;
 	private AnimatorStateInfo esquivaStateInfo;
 	public GameObject[] armas;
+	private Arma[] armaScript;
 	public GameObject[] magias;
 	public AbejideChao meuAbejideChao;
 	private Vector3 angulo = Vector3.zero;
@@ -35,18 +36,18 @@ public class Abejide : MonoBehaviour {
 	private float tempoParaAndar;
 	public float maxTempoParaAndar;
 	public float distanciaDoChao;
-	private float ultimaDistanciaDoChao;
-	private float tempoCalcularDistancia;
 	public float tempoParaAtacar; //Quarda o tempo que o jogodor tem que esperar par poder usar o ataque de andando
 	public float peDirecao = 0f;
 	private float direcaoAngulo; //Usada no método <PeDirecao>, pois não se pode usar uma variavel local em uma função de la
 	private float forcaDeMovimento;
 	private float tempoParaPoderPular;
+	private float tempoSubindo;
+	public float forcaCaindo = 9800f;
 
 	private bool chegouNoAnguloDaEsquiva;
 	private float anguloDaEsquiva;
 
-	private int armaAtual = 0;
+	public int armaAtual = 0;
 	private int andarVertical = 0;
 	private int andarHorizontal = 0;
 
@@ -54,19 +55,36 @@ public class Abejide : MonoBehaviour {
 	private bool estaAtaqueAndando;
 	public bool possoPular = true;
 
+	void Awake () {
+		meuAnimator = GetComponentInChildren<Animator> ();
+
+		armaScript = new Arma[armas.Length];
+		for (int linha = 0; linha < armas.Length; linha++) {
+			armas [linha].GetComponent<Renderer> ().enabled = false;
+			armaScript [linha] = armas [linha].GetComponent<Arma> ();
+			armaScript [linha].donoAnimator = meuAnimator;
+			armaScript [linha].enabled = false;
+		}
+	}
+
 	void Start () {
 		if (GetComponent<Abejide> ().enabled) {
 			AtivarCodigo ();
 		}
 	}
 
+	public void AtivarCodigoLula () {
+		forcaDeMovimento = 0f;
+		tempoCombo = maxTempoCombo + 1f;
+		meuAnimator.SetBool ("Atacando", false);
+		GetComponent<Abejide> ().enabled = true;
+	}
+
 	// Executa mesmo se o código estiver desatiado
 	public void AtivarCodigo () {
 		meuDadosMovimentacao = GetComponent<DadosMovimentacao> ();
-		meuAnimator = GetComponentInChildren<Animator> ();
 
 		tempoParaAtacar = 0;
-		tempoCalcularDistancia = 0;
 
 		esquivando = false;
 		estouNoChao = true;
@@ -74,26 +92,26 @@ public class Abejide : MonoBehaviour {
 		estaMovendo = false;
 		estaAtaqueAndando = false;
 
-		for (int linha = 0; linha < armas.Length; linha++) {
-			armas [linha].GetComponent<Renderer> ().enabled = false;
-		}
-
 		GetComponent<Abejide> ().enabled = true;
 
 		meuAbejideChao = GetComponentInChildren<AbejideChao> ();
 		meuAbejideChao.GetComponent<Collider> ().enabled = true;
-		meuAbejideChao.enabled = false;
 	}
 
 	// Update is called once per frame
 	void Update () {
+		if (inimigoParaFocar != null && inimigoParaFocar.GetComponent<DadosMovimentacao> ().vida < 1) {
+			inimigoParaFocar = null;
+			BuscarInimigoFocar ();
+		}
+
 		SistemaDePulo ();
 
 		peStateInfo = meuAnimator.GetCurrentAnimatorStateInfo (0);
 		if (armaAtual + 1 < meuAnimator.layerCount - 1) {
-			armaStateInfo =  meuAnimator.GetCurrentAnimatorStateInfo (armaAtual + 1);
+			armaStateInfo =  meuAnimator.GetCurrentAnimatorStateInfo (armaAtual + 2);
 		}
-		esquivaStateInfo = meuAnimator.GetCurrentAnimatorStateInfo (meuAnimator.layerCount - 2);
+		esquivaStateInfo = meuAnimator.GetCurrentAnimatorStateInfo (meuAnimator.layerCount - 3);
 
 		if (!peStateInfo.IsTag ("Recuperando") && !esquivaStateInfo.IsTag ("Recuperando")) {
 			if (!focandoInimigoAnimator || esquivando) {
@@ -148,6 +166,16 @@ public class Abejide : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
+		if (estaAtaqueAndando) {
+			if (tempoSubindo > 0.5f) {
+				meuDadosMovimentacao.PegarMeuRigidbody ().AddForce (transform.up * -forcaCaindo, ForceMode.Force);
+			} else {
+				tempoSubindo += Time.deltaTime;
+			}
+		} else if (!meuAnimator.GetBool ("Subindo") && !estouNoChao && !estaAtaqueAndando) {
+			meuDadosMovimentacao.PegarMeuRigidbody ().AddForce (transform.up * -forcaCaindo, ForceMode.Force);
+		}
+
 		if (!focandoInimigoAnimator || esquivando) {
 			//Faz sempre o Abejide se mover para frente.
 			meuDadosMovimentacao.PegarMeuRigidbody ().AddForce (transform.forward * forcaDeMovimento, ForceMode.Force);
@@ -166,46 +194,24 @@ public class Abejide : MonoBehaviour {
 			estouNoChao = false;
 			meuAnimator.SetBool ("Subindo", true);
 			meuAnimator.SetTrigger ("SubirOuDescer");
-			ultimaDistanciaDoChao = distanciaDoChao;
-			meuDadosMovimentacao.PegarMeuRigidbody().AddForce (transform.up * meuDadosMovimentacao.velocidadePulando);
+			meuDadosMovimentacao.PegarMeuRigidbody().AddForce (transform.up *
+				                                               meuDadosMovimentacao.velocidadePulando);
 			possoPular = false;
+			tempoSubindo = 0;
+			meuAbejideChao.bateuNoChao = false;
 		}
 
-		RaycastHit pontoDeColisao;
+		if (!estouNoChao) {
+			if (meuAnimator.GetBool ("Subindo") && !estaAtaqueAndando) {
+				tempoSubindo += Time.deltaTime;
 
-		Physics.Raycast (meuAbejideChao.transform.position, meuAbejideChao.transform.TransformDirection(-Vector3.up), out pontoDeColisao, Mathf.Infinity);
-		Debug.DrawLine (meuAbejideChao.transform.position, meuAbejideChao.transform.position - Vector3.up * pontoDeColisao.distance, Color.red);
-		distanciaDoChao = pontoDeColisao.distance;
-
-		//Troca a animação de caindo ou pulando dependendo da ocasiao
-		tempoCalcularDistancia += Time.deltaTime;
-		if (tempoCalcularDistancia > 0.05f) {
-			tempoCalcularDistancia = 0;
-
-			if (distanciaDoChao > 0.5f && !meuAbejideChao.enabled) {
-				meuAbejideChao.bateuNoChao = false;
-				meuAbejideChao.enabled = true;
-			}
-
-			//If que que se o abejide esta subindo
-			//if (ultimaDistanciaDoChao < distanciaDoChao - 0.2f) {
-			//	Debug.Log ("Subindo");
-			if (!estaAtaqueAndando && ultimaDistanciaDoChao > distanciaDoChao + 0.2f) {
-				if (meuAnimator.GetBool ("Subindo")) {
+				if (tempoSubindo > 0.2f) {
 					meuAnimator.SetBool ("Subindo", false);
 					meuAnimator.SetTrigger ("SubirOuDescer");
-					tempoParaPoderPular = 0f;
-				} else if (estouNoChao) {
-					meuAnimator.SetTrigger ("SubirOuDescer");
-					meuAnimator.SetBool ("Subindo", false);
-					estouNoChao = false;
-					possoPular = false;
 				}
-			}
-
-			if (!estouNoChao && (meuAbejideChao.enabled && meuAbejideChao.bateuNoChao)) {
-				meuAbejideChao.enabled = false;
+			} else if (meuAbejideChao.bateuNoChao) {
 				meuDadosMovimentacao.PegarMeuRigidbody().velocity = Vector3.zero;
+				tempoParaPoderPular = 0f;
 				estouNoChao = true;
 
 				//Só entra neste if se o jogador tiver usando o ataque do Abejide corredo
@@ -216,15 +222,17 @@ public class Abejide : MonoBehaviour {
 					meuAnimator.SetBool ("Correndo", false);
 				}
 			}
+		} else if (!possoPular) {
+			tempoParaPoderPular += Time.deltaTime;
 
-			if (!possoPular && estouNoChao) {
-				tempoParaPoderPular += Time.deltaTime;
-
-				if (tempoParaPoderPular > 0.3f) {
-					possoPular = true;
-				}
+			if (tempoParaPoderPular > 0.3f) {
+				possoPular = true;
 			}
-			ultimaDistanciaDoChao = distanciaDoChao;
+		} else if (!meuAbejideChao.bateuNoChao && !estaAtaqueAndando) {
+			possoPular = false;
+			estouNoChao = false;
+			meuAnimator.SetBool ("Subindo", false);
+			meuAnimator.SetTrigger ("SubirOuDescer");
 		}
 	}
 
@@ -266,13 +274,14 @@ public class Abejide : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Z)) {
 			if (meuAnimator.GetBool ("Correndo")) {
 				if (tempoParaAtacar > 0.4f) {
-					meuDadosMovimentacao.PegarMeuRigidbody().AddForce (transform.up * (meuDadosMovimentacao.velocidadePulando / 2));
+					meuDadosMovimentacao.PegarMeuRigidbody().AddForce (transform.up * (meuDadosMovimentacao.velocidadePulando / 4f));
 					meuAnimator.SetTrigger ("AtaqueAndando");
 					estouNoChao = false;
 					meuAnimator.SetBool ("Atacando", true);
 					estaAtaqueAndando = true;
 					possoPular = false;
-					tempoParaAtacar = 0;
+					tempoParaAtacar = 0f;
+					tempoSubindo = 0f;
 				}
 			} else {
 				if (!armaStateInfo.IsTag ("Atacando") || tempoCombo < 0.135f) {
@@ -300,9 +309,9 @@ public class Abejide : MonoBehaviour {
 	}
 
 	void MovimentacaoLivre() {
-		//Movimentacao do abejide, e tambem faz ele apontar para a "seta" que foi pressionada
+		//Movimentacao do abejide e, tambem faz ele apontar para a "seta" que foi pressionada.
 		if (Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow)) {
-			estaMovendo = true;
+			estaMovendo = true; //Controle para fazer o personagem se mover.
 
 			angulo.Set (angulo.x, 0, angulo.z);
 		}
@@ -343,7 +352,8 @@ public class Abejide : MonoBehaviour {
 
 					if (meuAnimator.GetBool ("Correndo")) {
 						meuAnimator.SetBool ("Correndo", false);
-					} if (tempoParaAtacar != 0f) {
+					}
+					if (tempoParaAtacar != 0f) {
 						tempoParaAtacar = 0;
 					}
 				}
@@ -365,7 +375,7 @@ public class Abejide : MonoBehaviour {
 
 				forcaDeMovimento = velocidadeEsquiva;
 			}
-		} else {
+		} else if (!estaAtaqueAndando) {
 			forcaDeMovimento = 0f;
 		}
 	}
@@ -374,8 +384,11 @@ public class Abejide : MonoBehaviour {
 		seta.LookAt (inimigoParaFocar);
 
 		//Faz o abejide olhar suavemente para o inimigo focado
-		float tempoDeRotacao = meuDadosMovimentacao.velocidadeRotacao + meuDadosMovimentacao.PegarMeuRigidbody ().velocity.magnitude;
-		transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(new Vector3 (0, seta.eulerAngles.y, 0)), tempoDeRotacao * 1.5f * Time.deltaTime);
+		float tempoDeRotacao = meuDadosMovimentacao.velocidadeRotacao +
+			                   meuDadosMovimentacao.PegarMeuRigidbody ().velocity.magnitude;
+		transform.rotation = Quaternion.Slerp(transform.rotation,
+							 Quaternion.Euler(new Vector3 (0, seta.eulerAngles.y, 0)),
+			 				 tempoDeRotacao * 1.5f * Time.deltaTime);
 
 
 		//Sistema de movimentação
@@ -515,12 +528,12 @@ public class Abejide : MonoBehaviour {
 
 			int indiceMenorDistancia = 0;
 			float distanciaTemp;
-			distanciaDoInimigo = Vector3.Distance (transform.position, inimigoTemp [0].transform.position);
+			distanciaDoInimigo = 1000f;
 
-			for (int i = 1; i < inimigoTemp.Length; i++) {
+			for (int i = 0; i < inimigoTemp.Length; i++) {
 				distanciaTemp = Vector3.Distance (transform.position, inimigoTemp [i].transform.position);
 
-				if (distanciaTemp < distanciaDoInimigo) {
+				if (inimigoTemp[i].GetComponent<InimigosNormais> ().enabled && distanciaTemp < distanciaDoInimigo) {
 					distanciaDoInimigo = distanciaTemp;
 					indiceMenorDistancia = i;
 				}

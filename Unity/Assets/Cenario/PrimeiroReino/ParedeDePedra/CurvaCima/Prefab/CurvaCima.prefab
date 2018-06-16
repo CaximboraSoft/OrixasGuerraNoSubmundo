@@ -21,9 +21,6 @@ GameObject:
   - component: {fileID: 4751968862540494}
   - component: {fileID: 33202837641654970}
   - component: {fileID: 23140184679377496}
-  - component: {fileID: 65369015409124992}
-  - component: {fileID: 65232354898487714}
-  - component: {fileID: 114185556653932842}
   m_Layer: 0
   m_Name: CurvaCima
   m_TagString: Untagged
@@ -85,39 +82,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1884003311065876}
   m_Mesh: {fileID: 4300000, guid: 13b4ccdedae73f54b8cc63c814b837b1, type: 3}
---- !u!65 &65232354898487714
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1884003311065876}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 0.8, z: 0.59817505}
-  m_Center: {x: -0.6, y: 0, z: 0.28730953}
---- !u!65 &65369015409124992
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1884003311065876}
-  m_Material: {fileID: 13400000, guid: 0b476f2f7a20fa84585495a0b24aeecf, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.8, y: 3.0982306, z: 0.59817505}
-  m_Center: {x: 0, y: -1.1412122, z: 0.28730953}
---- !u!114 &114185556653932842
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1884003311065876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 047be67e0adb9fd4a8b8ed2041885e57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  deixarTransparente: 0

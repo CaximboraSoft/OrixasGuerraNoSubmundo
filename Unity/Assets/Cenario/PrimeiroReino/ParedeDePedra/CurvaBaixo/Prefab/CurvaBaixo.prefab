@@ -21,9 +21,6 @@ GameObject:
   - component: {fileID: 4412336264881928}
   - component: {fileID: 33004489148745348}
   - component: {fileID: 23239822147526562}
-  - component: {fileID: 65582169953281822}
-  - component: {fileID: 65092842175359080}
-  - component: {fileID: 114548228146684708}
   m_Layer: 0
   m_Name: CurvaBaixo
   m_TagString: Untagged
@@ -85,39 +82,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1766045787890514}
   m_Mesh: {fileID: 4300000, guid: 44ac01e62a7a0fe498baa74c297abae7, type: 3}
---- !u!65 &65092842175359080
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1766045787890514}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9319475, y: 0.8, z: 0.5980406}
-  m_Center: {x: -0.57066, y: 0, z: 0.2872423}
---- !u!65 &65582169953281822
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1766045787890514}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.8, y: 1.9319472, z: 0.5980406}
-  m_Center: {x: -0, y: -0.5580706, z: 0.2872423}
---- !u!114 &114548228146684708
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1766045787890514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 047be67e0adb9fd4a8b8ed2041885e57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  deixarTransparente: 0

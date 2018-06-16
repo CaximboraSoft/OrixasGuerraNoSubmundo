@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 23962601998085492}
   m_Layer: 0
   m_Name: TochaRocho
-  m_TagString: Untagged
+  m_TagString: Tocha
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -239,7 +239,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 558221615
+  randomSeed: 1779835057
   InitialModule:
     serializedVersion: 3
     enabled: 1

@@ -32,17 +32,23 @@ public class AbejideAto01 : MonoBehaviour {
 
 		meuMetodosDaCutscene = GetComponent<MetodosDaCutscene> ();
 		GetComponent<MetodosDaCutscene> ().PosicionarInicial ();
+
+		InimigosNormais[] objInimigosNormais = FindObjectsOfType<InimigosNormais> ();
+		for (int i = 0; i < objInimigosNormais.Length; i++) {
+			objInimigosNormais [i].enabled = false;
+		}
 	}
 
 	// Update is called once per frame
 	void Update () {
 		sat = meuMetodosDaCutscene.PegarSat ();
 
-		if (Input.GetKey (KeyCode.Space)) {
+		if (Input.GetKeyDown (KeyCode.Return)) {
 			if (pedraGigante != null) {
 				Destroy (pedraGigante.gameObject);
 			}
-				
+
+			Destroy (cutsceneObjetos);
 			GetComponent<AbejideAto02> ().PularCutscene ();
 			GetComponent<AbejideAto01> ().enabled = false;
 		}
@@ -51,6 +57,11 @@ public class AbejideAto01 : MonoBehaviour {
 
 			switch (meuMetodosDaCutscene.PegarAto ()) {
 			case 0:
+				InimigosNormais[] inimigosNormaisTemp = FindObjectsOfType<InimigosNormais> ();
+				for (int i = 0; i < inimigosNormaisTemp.Length; i++) {
+					inimigosNormaisTemp [i].enabled = false;
+				}
+
 				corpoAnimator.SetInteger ("IndiceGatilho", 0); //Pedrificado.
 				corpoAnimator.SetTrigger ("Gatilho");
 				meuMetodosDaCutscene.ComecarAtuacaoMoverNoEixoY (2f, true, false, 1, 0);
@@ -99,11 +110,6 @@ public class AbejideAto01 : MonoBehaviour {
 				meuMetodosDaCutscene.ComecarAtuacaoSeguirOutroAtor (meuMetodosDaCutscene.PegarOutroAtor(2), false, true, false);
 				break;
 			case 9: //Só entra qui quando o sete encruzilhaja ja tiver passado do chão.
-				CarcereiroAto01[] objTemp = FindObjectsOfType<CarcereiroAto01> ();
-				for (int i = 0; i < objTemp.Length; i++) {
-					objTemp [i].enabled = true;
-				}
-
 				Destroy (cutsceneObjetos);
 				Destroy (pedraGigante.gameObject);
 

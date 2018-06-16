@@ -7,7 +7,6 @@ public class CarcereiroAto01 : MonoBehaviour {
 	private MetodosDaCutscene meuMetodosDaCutscene;
 	private Animator atorAnimator;
 	public RuntimeAnimatorController controllerOriginal;
-	public RuntimeAnimatorController controllerCutscene;
 
 	public float[] rotacoes;
 	private int indiceRotacoes;
@@ -15,18 +14,23 @@ public class CarcereiroAto01 : MonoBehaviour {
 	private float maxTempoEspera;
 	public float velocidade = 1f;
 
-	// Use this for initialization
-	void Start () {
+	void Awake () {
 		atorAnimator = GetComponentInChildren<Animator> ();
-		atorAnimator.runtimeAnimatorController = controllerCutscene as RuntimeAnimatorController;
 
 		meuMetodosDaCutscene = GetComponent<MetodosDaCutscene> ();
+	}
+
+	// Use this for initialization
+	public void AtivarCodigo () {
 		meuMetodosDaCutscene.PosicionarInicial ();
+		meuMetodosDaCutscene.enabled = true;
 
 		tempoEspera = 10;
 		maxTempoEspera = 0;
 
 		indiceRotacoes = 0;
+
+		GetComponent<CarcereiroAto01> ().enabled = true;
 	}
 	
 	// Update is called once per frame
@@ -50,18 +54,17 @@ public class CarcereiroAto01 : MonoBehaviour {
 	public void AcabouCutscene () {
 		atorAnimator.runtimeAnimatorController = controllerOriginal as RuntimeAnimatorController;
 		GetComponent<MetodosDaCutscene> ().enabled = false;
-		GetComponent<InimigosNormais> ().enabled = true;
 		GetComponent<CarcereiroAto01> ().enabled = false;
 	}
 
 	public void PularCutscene () {
 		transform.rotation = Quaternion.Euler (new Vector3 (0, rotacoes[rotacoes.Length - 1], 0));
+		
 		meuMetodosDaCutscene.MudarIndicePosicao (0);
 		meuMetodosDaCutscene.ComecarAtuacaoTeleporte ();
 
 		atorAnimator.runtimeAnimatorController = controllerOriginal as RuntimeAnimatorController;
 		GetComponent<MetodosDaCutscene> ().enabled = false;
-		GetComponent<InimigosNormais> ().enabled = true;
 		GetComponent<CarcereiroAto01> ().enabled = false;
 	}
 }

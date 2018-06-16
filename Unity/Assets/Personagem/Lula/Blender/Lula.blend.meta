@@ -1,0 +1,241 @@
+fileFormatVersion: 2
+guid: e39046b91b035054daa0eed387b03fe2
+timeCreated: 1528943448
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Bone_004
+    100002: Bone_005
+    100004: Bone_006
+    100006: Bone_007
+    100008: BoneCabeca
+    100010: BoneCorpo
+    100012: BoneEscudo
+    100014: BoneEspada
+    100016: BoneEsquerda
+    100018: BoneMaoDireita
+    100020: BonePeDireito
+    100022: BonePeEsquerdo
+    100024: BonePes
+    100026: Corpo
+    100028: Khopesh
+    100030: //RootNode
+    100032: Osso
+    400000: Bone_004
+    400002: Bone_005
+    400004: Bone_006
+    400006: Bone_007
+    400008: BoneCabeca
+    400010: BoneCorpo
+    400012: BoneEscudo
+    400014: BoneEspada
+    400016: BoneEsquerda
+    400018: BoneMaoDireita
+    400020: BonePeDireito
+    400022: BonePeEsquerdo
+    400024: BonePes
+    400026: Corpo
+    400028: Khopesh
+    400030: //RootNode
+    400032: Osso
+    2100000: Abejide_001__Abejide_png
+    2100002: Abejide__Abejide_png
+    2100004: CaboEspadaQuebrada__EspadaQuebrada_png
+    2100006: EspadaQuebrada__EspadaQuebrada_png
+    2300000: Khopesh
+    2300002: Corpo
+    3300000: Khopesh
+    3300002: Corpo
+    4300000: Corpo
+    4300002: Khopesh
+    7400000: Default Take
+    7400002: Ak45
+    7400004: Azabaia_Parado
+    7400006: Azagaia_Ataques
+    7400008: Azagaia_Movendo
+    7400010: Bastao_Andando
+    7400012: Bastao_Ataques
+    7400014: Bastao_Parado
+    7400016: LulaTirandoArma
+    7400018: DenteDeInkayamba_Ataques
+    7400020: DenteDeInkayamba_Movendo
+    7400022: DenteDeInkayamba_Parado
+    7400024: NaCaraNao
+    7400026: OssoAction
+    7400028: PeDirecao
+    7400030: SemArma
+    7400032: Sieg_Ataques
+    7400034: Sieg_AtaquesMovendo
+    7400036: Sieg_Movendo
+    7400038: Sieg_Parado
+    7400040: LulaParado
+    7400042: LulaMorto
+    9500000: //RootNode
+    13700000: Corpo
+    13700002: Khopesh
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: LulaParado
+      takeName: Cutscene01
+      firstFrame: 0
+      lastFrame: 34
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: LulaTirandoArma
+      takeName: Cutscene01
+      firstFrame: 40
+      lastFrame: 49
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: LulaMorto
+      takeName: Cutscene01
+      firstFrame: 60
+      lastFrame: 78
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.5
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 1
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: baf0322069a2e7b4bbf71525ec42cc7c,
+    type: 3}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

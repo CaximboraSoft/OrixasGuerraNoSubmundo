@@ -16,7 +16,11 @@ public class AbejideChao : MonoBehaviour {
 		
 	}
 
-	void OnTriggerEnter (Collider other) {
+	void OnTriggerStay (Collider other) {
 		bateuNoChao = true;
+	}
+
+	void OnTriggerExit (Collider other) {
+		bateuNoChao = false;
 	}
 }

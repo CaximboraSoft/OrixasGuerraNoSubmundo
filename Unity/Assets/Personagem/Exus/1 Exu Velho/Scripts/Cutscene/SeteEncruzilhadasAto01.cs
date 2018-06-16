@@ -94,9 +94,9 @@ public class SeteEncruzilhadasAto01 : MonoBehaviour {
 				break;
 			case 7:
 				fala = "Faça isso de novo, e você pagará um preço ainda maior do que aquele que temos em mente.";
-				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 0, 6 * sat, true);
+				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 0, 7 * sat, true);
 				tempoEspera = 0;
-				maxTempoEspera = 6.1f * sat;
+				maxTempoEspera = 7.1f * sat;
 				break;
 			case 8:
 				fala = "Ja sei para onde vamos ir meu jovem, mas acho qe você não achará meu reino tão agradável quanto eu...";

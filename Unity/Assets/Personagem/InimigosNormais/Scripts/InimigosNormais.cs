@@ -1,27 +1,57 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class InimigosNormais : MonoBehaviour {
 
-	private GameObject abejide;
+	public Transform seta;
+	private Transform abejide;
+	private NavMeshAgent meuNavMeshAgent;
+	private DadosMovimentacao meuDadosMovimentacao;
+	private RaycastHit meuRaycastHit;
+	private Animator meuAnimator;
+
+	private bool viuAbejide = false;
 
 	public float distancia;
-	private float distanciaX;
-	private float distanciaZ;
+	public float distanciaAtacar = 20f;
+	public float velocidade;
 
+	public void AtivarCodigo () {
+		abejide = GameObject.FindGameObjectWithTag ("Abejide").transform;
+		meuNavMeshAgent = GetComponent<NavMeshAgent> ();
+		meuDadosMovimentacao = GetComponentInChildren<DadosMovimentacao> ();
+		meuAnimator = GetComponentInChildren <Animator> ();
 
-	// Use this for initialization
-	void Start () {
-		abejide = GameObject.Find ("Abejide");
+		GetComponent<InimigosNormais> ().enabled = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		distanciaX = abejide.transform.position.x - transform.position.x;
-		distanciaZ = abejide.transform.position.z - transform.position.z;
-		distancia = Mathf.Sqrt(Mathf.Pow(distanciaX, 2) + Mathf.Pow(distanciaZ, 2));
+		distancia = Vector3.Distance (transform.position, abejide.position);
 
-		transform.LookAt (new Vector3(abejide.transform.position.x, transform.position.y, abejide.transform.position.z));
+		if (!viuAbejide && distancia < distanciaAtacar) {
+			if (Physics.Linecast (transform.position, abejide.position, out meuRaycastHit)) {
+				viuAbejide = true;
+			}
+		}
+
+		if (viuAbejide) {
+			meuNavMeshAgent.SetDestination (abejide.position);
+			seta.LookAt (new Vector3(abejide.transform.position.x, seta.position.y, abejide.transform.position.z));
+			transform.rotation = Quaternion.Slerp (transform.rotation, seta.rotation, meuDadosMovimentacao.velocidadeRotacao * Time.deltaTime);
+			velocidade = meuNavMeshAgent.velocity.magnitude;
+
+			meuAnimator.SetFloat ("Velocidade", velocidade);
+		}
+	}
+
+	/// <summary>
+	/// Desativa todas as coisas deste que o objeto pode esta ativado, tipo o <NavMeshAgent>;
+	/// </summary>
+	public void DesativarCodigo () {
+		meuNavMeshAgent.enabled = false;
+		GetComponent<InimigosNormais> ().enabled = false;
 	}
 }

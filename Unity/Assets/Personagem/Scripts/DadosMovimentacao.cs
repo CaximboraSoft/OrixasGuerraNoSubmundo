@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class DadosMovimentacao : MonoBehaviour {
 
-	public Vector3 velocidade;
 	private Animator meuAnimator;
 	private Rigidbody meuRigidbody;
-	public RuntimeAnimatorController animacaoOriginal;
 
+	public float vida = 100f;
 	public float velocidadeAndando;
 	public float velocidadeCorrendo;
 	public float velocidadePulando;
 	public float velocidadeRotacao;
+
+	private float temporizador;
 
 	// Use this for initialization
 	void Start () {
@@ -22,39 +23,32 @@ public class DadosMovimentacao : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		/*
-		 if (EstouNoChao) {
-			
-		} else {
-			meuAnimator.SetFloat ("Velocidade", 0);
-		}*/
-	}
+		if (vida < 1) {
+			AnimatorStateInfo meuStateInfo = meuAnimator.GetCurrentAnimatorStateInfo (0);
 
-	public AnimatorStateInfo PegarLayerDoMeuAnimator (int indice) {
-		return meuAnimator.GetCurrentAnimatorStateInfo (indice);
-	}
-
-	public void MudarFloatDoMeuAnimator (string nome, float valor) {
-		meuAnimator.SetFloat (nome, valor);
-	}
-
-	public void MudarBoolDoMeuAnimator (string nome, bool valor) {
-		meuAnimator.SetBool (nome, valor);
-	}
-
-	public bool PegarBoolDoMeuAnimator (string nome) {
-		return meuAnimator.GetBool (nome);
-	}
-
-	public void ChamarTriggerDoMeuAnimator (string nome) {
-		meuAnimator.SetTrigger (nome);
+			if (meuStateInfo.IsTag ("MORTO")) {
+				meuAnimator.enabled = false;
+				GetComponent<DadosMovimentacao> ().enabled = false;
+			}
+		}
 	}
 
 	public Rigidbody PegarMeuRigidbody () {
 		return meuRigidbody;
 	}
 
-	public void ColocarAnimacaoOriginal () {
-		meuAnimator.runtimeAnimatorController = animacaoOriginal as RuntimeAnimatorController;
+	public void PerderVida (float dano) {
+		if (vida > 0) {
+			vida -= dano;
+
+			if (vida < 1) {
+				meuAnimator.SetBool ("Morto", true);
+				GetComponent<Rigidbody> ().useGravity = false;
+				GetComponent<Collider> ().enabled = false;
+				GetComponent<InimigosNormais> ().DesativarCodigo ();
+				temporizador = 0f;
+			}
+			meuAnimator.SetTrigger ("PerderVida");
+		}
 	}
 }

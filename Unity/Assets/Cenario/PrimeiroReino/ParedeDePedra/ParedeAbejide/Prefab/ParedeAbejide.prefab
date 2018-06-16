@@ -21,8 +21,6 @@ GameObject:
   - component: {fileID: 4473957348926858}
   - component: {fileID: 33240714446241166}
   - component: {fileID: 23673199901070482}
-  - component: {fileID: 65916213619466022}
-  - component: {fileID: 114704851900812050}
   m_Layer: 0
   m_Name: ParedeAbejide
   m_TagString: Untagged
@@ -84,27 +82,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1721985559026876}
   m_Mesh: {fileID: 4300000, guid: 7a8035c6d2d73b74e9e5855b5780265c, type: 3}
---- !u!65 &65916213619466022
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1721985559026876}
-  m_Material: {fileID: 13400000, guid: 0b476f2f7a20fa84585495a0b24aeecf, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.63861, y: 0.8474751, z: 0.5795111}
-  m_Center: {x: -1.5917904, y: -1.5909195e-14, z: 0.27987754}
---- !u!114 &114704851900812050
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1721985559026876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 047be67e0adb9fd4a8b8ed2041885e57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  deixarTransparente: 0

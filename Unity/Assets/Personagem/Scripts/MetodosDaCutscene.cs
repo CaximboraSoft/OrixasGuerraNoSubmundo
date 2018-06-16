@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class MetodosDaCutscene : MonoBehaviour {
 
+	private Animator meuAnimator;
 	private DadosMovimentacao meuDadosMovimentacao;
 	public Transform boca;
 	public Transform rostoMostrar;
@@ -62,6 +63,7 @@ public class MetodosDaCutscene : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		meuAnimator = GetComponentInChildren<Animator> ();
 		meuDadosDaFase = GameObject.FindGameObjectWithTag ("Terra").GetComponent<DadosDaFase> ();
 		meuDadosMovimentacao = GetComponent<DadosMovimentacao> ();
 
@@ -107,9 +109,9 @@ public class MetodosDaCutscene : MonoBehaviour {
 				boca.GetComponent<Conversas> ().nome.text = nome;
 				boca.GetComponent<Conversas> ().conversas.enabled = true;
 
+				boca.GetComponent<Conversas> ().MudarTempoLimparTexto(maxTempoVidaTexto);
 				if (mostrarEsteRosto) {
 					boca.GetComponent<Conversas> ().MudarRostoMostrar (rostoMostrar);
-					boca.GetComponent<Conversas> ().MudarTempoLimparTexto(maxTempoVidaTexto);
 				}
 			}
 		}
@@ -200,7 +202,7 @@ public class MetodosDaCutscene : MonoBehaviour {
 
 
 		} else {
-			meuDadosMovimentacao.MudarBoolDoMeuAnimator("Andando", manterAnimacaoAndando);
+			meuAnimator.SetBool ("Andando", manterAnimacaoAndando);
 
 			if (tempoEspera >= maxTempoEspera) {
 				if (!manterAnimacaoAndando) {
@@ -263,8 +265,8 @@ public class MetodosDaCutscene : MonoBehaviour {
 
 		indicePosicoes++;
 		posicao = GameObject.Find(posicoesNome + " (" + indicePosicoes.ToString () + ")").GetComponent<Transform> ();
-		meuDadosMovimentacao.MudarBoolDoMeuAnimator("Andando", true);
-		meuDadosMovimentacao.MudarBoolDoMeuAnimator("Correndo", correndo);
+		meuAnimator.SetBool ("Andando", true);
+		meuAnimator.SetBool  ("Correndo", correndo);
 
 		ato++;
 		tempoEspera = 0;

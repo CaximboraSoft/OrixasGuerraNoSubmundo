@@ -29,8 +29,6 @@ public class Coadjuvantes : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-
 		distancia = Vector3.Distance (transform.position, abejide.position);
 
 		if (ato == 5 && distancia < 20f) {
