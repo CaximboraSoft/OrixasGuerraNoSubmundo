@@ -11,7 +11,9 @@ public class InimigosNormais : MonoBehaviour {
 	private DadosMovimentacao meuDadosMovimentacao;
 	private RaycastHit meuRaycastHit;
 	private Animator meuAnimator;
+	private Vector3 meuRotacao;
 
+	public bool rodandoCutscene = false;
 	private bool viuAbejide = false;
 
 	public float distancia;
@@ -29,29 +31,47 @@ public class InimigosNormais : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		distancia = Vector3.Distance (transform.position, abejide.position);
+		if (!rodandoCutscene) { 
+			distancia = Vector3.Distance (transform.position, abejide.position);
 
-		if (!viuAbejide && distancia < distanciaAtacar) {
-			if (Physics.Linecast (transform.position, abejide.position, out meuRaycastHit)) {
-				viuAbejide = true;
+			seta.LookAt (abejide.transform.position);
+			if (!viuAbejide && distancia < distanciaAtacar) {
+				Physics.Raycast (seta.position, seta.forward, out meuRaycastHit);
+
+				if (meuRaycastHit.transform != null && meuRaycastHit.transform == abejide) {
+					viuAbejide = true;
+				}
+			}
+
+			if (viuAbejide) {
+				meuNavMeshAgent.SetDestination (abejide.position);
+				meuRotacao.Set (transform.eulerAngles.x, seta.eulerAngles.y, seta.eulerAngles.z);
+				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (meuRotacao), meuDadosMovimentacao.velocidadeRotacao * Time.deltaTime);
+				velocidade = meuNavMeshAgent.velocity.magnitude;
+				Debug.DrawLine (seta.position, meuRaycastHit.point, Color.red);
 			}
 		}
 
-		if (viuAbejide) {
-			meuNavMeshAgent.SetDestination (abejide.position);
-			seta.LookAt (new Vector3(abejide.transform.position.x, seta.position.y, abejide.transform.position.z));
-			transform.rotation = Quaternion.Slerp (transform.rotation, seta.rotation, meuDadosMovimentacao.velocidadeRotacao * Time.deltaTime);
-			velocidade = meuNavMeshAgent.velocity.magnitude;
+		meuAnimator.SetFloat ("Velocidade", velocidade);
+	}
 
-			meuAnimator.SetFloat ("Velocidade", velocidade);
-		}
+	/// <summary>
+	/// Para o inimigo caso o jogador entre em uma cutscene.
+	/// </summary>
+	public void PausarCutscene () {
+		rodandoCutscene = true;
+		meuNavMeshAgent.SetDestination (transform.position);
+		velocidade = 0f;
 	}
 
 	/// <summary>
 	/// Desativa todas as coisas deste que o objeto pode esta ativado, tipo o <NavMeshAgent>;
 	/// </summary>
 	public void DesativarCodigo () {
-		meuNavMeshAgent.enabled = false;
-		GetComponent<InimigosNormais> ().enabled = false;
+		transform.tag = "Untagged";
+		Destroy (meuNavMeshAgent);
+		Destroy (GetComponent<InimigosNormais> ());
+		//meuNavMeshAgent.enabled = false;
+		//GetComponent<InimigosNormais> ().enabled = false;
 	}
 }

@@ -25,7 +25,7 @@ public class AbejideAto01 : MonoBehaviour {
 		corpoAnimator.runtimeAnimatorController = animacaoDaCurscene as RuntimeAnimatorController;
 
 		pedraGigante.transform.SetParent (transform);
-		pedraGigante.transform.localPosition = Vector3.zero;
+		pedraGigante.transform.localPosition = new Vector3 (0f, -0.9f, 0f);
 
 		tempoEspera = 10;
 		maxTempoEspera = 0;

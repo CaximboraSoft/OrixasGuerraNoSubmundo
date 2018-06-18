@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class DeixarTransparente : MonoBehaviour {
 
-	private Renderer renderMaterial = new Renderer ();
-	private Shader shaderOriginal;
-	private Shader shaderTransparente;
+	public Renderer renderMaterial = new Renderer ();
+	public Material materialTransparente;
+	public Material[] materialOriginal;
 
 	public bool deixarTransparente;
 
@@ -14,28 +14,37 @@ public class DeixarTransparente : MonoBehaviour {
 	void Awake () {
 		deixarTransparente = false;
 
-		renderMaterial = gameObject.GetComponent<Renderer> ();
-		shaderOriginal = renderMaterial.material.shader;
+		renderMaterial = GetComponent<Renderer> ();
 
-		shaderTransparente = Shader.Find ("Custom/Tranparente");
-
-		for (int linha = 0; linha < renderMaterial.materials.Length; linha++) {
-			Color cor = renderMaterial.materials [linha].color;
-			cor.a = 0.5f;
-
-			renderMaterial.materials [linha].color = cor;
-		}
+		materialOriginal = GetComponent<Renderer> ().materials;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		for (int linha = 0; linha < renderMaterial.materials.Length; linha++) {
 			if (deixarTransparente) {
-				renderMaterial.materials[linha].shader = shaderTransparente;
+				CarrecarMaterialTransparente (false);
 			} else {
-				renderMaterial.materials[linha].shader = shaderOriginal;
+				CarrecarMaterialTransparente (true);
 				GetComponent<DeixarTransparente> ().enabled = false;
 			}
 		}
+	}
+
+	private void CarrecarMaterialTransparente (bool original) {
+		Material[] materialTemporario;
+		materialTemporario = new Material[materialOriginal.Length];
+
+		if (!original) {
+			for (int i = 0; i < materialTemporario.Length; i++) {
+				materialTemporario [i] = materialTransparente;
+			}
+		} else {
+			for (int i = 0; i < materialTemporario.Length; i++) {
+				materialTemporario [i] = materialOriginal[i];
+			}
+		}
+
+		GetComponent<Renderer> ().materials = materialTemporario;
 	}
 }

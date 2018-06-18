@@ -69,6 +69,10 @@ ModelImporter:
     2100014: Cabo_Azagaia___Azagaia
     2100016: Espada_Azagaia___Azagaia
     2100018: unnamed
+    2100020: LancaCabo01
+    2100022: LancaPonta01
+    2100024: None__ak_45_pente_alongado_png
+    2100026: None__NaCaraNao_png_001
     2300000: Inimigo
     2300002: Plane
     3300000: Inimigo
@@ -131,7 +135,52 @@ ModelImporter:
     13700012: NaCaraNao
     13700014: _k45
     13700016: Lanca01_Cube_001
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Abejide_001__Abejide_png
+    second: {fileID: 2100000, guid: 5694523f691678046973edbd343d3e67, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Abejide__Abejide_png
+    second: {fileID: 2100000, guid: 5694523f691678046973edbd343d3e67, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CaboEspadaQuebrada__EspadaQuebrada_png
+    second: {fileID: 2100000, guid: 3c1df459ef380e04599b1ca08c333979, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cabo_Azagaia___Azagaia
+    second: {fileID: 2100000, guid: a429358fc7db2f844ace7482329c293e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EspadaQuebrada__EspadaQuebrada_png
+    second: {fileID: 2100000, guid: 3c1df459ef380e04599b1ca08c333979, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Espada_Bastao__Bast_o_png
+    second: {instanceID: 0}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Espada_Inkayamba___Inkayamba_
+    second: {fileID: 2100000, guid: 546e8ae18f96f0641a44081d283e9ea7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LancaCabo01
+    second: {fileID: 2100000, guid: c7ebd682ba4ca07439602ce9f2c48325, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LancaPonta01
+    second: {fileID: 2100000, guid: dc538ce1f63e0a449bfd9720883fe530, type: 2}
   materials:
     importMaterials: 0
     materialName: 0
@@ -920,7 +969,7 @@ ModelImporter:
     globalScale: 0.5
     meshCompression: 0
     addColliders: 0
-    importVisibility: 0
+    importVisibility: 1
     importBlendShapes: 1
     importCameras: 0
     importLights: 0

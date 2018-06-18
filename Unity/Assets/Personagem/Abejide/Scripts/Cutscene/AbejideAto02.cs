@@ -198,7 +198,7 @@ public class AbejideAto02 : MonoBehaviour {
 	}
 
 	private void AcabouCutscene () {
-		GetComponentInChildren<AbejideMao> ().enabled = true;
+		GetComponentInChildren<Arma> ().enabled = true;
 		GetComponent<MetodosDaCutscene> ().enabled = false;
 
 		if (lanca != null) {
@@ -230,7 +230,8 @@ public class AbejideAto02 : MonoBehaviour {
 		Destroy (cutsceneObjetos);
 
 		GameObject.FindObjectOfType<Lula> ().enabled = true;
-		GetComponent<AbejideAto02> ().enabled = false;
+		Destroy (GetComponent<AbejideAto01> ());
+		Destroy (GetComponent<AbejideAto02> ());
 	}
 
 	public void PularCutscene () {

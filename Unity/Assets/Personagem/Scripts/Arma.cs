@@ -28,7 +28,7 @@ public class Arma : MonoBehaviour {
 	}
 
 	void OnTriggerStay (Collider other) {
-		if (donoStateInfo.fullPathHash != nomeDoAtaque && donoStateInfo.normalizedTime > donoStateInfo.length / 2f &&
+		if (donoStateInfo.fullPathHash != nomeDoAtaque && donoStateInfo.normalizedTime > donoStateInfo.length / 1.5f &&
 			donoStateInfo.IsTag ("Atacando") && other.transform.tag == "Inimigo") {
 
 			nomeDoAtaque = donoStateInfo.fullPathHash;

@@ -14,6 +14,7 @@ public class Lula : MonoBehaviour {
 	private Abejide abejide;
 	public Renderer abejideEspada;
 	private Animator abejideAnimator;
+	public InimigosNormais[] pausarInimigosNormais;
 
 	public Conversas boca;
 
@@ -30,6 +31,7 @@ public class Lula : MonoBehaviour {
 	void Awake () {
 		abejide = FindObjectOfType<Abejide> ();
 		abejideAnimator = abejide.GetComponentInChildren<Animator> ();
+		temporizador = 0f;
 	}
 	
 	// Update is called once per frame
@@ -44,44 +46,62 @@ public class Lula : MonoBehaviour {
 			}
 		}
 		// && ato > 2 && !morto
-		if (Input.GetKeyDown (KeyCode.Return)) {
-			if (espada != null) {
-				Destroy (espada);
-			}
-				
-			if (!abejideEspada.enabled) {
-				Destroy (espada);
-				temporizador = 0f;
-				GetComponent<Animator> ().SetTrigger ("TirarArma");
+		if (Input.GetKeyDown (KeyCode.Return) && ato != 2) {
+			if (ato < 2) {
+				boca.GetComponent<Conversas> ().conversas.enabled = false;
+				for (int i = 0; i < pausarInimigosNormais.Length; i++) {
+					pausarInimigosNormais [i].rodandoCutscene = false;
+				}
 
-				abejideAnimator.SetInteger ("IndiceGatilho", 0);
-				abejideAnimator.SetTrigger ("Gatilho");
-				abejideEspada.enabled = true;
-			}
+				abejide.AtivarCodigoLula ();
+				ato++;
+			} else {
+				if (espada != null) {
+					Destroy (espada);
+				}
+					
+				if (!abejideEspada.enabled) {
+					Destroy (espada);
+					temporizador = 0f;
+					GetComponent<Animator> ().SetTrigger ("TirarArma");
 
-			AcabouCutscene ();
+					abejideAnimator.SetInteger ("IndiceGatilho", 0);
+					abejideAnimator.SetTrigger ("Gatilho");
+					abejideEspada.enabled = true;
+				}
+
+				AcabouCutscene ();
+			}
 		}
 
 		switch  (ato) {
 		case 0:
 			if (carcereirosMorreram) {
-				DesativarAbejide ();
+				temporizador += Time.deltaTime;
 
-				abejide.enabled = false;
-				boca.enabled = true;
-				boca.GetComponent<Conversas> ().MudarRostoMostrar (rostoMostrar);
-				fala = "Psiu! Psiu...";
-				boca.GetComponent<Conversas> ().nome.text = "Akin:";
-				boca.GetComponent<Text> ().text = fala;
-				boca.GetComponent<Conversas> ().MudarTempoLimparTexto (1.5f);
-				boca.GetComponent<Conversas> ().conversas.enabled = true;
-				temporizador = 0;
-				ato++;
+				if (temporizador > -2f) {
+					DesativarAbejide ();
+
+					abejide.enabled = false;
+					boca.enabled = true;
+					boca.GetComponent<Conversas> ().MudarRostoMostrar (rostoMostrar);
+					fala = "Psiu! Psiu...";
+					boca.GetComponent<Conversas> ().nome.text = "Akin:";
+					boca.GetComponent<Text> ().text = fala;
+					boca.GetComponent<Conversas> ().MudarTempoLimparTexto (1.5f);
+					boca.GetComponent<Conversas> ().conversas.enabled = true;
+					temporizador = 0;
+					ato++;
+				}
 			}
 			break;
 		case 1:
 			temporizador += Time.deltaTime;
 			if (temporizador > 1.5f) {
+				for (int i = 0; i < pausarInimigosNormais.Length; i++) {
+					pausarInimigosNormais [i].rodandoCutscene = false;
+				}
+
 				abejide.AtivarCodigoLula ();
 				ato++;
 			}
@@ -166,7 +186,9 @@ public class Lula : MonoBehaviour {
 	}
 
 	private void AcabouCutscene () {
-		Destroy (abejide.GetComponentInChildren<AbejideMao> ().gameObject);
+		for (int i = 0; i < pausarInimigosNormais.Length; i++) {
+			pausarInimigosNormais [i].rodandoCutscene = false;
+		}
 
 		abejideAnimator.SetLayerWeight (abejide.armaAtual + 2, 0f);
 		abejide.armaAtual = 0;
@@ -176,11 +198,21 @@ public class Lula : MonoBehaviour {
 		boca.GetComponent<Conversas> ().conversas.enabled = false;
 		temporizador = 0;
 		morto = true;
-		abejideEspada.GetComponent<Arma> ().enabled = true;
+		abejideEspada.enabled = true;
+		Arma abejideArma = abejide.GetComponentInChildren<Arma> ();
+		abejideArma.dano = abejide.armasDano [0];
+		abejideArma.indiceDoLayer = 2;
+		abejideArma.transform.localScale = new Vector3 (abejideArma.transform.localScale.x, abejide.alcanceEspadas[0], abejideArma.transform.localScale.z);
 		ato = -999;
 	}
 
 	private void DesativarAbejide () {
+		pausarInimigosNormais = FindObjectsOfType<InimigosNormais> ();
+
+		for (int i = 0; i < pausarInimigosNormais.Length; i++) {
+			pausarInimigosNormais [i].PausarCutscene ();
+		}
+
 		abejide.enabled = false;
 		abejideAnimator.SetBool ("Atacando", false);
 		abejideAnimator.SetBool ("Correndo", false);
@@ -190,7 +222,7 @@ public class Lula : MonoBehaviour {
 
 	private bool CarcereirosMorreram () {
 		for (int i = 0; i < carcereiros.Length; i++) {
-			if (carcereiros[i].enabled) {
+			if (carcereiros[i] != null) {
 				return false;
 			}
 		}

@@ -25,7 +25,7 @@ public class DadosDaFase : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//LigarConformeDistancia ();
+		LigarConformeDistancia ();
 	}
 
 	void LigarConformeDistancia () {
@@ -57,8 +57,8 @@ public class DadosDaFase : MonoBehaviour {
 			luz [i] = objTemp [i].GetComponentInChildren<Light> ();
 			fogo [i] = objTemp [i].GetComponentInChildren<ParticleSystem> ();
 
-			fogo[i].Stop ();
-			luz[i].enabled = false;
+			fogo[i].Play ();
+			luz[i].enabled = true;
 		}
 	}
 }

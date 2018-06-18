@@ -1,17 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto02.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs">
     <Files>
-      <File FileName="Assets\Personagem\Abejide\Scripts\Abejide.cs" Line="9" Column="27" />
-      <File FileName="Assets\Personagem\Abejide\Scripts\AbejideMao.cs" Line="1" Column="1" />
-      <File FileName="Assets\Personagem\Scripts\Arma.cs" Line="1" Column="1" />
-      <File FileName="Assets\Personagem\Lula\Scripts\Lula.cs" Line="1" Column="1" />
-      <File FileName="Assets\Personagem\Scripts\DadosMovimentacao.cs" Line="31" Column="56" />
-      <File FileName="Assets\Personagem\InimigosNormais\Carcereiro\Script\Cutscene\CarcereiroAto01.cs" Line="1" Column="1" />
-      <File FileName="Assets\Personagem\InimigosNormais\Scripts\InimigosNormais.cs" Line="25" Column="17" />
-      <File FileName="Assets\Cenario\Scripts\CameraDetectarColisao.cs" Line="25" Column="18" />
-      <File FileName="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto02.cs" Line="233" Column="49" />
-      <File FileName="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" Line="1" Column="17" />
+      <File FileName="Assets\Personagem\Scripts\DadosMovimentacao.cs" Line="1" Column="1" />
+      <File FileName="Assets\Personagem\InimigosNormais\Scripts\InimigosNormais.cs" Line="1" Column="1" />
+      <File FileName="Assets\Cenario\Scripts\CameraDetectarColisao.cs" Line="1" Column="1" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" Line="82" Column="14" />
+      <File FileName="Assets\Personagem\Exus\2 Exu Tranca-Tudo\Scripts\Cutscene\TrancaRuaAto01.cs" Line="46" Column="13" />
+      <File FileName="Assets\Personagem\Exus\1 Exu Velho\Scripts\Cutscene\SeteEncruzilhadasAto01.cs" Line="1" Column="1" />
+      <File FileName="Assets\Cenario\Scripts\DadosDaFase.cs" Line="28" Column="3" />
+      <File FileName="Assets\Cenario\Scripts\DeixarTransparente.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

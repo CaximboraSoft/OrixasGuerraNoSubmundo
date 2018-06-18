@@ -13,8 +13,6 @@ public class DadosMovimentacao : MonoBehaviour {
 	public float velocidadePulando;
 	public float velocidadeRotacao;
 
-	private float temporizador;
-
 	// Use this for initialization
 	void Start () {
 		meuAnimator = GetComponentInChildren<Animator> ();
@@ -23,12 +21,13 @@ public class DadosMovimentacao : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (vida < 1) {
+		if (vida <= 1) {
 			AnimatorStateInfo meuStateInfo = meuAnimator.GetCurrentAnimatorStateInfo (0);
 
 			if (meuStateInfo.IsTag ("MORTO")) {
 				meuAnimator.enabled = false;
-				GetComponent<DadosMovimentacao> ().enabled = false;
+				Destroy (meuAnimator);
+				Destroy (GetComponent<DadosMovimentacao> ());
 			}
 		}
 	}
@@ -41,13 +40,13 @@ public class DadosMovimentacao : MonoBehaviour {
 		if (vida > 0) {
 			vida -= dano;
 
-			if (vida < 1) {
+			if (vida <= 1) {
 				meuAnimator.SetBool ("Morto", true);
-				GetComponent<Rigidbody> ().useGravity = false;
-				GetComponent<Collider> ().enabled = false;
+				Destroy (meuRigidbody);
+				Destroy (GetComponent<Collider> ());
 				GetComponent<InimigosNormais> ().DesativarCodigo ();
-				temporizador = 0f;
 			}
+
 			meuAnimator.SetTrigger ("PerderVida");
 		}
 	}

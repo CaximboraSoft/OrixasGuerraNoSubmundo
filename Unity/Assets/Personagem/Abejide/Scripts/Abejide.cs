@@ -9,8 +9,10 @@ public class Abejide : MonoBehaviour {
 	private AnimatorStateInfo armaStateInfo;
 	private AnimatorStateInfo peStateInfo;
 	private AnimatorStateInfo esquivaStateInfo;
-	public GameObject[] armas;
-	private Arma[] armaScript;
+	private Arma armaScript;
+	public Renderer[] armas;
+	public float[] armasDano;
+	public float[] alcanceEspadas;
 	public GameObject[] magias;
 	public AbejideChao meuAbejideChao;
 	private Vector3 angulo = Vector3.zero;
@@ -57,13 +59,11 @@ public class Abejide : MonoBehaviour {
 
 	void Awake () {
 		meuAnimator = GetComponentInChildren<Animator> ();
+		armaScript = GetComponentInChildren<Arma> ();
+		armaScript.enabled = false;
 
-		armaScript = new Arma[armas.Length];
 		for (int linha = 0; linha < armas.Length; linha++) {
-			armas [linha].GetComponent<Renderer> ().enabled = false;
-			armaScript [linha] = armas [linha].GetComponent<Arma> ();
-			armaScript [linha].donoAnimator = meuAnimator;
-			armaScript [linha].enabled = false;
+			armas [linha].enabled = false;
 		}
 	}
 
@@ -546,5 +546,11 @@ public class Abejide : MonoBehaviour {
 		}
 
 		inimigoParaFocar = null;
+	}
+
+	public void TrocarDeArma (int indiceArma) {
+		armas [armaAtual].enabled = false;
+		armas [indiceArma].enabled = false;
+		armaAtual = indiceArma;
 	}
 }

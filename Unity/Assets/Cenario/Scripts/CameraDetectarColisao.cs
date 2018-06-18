@@ -22,7 +22,7 @@ public class CameraDetectarColisao : MonoBehaviour {
 		partidaRaio.Set (transform.position.x, transform.position.y + distanciaY, transform.position.z - distanciaZ);
 
 		if (Physics.Linecast (partidaRaio, alvo.position, out hitPoint)) {
-			Debug.DrawLine (partidaRaio, alvo.position);
+			Debug.DrawLine (partidaRaio, alvo.position, Color.yellow);
 		}
 	}
 }

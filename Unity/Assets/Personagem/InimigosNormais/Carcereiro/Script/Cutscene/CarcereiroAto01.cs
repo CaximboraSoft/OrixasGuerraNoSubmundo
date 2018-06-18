@@ -53,8 +53,8 @@ public class CarcereiroAto01 : MonoBehaviour {
 
 	public void AcabouCutscene () {
 		atorAnimator.runtimeAnimatorController = controllerOriginal as RuntimeAnimatorController;
-		GetComponent<MetodosDaCutscene> ().enabled = false;
-		GetComponent<CarcereiroAto01> ().enabled = false;
+		Destroy (GetComponent<MetodosDaCutscene> ());
+		Destroy (GetComponent<CarcereiroAto01> ());
 	}
 
 	public void PularCutscene () {
@@ -63,8 +63,6 @@ public class CarcereiroAto01 : MonoBehaviour {
 		meuMetodosDaCutscene.MudarIndicePosicao (0);
 		meuMetodosDaCutscene.ComecarAtuacaoTeleporte ();
 
-		atorAnimator.runtimeAnimatorController = controllerOriginal as RuntimeAnimatorController;
-		GetComponent<MetodosDaCutscene> ().enabled = false;
-		GetComponent<CarcereiroAto01> ().enabled = false;
+		AcabouCutscene ();
 	}
 }

@@ -91,7 +91,7 @@ ModelImporter:
     7400020: 0_AtaqueAndando
     7400022: Sieg_AtaquesMovendo
     7400024: C_Andando
-    7400026: C_Parado
+    7400026: C_MORTO
     7400028: C_Correndo
     7400030: 0_Caindo
     7400032: 0_Subindo
@@ -110,6 +110,10 @@ ModelImporter:
     7400058: PerfuraPerfura
     7400060: C_PerderVida
     7400062: C_Morrendo
+    7400064: C_Ataque01
+    7400066: C_Ataque02
+    7400068: C_Ataque03
+    7400070: C_Parado
     9500000: //RootNode
     13700000: Amud
     13700002: Azagaia
@@ -233,7 +237,7 @@ ModelImporter:
       name: C_Ataque01
       takeName: Sieg_Ataques
       firstFrame: 1
-      lastFrame: 31
+      lastFrame: 36
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -261,7 +265,7 @@ ModelImporter:
       name: C_Ataque02
       takeName: Sieg_Ataques
       firstFrame: 40
-      lastFrame: 64
+      lastFrame: 66
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -288,36 +292,8 @@ ModelImporter:
     - serializedVersion: 16
       name: C_Ataque03
       takeName: Sieg_Ataques
-      firstFrame: 70
-      lastFrame: 95
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: C_Ataque04
-      takeName: Sieg_Ataques
-      firstFrame: 100
-      lastFrame: 122
+      firstFrame: 69
+      lastFrame: 96
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -397,13 +373,41 @@ ModelImporter:
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: C_MORTO
+      takeName: Sieg_Parado
+      firstFrame: 135
+      lastFrame: 139
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 0.5
     meshCompression: 0
     addColliders: 0
-    importVisibility: 0
+    importVisibility: 1
     importBlendShapes: 1
     importCameras: 0
     importLights: 0
@@ -426,7 +430,7 @@ ModelImporter:
     tangentImportMode: 3
     normalCalculationMode: 4
   importAnimation: 1
-  copyAvatar: 1
+  copyAvatar: 0
   humanDescription:
     serializedVersion: 2
     human: []
