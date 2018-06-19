@@ -39,8 +39,10 @@ public class DadosMovimentacao : MonoBehaviour {
 	public void PerderVida (float dano) {
 		if (vida > 0) {
 			vida -= dano;
+			GetComponent<InimigosNormais> ().PerdeuVida ();
 
 			if (vida <= 1) {
+				meuAnimator.SetLayerWeight (1, 0f);
 				meuAnimator.SetBool ("Morto", true);
 				Destroy (meuRigidbody);
 				Destroy (GetComponent<Collider> ());

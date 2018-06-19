@@ -4,4 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Telas/Menu.unity
+    guid: 320303fa49f36c24bb577526a0ad4c71
+  - enabled: 1
+    path: Assets/Telas/PrimeiroReino.unity
+    guid: 99de12cd88520114299e7d670a86de2f

@@ -1,5 +1,6 @@
 WindowsStandalone
 SceneListBegin?
+Assets/Telas/Menu.unity
 Assets/Telas/PrimeiroReino.unity
 SceneListEnd?
 e3f1b7fd7c582e2d6c413632367760c1 Assembly-CSharp.dll:.PedraGigante
@@ -83,7 +84,6 @@ f61c0793411f10cf5fbfa1473fef5ef2 UnityEngine.UI.dll:UnityEngine.UI.ToggleGroup
 86d36c43c53541d667100dc90b89cfba UnityEngine.UI.dll:UnityEngine.EventSystems.TouchInputModule
 1b8c02d0aa82fbf036a2b9b2d713eec3 UnityEngine.UI.dll:UnityEngine.UI.VerticalLayoutGroup
 3297892c27a8f0106e50da453a15f307 Assembly-CSharp.dll:.CameraAto01
-7cf970374c34a757c04d7fc63ac2a652 Assembly-CSharp.dll:.MovimentacaoTeste
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 dbc29a6f2739d277c10da432d73adb6d UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
 8144169769d51429c4aedc8b0f92d47b UnityEngine.Timeline.dll:UnityEngine.Timeline.AnimationPlayableAsset
@@ -165,11 +165,11 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 27132f692d06ac6e722571d543f3e10a Assembly-CSharp.dll:.FazerPedrasVoar
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 b397aa314b042ae4f34dd2d1444b2df4 Assembly-CSharp.dll:.AbejideMagia
-bebf1b73970266d8a271615faef8d7b3 Assembly-CSharp.dll:.EstudosDaFisica
 53b4d7a6721cb2a9e57a2077138c57a3 Assembly-CSharp.dll:.DeixarTransparente
 ae13eb3039308f1f966a91fb445ea356 Assembly-CSharp.dll:.AbejideAto01
 ab185e81ef555e0231cb286629a73dfa Assembly-CSharp.dll:.TrancaRuaAto01
 859e0085d3f9a821e24c1fa66e1c241b Assembly-CSharp.dll:.ObjetoMassa
 cefee73a023d97637362d1bf203464d3 Assembly-CSharp.dll:.AbejideAto02
 63c4676cbdfc0050b8d052d2f164d1e4 Assembly-CSharp.dll:.CarcereiroAto01
-5f6ddc87f953e0e89ee6f71672001801 Assembly-CSharp.dll:.Abejide
+78fa0dd56605fe7fd16dbbcc93fd82e8 Assembly-CSharp.dll:.Abejide
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.LevelManager

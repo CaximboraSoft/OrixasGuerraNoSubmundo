@@ -1,15 +1,18 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Personagem\InimigosNormais\Scripts\InimigosNormais.cs">
     <Files>
-      <File FileName="Assets\Personagem\Scripts\DadosMovimentacao.cs" Line="1" Column="1" />
-      <File FileName="Assets\Personagem\InimigosNormais\Scripts\InimigosNormais.cs" Line="1" Column="1" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\Abejide.cs" Line="185" Column="19" />
+      <File FileName="Assets\Personagem\Scripts\DadosMovimentacao.cs" Line="45" Column="38" />
+      <File FileName="Assets\Personagem\InimigosNormais\Scripts\InimigosNormais.cs" Line="85" Column="112" />
       <File FileName="Assets\Cenario\Scripts\CameraDetectarColisao.cs" Line="1" Column="1" />
-      <File FileName="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" Line="82" Column="14" />
-      <File FileName="Assets\Personagem\Exus\2 Exu Tranca-Tudo\Scripts\Cutscene\TrancaRuaAto01.cs" Line="46" Column="13" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" Line="1" Column="1" />
+      <File FileName="Assets\Personagem\Exus\2 Exu Tranca-Tudo\Scripts\Cutscene\TrancaRuaAto01.cs" Line="1" Column="1" />
       <File FileName="Assets\Personagem\Exus\1 Exu Velho\Scripts\Cutscene\SeteEncruzilhadasAto01.cs" Line="1" Column="1" />
-      <File FileName="Assets\Cenario\Scripts\DadosDaFase.cs" Line="28" Column="3" />
+      <File FileName="Assets\Cenario\Scripts\DadosDaFase.cs" Line="1" Column="1" />
       <File FileName="Assets\Cenario\Scripts\DeixarTransparente.cs" Line="1" Column="1" />
+      <File FileName="Assets\Interfaces\Menu\LevelManager.cs" Line="14" Column="23" />
+      <File FileName="Assets\Cenario\Scripts\EsconderObjeto.cs" Line="9" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

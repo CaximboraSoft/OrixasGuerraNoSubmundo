@@ -114,6 +114,9 @@ ModelImporter:
     7400066: C_Ataque02
     7400068: C_Ataque03
     7400070: C_Parado
+    7400072: C_Ataque01Antes
+    7400074: C_Ataque02Antes
+    7400076: C_Ataque03Antes
     9500000: //RootNode
     13700000: Amud
     13700002: Azagaia
@@ -236,7 +239,7 @@ ModelImporter:
     - serializedVersion: 16
       name: C_Ataque01
       takeName: Sieg_Ataques
-      firstFrame: 1
+      firstFrame: 5
       lastFrame: 36
       wrapMode: 0
       orientationOffsetY: 0
@@ -264,7 +267,7 @@ ModelImporter:
     - serializedVersion: 16
       name: C_Ataque02
       takeName: Sieg_Ataques
-      firstFrame: 40
+      firstFrame: 45
       lastFrame: 66
       wrapMode: 0
       orientationOffsetY: 0
@@ -292,7 +295,7 @@ ModelImporter:
     - serializedVersion: 16
       name: C_Ataque03
       takeName: Sieg_Ataques
-      firstFrame: 69
+      firstFrame: 74
       lastFrame: 96
       wrapMode: 0
       orientationOffsetY: 0
@@ -378,6 +381,90 @@ ModelImporter:
       takeName: Sieg_Parado
       firstFrame: 135
       lastFrame: 139
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: C_Ataque01Antes
+      takeName: Sieg_Ataques
+      firstFrame: 1
+      lastFrame: 5
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: C_Ataque02Antes
+      takeName: Sieg_Ataques
+      firstFrame: 40
+      lastFrame: 45
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: C_Ataque03Antes
+      takeName: Sieg_Ataques
+      firstFrame: 69
+      lastFrame: 74
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

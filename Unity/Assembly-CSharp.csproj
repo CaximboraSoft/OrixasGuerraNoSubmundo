@@ -61,6 +61,7 @@
      <Compile Include="Assets\Cenario\Scripts\DetectorDeixarTrasn.cs" />
      <Compile Include="Assets\Cenario\Scripts\EsconderObjeto.cs" />
      <Compile Include="Assets\Cenario\Scripts\FPS.cs" />
+     <Compile Include="Assets\Interfaces\Menu\LevelManager.cs" />
      <Compile Include="Assets\Interfaces\Scripts\Conversas.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\Abejide.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideChao.cs" />
@@ -83,8 +84,6 @@
      <Compile Include="Assets\Personagem\Scripts\DadosMovimentacao.cs" />
      <Compile Include="Assets\Personagem\Scripts\MetodosDaCutscene.cs" />
      <Compile Include="Assets\Personagem\Scripts\ObjetoMassa.cs" />
-     <Compile Include="Assets\Testes\EstudosDaFisica.cs" />
-     <Compile Include="Assets\Testes\MovimentacaoTeste.cs" />
      <None Include="Assets\Personagem\Shader\Armas Shaded.shader" />
      <None Include="Assets\Personagem\Shader\Armas Shaded NormalMap.shader" />
      <None Include="Assets\Personagem\Shader\Examples\Diffuse Simple.shader" />

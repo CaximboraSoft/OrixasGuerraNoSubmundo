@@ -2,7 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
+
 public class Abejide : MonoBehaviour {
+
+	public Slider estamina;
+	public float addEstaminaParado;
+	public float addEstaminaAndando;
+	public float subEstaminaAtacando;
+	public float subEstaminaCorrendo;
+	public float subEstaminaPulando;
+	public float subEstaminaEsquivando;
+	public int iDUltimoAtaque = 0;
 
 	public Vector3 vetorDeMovimento;
 	private DadosMovimentacao meuDadosMovimentacao;
@@ -163,6 +174,23 @@ public class Abejide : MonoBehaviour {
 				BuscarInimigoFocar ();
 			}
 		}
+
+		//Estamina
+		if (!meuAnimator.GetBool ("Atacando") && !armaStateInfo.IsTag ("Atacando")) {
+			//Perde estamina correndo
+			if (meuAnimator.GetFloat ("Velocidade") >= 4f && !esquivando) {
+				estamina.value -= subEstaminaCorrendo;
+			//Recupera estamina
+			} else {
+				iDUltimoAtaque = 0;
+
+				if (peStateInfo.IsTag ("Parado")) {
+					estamina.value += addEstaminaParado;
+				} else {
+					estamina.value += addEstaminaAndando;
+				}
+			}
+		}
 	}
 
 	void FixedUpdate () {
@@ -178,7 +206,7 @@ public class Abejide : MonoBehaviour {
 
 		if (!focandoInimigoAnimator || esquivando) {
 			//Faz sempre o Abejide se mover para frente.
-			meuDadosMovimentacao.PegarMeuRigidbody ().AddForce (transform.forward * forcaDeMovimento, ForceMode.Force);
+			meuDadosMovimentacao.PegarMeuRigidbody ().AddForce (transform.forward * forcaDeMovimento * estamina.value, ForceMode.Force);
 		} else {
 			MovimentacaoOlhando ();
 		}
@@ -199,6 +227,8 @@ public class Abejide : MonoBehaviour {
 			possoPular = false;
 			tempoSubindo = 0;
 			meuAbejideChao.bateuNoChao = false;
+
+			estamina.value -= subEstaminaPulando;
 		}
 
 		if (!estouNoChao) {
@@ -241,6 +271,7 @@ public class Abejide : MonoBehaviour {
 			esquivando = true;
 			chegouNoAnguloDaEsquiva = false;
 			meuAnimator.SetBool ("Atacando", false);
+			estamina.value -= subEstaminaEsquivando;
 
 			if (Input.GetKey (KeyCode.UpArrow)) {
 				anguloDaEsquiva = 0;
@@ -259,8 +290,8 @@ public class Abejide : MonoBehaviour {
 
 		if (esquivando) {
 			if (!chegouNoAnguloDaEsquiva) {
-				float tempoDeRotacao = meuDadosMovimentacao.velocidadeRotacao * 4f;
-				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (new Vector3 (0, anguloDaEsquiva, 0)), tempoDeRotacao * Time.deltaTime);
+				float tempoDeRotacao = meuDadosMovimentacao.velocidadeRotacao * 15f;
+				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (new Vector3 (0, anguloDaEsquiva, 0)), tempoDeRotacao * estamina.value * Time.deltaTime);
 
 			if (Mathf.Abs(anguloDaEsquiva - transform.eulerAngles.y) < 25 || (anguloDaEsquiva == 0 && transform.eulerAngles.y > 350)) {
 					meuAnimator.SetTrigger ("Esquivar");
@@ -296,9 +327,15 @@ public class Abejide : MonoBehaviour {
 
 				tempoCombo = 0;
 				meuAnimator.SetBool ("Atacando", true);
+
+				//Perde estamina atacando
+				if (iDUltimoAtaque != armaStateInfo.fullPathHash) {
+					iDUltimoAtaque = armaStateInfo.fullPathHash;
+					estamina.value -= subEstaminaAtacando;
+				}
 			}
 		}
-			
+
 		if (!estaAtaqueAndando) {
 			tempoCombo += Time.deltaTime;
 
@@ -368,10 +405,10 @@ public class Abejide : MonoBehaviour {
 				}
 				
 				//Faz o Abejide apontar para um angulo segundo as setas que o jogador pode esta apertando.
-				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (angulo), tempoDeRotacao * Time.deltaTime);
+				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (angulo), tempoDeRotacao * estamina.value * Time.deltaTime);
 			} else if (chegouNoAnguloDaEsquiva) {
 				float tempoDeRotacao = meuDadosMovimentacao.velocidadeRotacao * 1.2f;
-				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (angulo), tempoDeRotacao * Time.deltaTime);
+				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (angulo), tempoDeRotacao * estamina.value * Time.deltaTime);
 
 				forcaDeMovimento = velocidadeEsquiva;
 			}
@@ -386,9 +423,7 @@ public class Abejide : MonoBehaviour {
 		//Faz o abejide olhar suavemente para o inimigo focado
 		float tempoDeRotacao = meuDadosMovimentacao.velocidadeRotacao +
 			                   meuDadosMovimentacao.PegarMeuRigidbody ().velocity.magnitude;
-		transform.rotation = Quaternion.Slerp(transform.rotation,
-							 Quaternion.Euler(new Vector3 (0, seta.eulerAngles.y, 0)),
-			 				 tempoDeRotacao * 1.5f * Time.deltaTime);
+		transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(new Vector3 (0, seta.eulerAngles.y, 0)), tempoDeRotacao * estamina.value * 1.5f * Time.deltaTime);
 
 
 		//Sistema de movimentação
