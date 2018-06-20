@@ -164,7 +164,7 @@ public class AbejideAto02 : MonoBehaviour {
 					break;
 				case 9:
 					if (meuMetodosDaCutscene.AtorJaPassouDoAto (2, 7)) {
-						fala = "Não permitirei que sai impune";
+						fala = "Não permitirei que saia impune";
 						meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 4, 3 * sat, true);
 						tempoEspera = 0;
 						maxTempoEspera = (4f + 3f) * sat;
