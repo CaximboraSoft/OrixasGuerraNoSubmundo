@@ -52,6 +52,7 @@ public class CarcereiroAto01 : MonoBehaviour {
 	}
 
 	public void AcabouCutscene () {
+		GetComponentInChildren<Arma> ().enabled = true;
 		atorAnimator.runtimeAnimatorController = controllerOriginal as RuntimeAnimatorController;
 		Destroy (GetComponent<MetodosDaCutscene> ());
 		Destroy (GetComponent<CarcereiroAto01> ());

@@ -32,6 +32,8 @@ public class Abejide : MonoBehaviour {
 	private float distanciaDoInimigo = 0f;
 	public Transform seta;
 	public Transform satPosicaoFora;
+	public Image[] coracoes;
+	public int vidas = 6;
 
 	public bool focandoInimigoAnimator;
 	private bool focandoInimigoLocal;
@@ -111,6 +113,14 @@ public class Abejide : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		for (int i = 0; i < coracoes.Length; i++) {
+			if (i < vidas) {
+				coracoes [i].enabled = true;
+			} else {
+				coracoes [i].enabled = false;
+			}
+		}
+
 		if (inimigoParaFocar != null && inimigoParaFocar.GetComponent<DadosMovimentacao> ().vida < 1) {
 			inimigoParaFocar = null;
 			BuscarInimigoFocar ();
@@ -143,7 +153,7 @@ public class Abejide : MonoBehaviour {
 		meuAnimator.SetFloat ("PeDirecao", peDirecao);
 		meuAnimator.SetBool ("FocandoInimigo", focandoInimigoAnimator);
 		meuAnimator.SetBool ("EstouNoChao", estouNoChao);
-		meuAnimator.SetFloat ("VelocidadeAtacando", velocidadeAtacando);
+		meuAnimator.SetFloat ("VelocidadeAtacando", velocidadeAtacando * estamina.value);
 		if (estouNoChao) {
 			meuAnimator.SetFloat ("Velocidade", meuDadosMovimentacao.PegarMeuRigidbody ().velocity.magnitude);
 		} else {
@@ -568,7 +578,7 @@ public class Abejide : MonoBehaviour {
 			for (int i = 0; i < inimigoTemp.Length; i++) {
 				distanciaTemp = Vector3.Distance (transform.position, inimigoTemp [i].transform.position);
 
-				if (inimigoTemp[i].GetComponent<InimigosNormais> ().enabled && distanciaTemp < distanciaDoInimigo) {
+				if (distanciaTemp < distanciaDoInimigo) {
 					distanciaDoInimigo = distanciaTemp;
 					indiceMenorDistancia = i;
 				}
@@ -587,5 +597,17 @@ public class Abejide : MonoBehaviour {
 		armas [armaAtual].enabled = false;
 		armas [indiceArma].enabled = false;
 		armaAtual = indiceArma;
+	}
+
+	public void PerderVida () {
+		vidas--;
+	}
+
+	void OnCollisionEnter (Collision other) {
+		if (other.transform.tag == "Vida" && vidas < 6) {
+			Destroy (other.gameObject);
+			vidas++;
+		}
+		
 	}
 }

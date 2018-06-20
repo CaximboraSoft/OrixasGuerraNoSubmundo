@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
+
 public class DadosDaFase : MonoBehaviour {
 	
 	public Transform[] atores;
@@ -10,10 +12,12 @@ public class DadosDaFase : MonoBehaviour {
 	public Light[] luz;
 	public ParticleSystem[] fogo;
 
-	public float distanciaAcenderTocha = 10f;
-	public float inimigosNormais = 0;
-	public float inimigosNormaisAtacando = 0;
+	public int inimigosIa0Atacando; //Usado para os carcereiros
+	public int inimigosIa1Atacando; //Usados para as succubus
+	public int inimigosIa2Atacando; //Usados para as esqueletos
 
+	public Text pontuacaoText;
+	public int pontuacao;
 	public int sat;
 
 	// Use this for initialization
@@ -25,7 +29,40 @@ public class DadosDaFase : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		pontuacaoText.text = pontuacao.ToString ();
+
+		ChecarInimigosAtacando ();
+
 		LigarConformeDistancia ();
+	}
+
+	void ChecarInimigosAtacando () {
+		int inimigosIa0AtacandoTemp = 0;
+		int inimigosIa1AtacandoTemp = 0;
+		int inimigosIa2AtacandoTemp = 0;
+		InimigosNormais[] inimigosNormais = FindObjectsOfType <InimigosNormais> ();
+
+		for (int i = 0; i < inimigosNormais.Length; i++) {
+			if (inimigosNormais[i] != null && inimigosNormais[i].viuAbejide) {
+				if (inimigosNormais[i].estato == 0) {
+					inimigosIa0AtacandoTemp++;
+
+					if (inimigosNormais[i].nivelDaIa == 1) {
+						inimigosIa1AtacandoTemp++;
+					} if (inimigosNormais[i].nivelDaIa == 2) {
+						inimigosIa2AtacandoTemp++;
+					}
+				}
+			}
+		}
+
+		if (inimigosIa0Atacando != inimigosIa0AtacandoTemp) {
+			inimigosIa0Atacando = inimigosIa0AtacandoTemp;
+		} if (inimigosIa1Atacando != inimigosIa1AtacandoTemp) {
+			inimigosIa1Atacando = inimigosIa1AtacandoTemp;
+		} if (inimigosIa2Atacando != inimigosIa2AtacandoTemp) {
+			inimigosIa2Atacando = inimigosIa2AtacandoTemp;
+		}
 	}
 
 	void LigarConformeDistancia () {

@@ -20,13 +20,17 @@ public class CordjuvanteAnimatorOff : MonoBehaviour {
 	void Update () {
 		distancia = Vector3.Distance (transform.position, abejide.position);
 
-		if (!meuAnimator[0].enabled) {
+		if (meuAnimator[0] == null) {
+			Destroy (GetComponent <CordjuvanteAnimatorOff> ());
+		}
+
+		if (meuAnimator[0] != null && !meuAnimator[0].enabled) {
 			if (distancia < 20f) {
 				for (int i = 0; i < meuAnimator.Length; i++) {
 					meuAnimator[i].enabled = true;
 				}
 			}
-		} else if (meuAnimator[0].enabled && distancia > 20f) {
+		} else if (meuAnimator[0] != null && meuAnimator[0].enabled && distancia > 20f) {
 			for (int i = 0; i < meuAnimator.Length; i++) {
 				meuAnimator[i].enabled = false;
 			}

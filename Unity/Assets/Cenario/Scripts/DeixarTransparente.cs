@@ -14,6 +14,8 @@ public class DeixarTransparente : MonoBehaviour {
 	void Awake () {
 		deixarTransparente = false;
 
+		materialTransparente = Resources.Load ("Materiais/Transparente", typeof(Material)) as Material;
+
 		renderMaterial = GetComponent<Renderer> ();
 
 		materialOriginal = GetComponent<Renderer> ().materials;

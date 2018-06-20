@@ -26,6 +26,6 @@ Material:
     - _Outline: 0.005
     - _RimPower: 3
     m_Colors:
-    - _Color: {r: 0.47794116, g: 0.47794116, b: 0.47794116, a: 1}
+    - _Color: {r: 0.66176474, g: 0.66176474, b: 0.66176474, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.26, g: 0.19, b: 0.16, a: 0}

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: SuccubusAtaque
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Corpo
+    m_Weight: 0
+  - m_Path: Osso
+    m_Weight: 0
+  - m_Path: Osso/BoneCorpo
+    m_Weight: 1
+  - m_Path: Osso/BoneCorpo/BoneAsaDireita
+    m_Weight: 0
+  - m_Path: Osso/BoneCorpo/BoneAsaEsquerda
+    m_Weight: 0
+  - m_Path: Osso/BoneCorpo/BoneCabeca
+    m_Weight: 1
+  - m_Path: Osso/BoneCorpo/BoneEsquerda
+    m_Weight: 1
+  - m_Path: Osso/BoneCorpo/BoneMaoDireita
+    m_Weight: 1
+  - m_Path: Osso/BonePes
+    m_Weight: 0
+  - m_Path: Osso/BonePes/BonePeDireito
+    m_Weight: 0
+  - m_Path: Osso/BonePes/BonePeEsquerdo
+    m_Weight: 0

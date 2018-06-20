@@ -17,7 +17,9 @@ public class AbejideChao : MonoBehaviour {
 	}
 
 	void OnTriggerStay (Collider other) {
-		bateuNoChao = true;
+		if (other.tag != "ArmaColisor") {
+			bateuNoChao = true;
+		}
 	}
 
 	void OnTriggerExit (Collider other) {

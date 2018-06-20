@@ -7,7 +7,7 @@ public class Coadjuvantes : MonoBehaviour {
 	private Animator meuAnimator;
 	private Transform abejide;
 
-	public bool codigoIniciaAtivo = true;
+	public bool calcularDistancia = true;
 
 	private float distancia;
 
@@ -20,15 +20,28 @@ public class Coadjuvantes : MonoBehaviour {
 		meuAnimator.SetTrigger ("MudarAto");
 
 		abejide = GameObject.FindGameObjectWithTag ("Abejide").transform;
-
-		GetComponent<Coadjuvantes> ().enabled = codigoIniciaAtivo;
-		if (ato == 3 || ato == 4) {
-			GetComponent<Coadjuvantes> ().enabled = false;
-		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (ato != 3 && ato != 4 && calcularDistancia) {
+			AtivarDesativarAnimacao ();
+		}
+
+		if (meuAnimator.GetInteger ("Ato") == -1) {
+			AnimatorStateInfo meuAnimatorStateInfo = meuAnimator.GetCurrentAnimatorStateInfo (0);
+
+			if (meuAnimatorStateInfo.IsTag ("MORTO")) {
+
+
+				Destroy (GetComponent<Collider> ());
+				Destroy (meuAnimator);
+				Destroy (GetComponent<Coadjuvantes> ());
+			}
+		}
+	}
+
+	void AtivarDesativarAnimacao () {
 		distancia = Vector3.Distance (transform.position, abejide.position);
 
 		if (ato == 5 && distancia < 20f) {

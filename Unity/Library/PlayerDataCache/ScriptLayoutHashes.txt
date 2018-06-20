@@ -3,6 +3,7 @@ SceneListBegin?
 Assets/Telas/Menu.unity
 Assets/Telas/PrimeiroReino.unity
 SceneListEnd?
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.LevelManager
 e3f1b7fd7c582e2d6c413632367760c1 Assembly-CSharp.dll:.PedraGigante
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 dbc29a6f2739d277c10da432d73adb6d UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
@@ -127,7 +128,7 @@ b97087ff90f303e68457b4eb0381cf94 Assembly-CSharp.dll:.EsqueletoAto01
 8100e52d9c0eb0b410792c043eead24e Assembly-CSharp.dll:.MetodosDaCutscene
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.CallbackExecutor
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.Editor.Placeholder
-66bf9da69b78cc3a4b68e43930e2a8f2 Assembly-CSharp.dll:.InimigosNormais
+9277cd4fb6a291732db0397e0648309e Assembly-CSharp.dll:.InimigosNormais
 c6583d890bf7db2b93f96e829394d483 Assembly-CSharp.dll:.SeteEncruzilhadasAto01
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.EsconderObjeto
 f0c97c496036ff71265ae1bfce469c73 Assembly-CSharp.dll:.Coadjuvantes
@@ -172,4 +173,3 @@ ab185e81ef555e0231cb286629a73dfa Assembly-CSharp.dll:.TrancaRuaAto01
 cefee73a023d97637362d1bf203464d3 Assembly-CSharp.dll:.AbejideAto02
 63c4676cbdfc0050b8d052d2f164d1e4 Assembly-CSharp.dll:.CarcereiroAto01
 78fa0dd56605fe7fd16dbbcc93fd82e8 Assembly-CSharp.dll:.Abejide
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.LevelManager

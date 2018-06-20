@@ -202,6 +202,7 @@ public class Lula : MonoBehaviour {
 		Arma abejideArma = abejide.GetComponentInChildren<Arma> ();
 		abejideArma.dano = abejide.armasDano [0];
 		abejideArma.indiceDoLayer = 2;
+		Destroy(abejideArma.GetComponent<AudioSource> ());
 		abejideArma.transform.localScale = new Vector3 (abejideArma.transform.localScale.x, abejide.alcanceEspadas[0], abejideArma.transform.localScale.z);
 		ato = -999;
 	}
