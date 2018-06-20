@@ -569,6 +569,8 @@ public class Abejide : MonoBehaviour {
 
 	private void BuscarInimigoFocar () {
 		GameObject[] inimigoTemp = GameObject.FindGameObjectsWithTag ("Inimigo");
+		GameObject miniBossTemp = GameObject.FindGameObjectWithTag ("MiniBoss");
+
 		if (inimigoTemp.Length != 0) {
 
 			int indiceMenorDistancia = 0;
@@ -584,7 +586,16 @@ public class Abejide : MonoBehaviour {
 				}
 			}
 
-			if (distanciaDoInimigo < maxDistanciaOlhando) {
+			if (miniBossTemp != null) {
+				if (Vector3.Distance (miniBossTemp.transform.position, transform.position) < distanciaDoInimigo) {
+					distanciaDoInimigo = Vector3.Distance (miniBossTemp.transform.position, transform.position);
+					inimigoParaFocar = miniBossTemp.transform;
+					return;
+				} else {
+					inimigoParaFocar = inimigoTemp [indiceMenorDistancia].GetComponent<Transform> ();
+					return;
+				}
+			} else if (distanciaDoInimigo < maxDistanciaOlhando) {
 				inimigoParaFocar = inimigoTemp [indiceMenorDistancia].GetComponent<Transform> ();
 				return;
 			}

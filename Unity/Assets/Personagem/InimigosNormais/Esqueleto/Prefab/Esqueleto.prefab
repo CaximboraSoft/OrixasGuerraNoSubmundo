@@ -407,7 +407,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1754875147741012}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -214.9, y: 0.143, z: -21.7}
+  m_LocalPosition: {x: -236.9, y: 0.143, z: -10.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4595970613307158}
@@ -927,7 +927,7 @@ MonoBehaviour:
   velocidade: 0
   distanciaDeAtaque: 1.9
   minTempoAtacar: 2
-  maxTempoAtacar: 4
+  maxTempoAtacar: 5
   minDistanciaDeredor: 2
   maxDistanciaDeredor: 14
   changeEstatoAtacando: 50

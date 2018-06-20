@@ -56,8 +56,8 @@ public class InimigosNormais : MonoBehaviour {
 	public float maxMudarEstatoAtacando = 25f;
 	public float muitoProximo = 0f;
 	public float maxMuitoProximo = 0f;
-	public float muitoDistante;
-	public float maxMuitoDistante;
+	public float muitoDistante = 0f;
+	public float maxMuitoDistante = 4f;
 
 	public int nivelDaIa = 0;
 	/* Estatos:
@@ -423,6 +423,7 @@ public class InimigosNormais : MonoBehaviour {
 	public void DesativarCodigo () {
 		bool droparVida = false;
 
+		//Verifica quantos inimigos com esse mesmo nivel de IA esta atacando, mas dependendo do nivel de IA tembem é contabilizado os outros
 		switch (nivelDaIa) {
 		case 0:
 			dadosDaFase.pontuacao += 100;

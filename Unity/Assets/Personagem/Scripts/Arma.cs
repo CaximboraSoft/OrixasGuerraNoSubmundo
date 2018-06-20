@@ -33,22 +33,31 @@ public class Arma : MonoBehaviour {
 		if (donoStateInfo.fullPathHash != nomeDoAtaque && donoStateInfo.normalizedTime > donoStateInfo.length / 1.5f &&
 			donoStateInfo.IsTag ("Atacando")) {
 
-			if (other.transform.tag == "Inimigo" && donoAnimator.name == "AbejideBlender") {
-				nomeDoAtaque = donoStateInfo.fullPathHash;
-				other.GetComponent<DadosMovimentacao> ().PerderVida (dano);
-				if (dano == 10f) {
-					GetComponent<AudioSource> ().clip = danoSoco [Random.Range (0, danoSoco.Length)];
-					GetComponent<AudioSource> ().Play ();
+			if (donoAnimator.name == "AbejideBlender") {
+				if (other.transform.tag == "Inimigo") {
+					nomeDoAtaque = donoStateInfo.fullPathHash;
+					other.GetComponent<DadosMovimentacao> ().PerderVida (dano);
+					if (dano == 10f) {
+						GetComponent<AudioSource> ().clip = danoSoco [Random.Range (0, danoSoco.Length)];
+						GetComponent<AudioSource> ().Play ();
+					}
+				} else if (other.transform.tag == "MiniBoss") {
+					nomeDoAtaque = donoStateInfo.fullPathHash;
+					other.GetComponent<DadosMovimentacao> ().PerderVida (dano);
+					if (dano == 10f) {
+						GetComponent<AudioSource> ().clip = danoSoco [Random.Range (0, danoSoco.Length)];
+						GetComponent<AudioSource> ().Play ();
+					}
+				} else if (other.transform.tag == "Coadjuvantes") {
+					FindObjectOfType <DadosDaFase> ().pontuacao += 50;
+
+					other.GetComponent<Animator> ().SetInteger ("Ato", -1);
+					other.GetComponent<Animator> ().SetTrigger ("MudarAto");
+					other.tag = "Untagged";
 				}
 			} else if (other.transform.tag == "Abejide") {
 				nomeDoAtaque = donoStateInfo.fullPathHash;
 				other.GetComponent<Abejide> ().PerderVida ();
-			} else if (other.transform.tag == "Coadjuvantes" && donoAnimator.name == "AbejideBlender") {
-				FindObjectOfType <DadosDaFase> ().pontuacao += 50;
-
-				other.GetComponent<Animator> ().SetInteger ("Ato", -1);
-				other.GetComponent<Animator> ().SetTrigger ("MudarAto");
-				other.tag = "Untagged";
 			}
 		}
 	}

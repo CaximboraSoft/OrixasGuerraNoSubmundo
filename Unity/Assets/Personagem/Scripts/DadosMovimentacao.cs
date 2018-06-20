@@ -7,6 +7,7 @@ public class DadosMovimentacao : MonoBehaviour {
 	private Animator meuAnimator;
 	private Rigidbody meuRigidbody;
 	private InimigosNormais meuInimigosNormais;
+	private MiniBoss meuMiniBoss;
 
 	public float vida = 100f;
 	public float velocidadeAndando;
@@ -19,6 +20,7 @@ public class DadosMovimentacao : MonoBehaviour {
 		meuAnimator = GetComponentInChildren<Animator> ();
 		meuRigidbody = GetComponent<Rigidbody> ();
 		meuInimigosNormais = GetComponent<InimigosNormais> ();
+		meuMiniBoss = GetComponent<MiniBoss> ();
 	}
 	
 	// Update is called once per frame
@@ -39,32 +41,42 @@ public class DadosMovimentacao : MonoBehaviour {
 	}
 
 	public void PerderVida (float dano) {
-		if (meuInimigosNormais.estato != 2) {
-			if (vida > 0) {
-				vida -= dano;
-				if (dano == 10f) {
-					meuInimigosNormais.PerdeuVida (false);
-				} else {
-					meuInimigosNormais.PerdeuVida (true);
-				}
+		if (vida > 0) {
+			bool danoEspada = false;
 
-
-				if (vida <= 1) {
-					meuAnimator.SetLayerWeight (1, 0f);
-
-					if (meuAnimator.layerCount > 2) {
-						meuAnimator.SetLayerWeight (2, 0f);
-						meuAnimator.SetLayerWeight (3, 0f);
-					}
-
-					meuAnimator.SetBool ("Morto", true);
-					Destroy (meuRigidbody);
-					Destroy (GetComponent<Collider> ());
-					meuInimigosNormais.DesativarCodigo ();
-				}
-
-				meuAnimator.SetTrigger ("PerderVida");
+			if (dano != 10f) {
+				danoEspada = true;
 			}
+			if (meuInimigosNormais != null) {
+				meuInimigosNormais.PerdeuVida (danoEspada);
+
+				if (meuInimigosNormais.estato != 2) {
+					vida -= dano;
+				}
+			} else {
+				meuMiniBoss.PerdeuVida (danoEspada);
+				vida -= dano;
+			}
+
+			if (vida <= 1) {
+				meuAnimator.SetLayerWeight (1, 0f);
+
+				if (meuAnimator.layerCount > 2) {
+					meuAnimator.SetLayerWeight (2, 0f);
+					meuAnimator.SetLayerWeight (3, 0f);
+				}
+
+				meuAnimator.SetBool ("Morto", true);
+				Destroy (meuRigidbody);
+				Destroy (GetComponent<Collider> ());
+				if (meuInimigosNormais != null) {
+					meuInimigosNormais.DesativarCodigo ();
+				} else {
+					meuMiniBoss.DesativarCodigo ();
+				}
+			}
+
+			meuAnimator.SetTrigger ("PerderVida");
 		}
 	}
 }

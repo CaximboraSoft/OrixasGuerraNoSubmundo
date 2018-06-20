@@ -46,7 +46,7 @@ public class Lula : MonoBehaviour {
 			}
 		}
 		// && ato > 2 && !morto
-		if (Input.GetKeyDown (KeyCode.Return) && ato != 2) {
+		if (Input.GetKeyDown (KeyCode.Return) && ato != 2 && ato != 0) {
 			if (ato < 2) {
 				boca.GetComponent<Conversas> ().conversas.enabled = false;
 				for (int i = 0; i < pausarInimigosNormais.Length; i++) {
