@@ -43,7 +43,7 @@ public class TrancaRuaAto01 : MonoBehaviour {
 
 			switch (meuMetodosDaCutscene.PegarAto ()) {
 			case 0:
-				fala = "Sua magia incoveniente não tem efeito por essas terras.";
+				fala = "Sua magia inconveniente não tem efeito por essas terras.";
 				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 1, 5 * sat, true);
 				tempoEspera = 0;
 				maxTempoEspera = 3f * sat;
@@ -58,7 +58,7 @@ public class TrancaRuaAto01 : MonoBehaviour {
 				meuMetodosDaCutscene.ComecarAtuacaoPosicao(velocidade, false, false, 0);
 				break;
 			case 4:
-				fala = "Há que bobagem, Se não fosse por nós ele estaria morto assim como todas as coisa vivas.";
+				fala = "Há que bobagem. Se não fosse por nós ele estaria morto assim como todas as coisas vivas.";
 				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 0, 7 * sat, true);
 				tempoEspera = 0;
 				maxTempoEspera = 7 * sat;

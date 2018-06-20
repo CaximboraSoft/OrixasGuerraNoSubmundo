@@ -134,7 +134,7 @@ public class Lula : MonoBehaviour {
 			break;
 
 		case 5:
-			fala = "Se me ajudar.. Te ajudo a sair daqui. Vi seu olhar... conheço-o muito bem.";
+			fala = "Se me ajudar, te ajudarei a sair daqui. Vi seu olhar... O conheço muito bem.";
 			boca.GetComponent<Text> ().text = fala;
 			boca.GetComponent<Conversas> ().MudarTempoLimparTexto (4f);
 			boca.GetComponent<Conversas> ().conversas.enabled = true;
@@ -144,7 +144,7 @@ public class Lula : MonoBehaviour {
 		case 6:
 			temporizador += Time.deltaTime;
 			if (temporizador > 4f) {
-				fala = "De quebra você ainda consegue uma arma boa, hein que tal?";
+				fala = "E de quebra você ganha uma arma muito boa. Hein, que tal?";
 				boca.GetComponent<Text> ().text = fala;
 				boca.GetComponent<Conversas> ().MudarTempoLimparTexto (4f);
 				boca.GetComponent<Conversas> ().conversas.enabled = true;
@@ -168,7 +168,7 @@ public class Lula : MonoBehaviour {
 		case 8:
 			temporizador += Time.deltaTime;
 			if (temporizador > 1f) {
-				fala = "Brigado, filho...";
+				fala = "Obrigado filho...";
 				boca.GetComponent<Text> ().text = fala;
 				boca.GetComponent<Conversas> ().MudarTempoLimparTexto (2f);
 				boca.GetComponent<Conversas> ().conversas.enabled = true;

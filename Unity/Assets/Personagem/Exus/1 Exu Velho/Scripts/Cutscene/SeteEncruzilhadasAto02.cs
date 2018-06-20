@@ -56,7 +56,7 @@ public class SeteEncruzilhadasAto02 : MonoBehaviour {
 					objTemp [i].AtivarCodigo ();
 				}
 
-				fala = "Esta será a sua nova casa.";
+				fala = "Esta será sua nova casa.";
 				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 5, 5 * sat, true);
 				tempoEspera = 0;
 				maxTempoEspera = (5 + 5) * sat;
@@ -84,13 +84,13 @@ public class SeteEncruzilhadasAto02 : MonoBehaviour {
 				}
 				break;
 			case 5:
-				fala = "Sou um velho cansado, mas não vou deixar que sai assim, meu caro.";
+				fala = "Sou um velho cansado, mas não vou deixar que saia assim, meu caro.";
 				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 0, 4 * sat, true);
 				tempoEspera = 0;
 				maxTempoEspera = 4 * sat;
 				break;
 			case 6:
-				fala = "Carcerreiros! cuidem dele. Eu voltarei em breve.";
+				fala = "Carcereiros! Cuidem dele. Eu voltarei em breve.";
 				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 0, 4 * sat, true);
 				tempoEspera = 0;
 				maxTempoEspera = 4 * sat;
