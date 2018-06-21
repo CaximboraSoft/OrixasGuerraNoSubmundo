@@ -68,6 +68,8 @@ public class InimigosNormais : MonoBehaviour {
 	public int estato = 0;
 
 	void Awake () {
+		dadosDaFase = FindObjectOfType <DadosDaFase> ();
+
 		if (nivelDaIa == 2) {
 			if (Random.Range (0, 2) == 0) { //Escudo
 				escudo.enabled = true;
@@ -87,7 +89,7 @@ public class InimigosNormais : MonoBehaviour {
 			}
 		}
 
-		if (!espadaAtiva) {
+		if (nivelDaIa == 2 && !espadaAtiva) {
 			distanciaDeAtaque = 2.5f;
 			GetComponentInChildren<Arma> ().transform.localScale = new Vector3 (1f, 7.5f, 1f);
 		}
@@ -103,8 +105,6 @@ public class InimigosNormais : MonoBehaviour {
 		meuNavMeshAgent.stoppingDistance = distanciaDeAtaque;
 		GetComponent<InimigosNormais> ().enabled = true;
 		meuAudioSource = GetComponent<AudioSource> ();
-
-		dadosDaFase = FindObjectOfType <DadosDaFase> ();
 
 		SortearEstato ();
 	}

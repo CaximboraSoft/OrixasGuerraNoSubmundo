@@ -19,7 +19,7 @@ ff05dcdf90651c3d98a9cad3df5e471e UnityEngine.Timeline.dll:UnityEngine.Timeline.C
 df374c01140c2d578bf70cbd60073d1d UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
 380945187724d259f3d083f3f1302b56 Assembly-CSharp.dll:.DadosMovimentacao
 82a7a1fba964230338420e35a3f22a7d Assembly-CSharp.dll:.CameraDetectarColisao
-26e9b4a6a43ceb235aadc9c6361bad77 Assembly-CSharp.dll:.Arma
+54611fc79004a9f20b9f0b5911793480 Assembly-CSharp.dll:.Arma
 a35dc9cca2faebc5f5f1aeb9e8e47bbe UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
 49cd62a578efc0a599b810a2b66cd49c UnityEngine.UI.dll:UnityEngine.UI.Button
@@ -84,7 +84,7 @@ c63db43c730fa2cbb8ca07de15898cb6 UnityEngine.UI.dll:UnityEngine.UI.Toggle
 f61c0793411f10cf5fbfa1473fef5ef2 UnityEngine.UI.dll:UnityEngine.UI.ToggleGroup
 86d36c43c53541d667100dc90b89cfba UnityEngine.UI.dll:UnityEngine.EventSystems.TouchInputModule
 1b8c02d0aa82fbf036a2b9b2d713eec3 UnityEngine.UI.dll:UnityEngine.UI.VerticalLayoutGroup
-3297892c27a8f0106e50da453a15f307 Assembly-CSharp.dll:.CameraAto01
+8e8b2eeb3bd2678202d2e7e31ffafede Assembly-CSharp.dll:.CameraAto01
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 dbc29a6f2739d277c10da432d73adb6d UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
 8144169769d51429c4aedc8b0f92d47b UnityEngine.Timeline.dll:UnityEngine.Timeline.AnimationPlayableAsset
@@ -128,13 +128,14 @@ b97087ff90f303e68457b4eb0381cf94 Assembly-CSharp.dll:.EsqueletoAto01
 8100e52d9c0eb0b410792c043eead24e Assembly-CSharp.dll:.MetodosDaCutscene
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.CallbackExecutor
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.Editor.Placeholder
-9277cd4fb6a291732db0397e0648309e Assembly-CSharp.dll:.InimigosNormais
+a699fc0c0843d8e3a3d87042f43d4b38 Assembly-CSharp.dll:.InimigosNormais
+55d9e6d7cc95b973dd0995de08999b90 Assembly-CSharp.dll:.MiniBoss
 c6583d890bf7db2b93f96e829394d483 Assembly-CSharp.dll:.SeteEncruzilhadasAto01
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.EsconderObjeto
-f0c97c496036ff71265ae1bfce469c73 Assembly-CSharp.dll:.Coadjuvantes
+a69aec9dd12c4bc48da323257c3d4414 Assembly-CSharp.dll:.Coadjuvantes
 8f17b2da80547c0f113848fec4d284fe Assembly-CSharp.dll:.ColocarDentro
 805fa2ed265787a13ccf40c3b8beef8b Assembly-CSharp.dll:.AbejideMao
-127c13d87d44fcad1f517f53b2360165 Assembly-CSharp.dll:.DadosDaFase
+4a13270d3d3e76838fdff721d3fcb1f3 Assembly-CSharp.dll:.DadosDaFase
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
 60b2bb652410a5867a5ab9a01cd38461 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkDiscovery
@@ -149,7 +150,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 3f32f08a64daf40b09ed864d96fe3840 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransform
 73843688b51256aed059f049c540bca8 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformChild
 528ea1fd7c01796fc60c4e2f172ea229 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformVisualizer
-03694dfb750d305548e098cbbc750b48 Assembly-CSharp.dll:.seguirJogador
+d984791569bdc45a70f62f9c954b3f1e Assembly-CSharp.dll:.seguirJogador
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.PlayModeRunnerCallback
 96d0fbde9fd209878a0a291f82c9bcdd UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.PlaymodeTestsController
 64eb32cc721b1cc68a91ed57461e188c UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.RemoteTestResultSender
@@ -172,4 +173,5 @@ ab185e81ef555e0231cb286629a73dfa Assembly-CSharp.dll:.TrancaRuaAto01
 859e0085d3f9a821e24c1fa66e1c241b Assembly-CSharp.dll:.ObjetoMassa
 cefee73a023d97637362d1bf203464d3 Assembly-CSharp.dll:.AbejideAto02
 63c4676cbdfc0050b8d052d2f164d1e4 Assembly-CSharp.dll:.CarcereiroAto01
-78fa0dd56605fe7fd16dbbcc93fd82e8 Assembly-CSharp.dll:.Abejide
+0988579959d152bcbfee5e15a87f2d59 Assembly-CSharp.dll:.Abejide
+8e8b2eeb3bd2678202d2e7e31ffafede Assembly-CSharp.dll:.CameraAto02

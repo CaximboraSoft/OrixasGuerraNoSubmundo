@@ -153,7 +153,11 @@ public class Abejide : MonoBehaviour {
 		meuAnimator.SetFloat ("PeDirecao", peDirecao);
 		meuAnimator.SetBool ("FocandoInimigo", focandoInimigoAnimator);
 		meuAnimator.SetBool ("EstouNoChao", estouNoChao);
-		meuAnimator.SetFloat ("VelocidadeAtacando", velocidadeAtacando * estamina.value);
+		if (estamina.value > estamina.maxValue / 2f) {
+			meuAnimator.SetFloat ("VelocidadeAtacando", velocidadeAtacando);
+		} else {
+			meuAnimator.SetFloat ("VelocidadeAtacando", velocidadeAtacando * (estamina.value + (estamina.maxValue / 2f)));
+		}
 		if (estouNoChao) {
 			meuAnimator.SetFloat ("Velocidade", meuDadosMovimentacao.PegarMeuRigidbody ().velocity.magnitude);
 		} else {
@@ -173,6 +177,8 @@ public class Abejide : MonoBehaviour {
 		} else if (focandoInimigoLocal && inimigoParaFocar != null) {
 			if (distanciaDoInimigo < maxDistanciaOlhando - 1f) {
 				focandoInimigoAnimator = true;
+			} else if (distanciaDoInimigo > maxDistanciaOlhando + 1f) {
+				focandoInimigoAnimator = false;
 			}
 		}
 
@@ -604,6 +610,14 @@ public class Abejide : MonoBehaviour {
 		inimigoParaFocar = null;
 	}
 
+	public Transform LugarParaCameraOlhar () {
+		if (inimigoParaFocar != null && focandoInimigoAnimator) {
+			return inimigoParaFocar;
+		}
+
+		return transform;
+	}
+
 	public void TrocarDeArma (int indiceArma) {
 		armas [armaAtual].enabled = false;
 		armas [indiceArma].enabled = false;
@@ -619,6 +633,5 @@ public class Abejide : MonoBehaviour {
 			Destroy (other.gameObject);
 			vidas++;
 		}
-		
 	}
 }

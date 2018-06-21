@@ -5,23 +5,30 @@ using UnityEngine;
 public class seguirJogador : MonoBehaviour {
 
 	private Transform abejide;
+	public Transform seta;
 	public Vector3 rotacao;
 	private Vector3 novaPosicao = Vector3.zero;
+	private Transform meuUltimoAlvo;
 
-	public float distanciaY;
-	public float distanciaZ;
+	public float distanciaY = 10f;
+	public float distanciaZ = 7f;
+	public float tempoDeResposta = 2f;
+	public float tempoOlhar = 2f;
+	public float temporizador = 0f;
 
 	// Use this for initialization
 	void Awake () {
 		abejide = GameObject.Find ("Abejide").GetComponent<Transform> ();
-
-		AtivarCodigo ();
 	}
 
 	public void AtivarCodigo() {
 		GetComponent<Camera> ().fieldOfView = 60;
-		transform.eulerAngles = Vector3.zero;
-		transform.rotation = Quaternion.Euler (rotacao);
+
+		novaPosicao.Set (abejide.position.x, abejide.position.y + distanciaY, abejide.position.z - distanciaZ);
+		transform.position = novaPosicao;
+
+		Transform meuAlvo = abejide.GetComponent <Abejide> ().LugarParaCameraOlhar ();
+		transform.LookAt (meuAlvo.position + rotacao);
 
 		GetComponent<seguirJogador> ().enabled = true;
 	}
@@ -30,6 +37,24 @@ public class seguirJogador : MonoBehaviour {
 	void Update () {
 		novaPosicao.Set (abejide.position.x, abejide.position.y + distanciaY, abejide.position.z - distanciaZ);
 
-		transform.position = novaPosicao;
+		Transform meuAlvo = abejide.GetComponent <Abejide> ().LugarParaCameraOlhar ();
+
+		if (meuAlvo != meuUltimoAlvo) {
+			temporizador = tempoOlhar;
+		}
+
+		meuUltimoAlvo = meuAlvo;
+
+		//O tempo de toração vai decaindo até chegar a zero
+		if (temporizador > 0f) {
+			temporizador -= Time.deltaTime;
+
+			if (temporizador < 0f) {
+				temporizador = 0f;
+			}
+		}
+		seta.LookAt (meuAlvo.position + rotacao);
+		transform.rotation = Quaternion.Lerp (transform.rotation, seta.rotation, temporizador * Time.deltaTime);
+		transform.position = Vector3.Lerp (transform.position, novaPosicao, tempoDeResposta * Time.deltaTime);
 	}
 }

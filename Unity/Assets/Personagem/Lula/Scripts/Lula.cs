@@ -79,7 +79,7 @@ public class Lula : MonoBehaviour {
 			if (carcereirosMorreram) {
 				temporizador += Time.deltaTime;
 
-				if (temporizador > -2f) {
+				if (temporizador > 2f) {
 					DesativarAbejide ();
 
 					abejide.enabled = false;

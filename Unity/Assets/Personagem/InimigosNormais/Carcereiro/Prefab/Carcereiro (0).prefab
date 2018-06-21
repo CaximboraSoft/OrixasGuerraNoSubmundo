@@ -707,7 +707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 445a0cd02b649404495b0ab61df1aacd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vida: 80
+  vida: 50
   velocidadeAndando: 0
   velocidadeCorrendo: 0
   velocidadePulando: 0
@@ -780,7 +780,7 @@ MonoBehaviour:
   muitoProximo: 0
   maxMuitoProximo: 0
   muitoDistante: 0
-  maxMuitoDistante: 0
+  maxMuitoDistante: 8
   nivelDaIa: 0
   estato: 0
 --- !u!136 &136296360111401264

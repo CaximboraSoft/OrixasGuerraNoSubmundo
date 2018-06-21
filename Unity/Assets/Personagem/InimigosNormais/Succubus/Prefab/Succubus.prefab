@@ -384,7 +384,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1436423769771912}
   m_LocalRotation: {x: -0, y: -0.70992684, z: -0, w: -0.7042755}
-  m_LocalPosition: {x: -110.3, y: 0.416, z: -8.5}
+  m_LocalPosition: {x: 430.93958, y: 0.34054184, z: 441.8158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4382999820030788}
@@ -392,7 +392,7 @@ Transform:
   - {fileID: 4386017495544378}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90.45801, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 30.240002, z: 0}
 --- !u!4 &4514513685201544
 Transform:
   m_ObjectHideFlags: 1
@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 445a0cd02b649404495b0ab61df1aacd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vida: 95
+  vida: 85
   velocidadeAndando: 0
   velocidadeCorrendo: 0
   velocidadePulando: 0
@@ -750,7 +750,7 @@ MonoBehaviour:
   muitoProximo: 0
   maxMuitoProximo: 0
   muitoDistante: 0
-  maxMuitoDistante: 0
+  maxMuitoDistante: 5
   nivelDaIa: 1
   estato: 0
 --- !u!136 &136630910981995890

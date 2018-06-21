@@ -30,7 +30,7 @@ public class MiniBoss : MonoBehaviour {
 	public float velocidade;
 	public float distanciaDeAtaque = 1.8f;
 
-	private float tempoAtacar = 0f;
+	private float tempoAtacar = 0f; //Temporizador usada para medior o tempo entre os ataque e para medir o tempo da investida
 	private float tempoAtacarRandom = 0f;
 	public float minTempoAtacar = 2f;
 	public float maxTempoAtacar = 4f;
@@ -41,8 +41,9 @@ public class MiniBoss : MonoBehaviour {
 	//Conrola a IA
 	public float changeEstatoAtacando = 50f; //Chance de quando for mudar de Estato esta vai cair
 	public float changeEstatoParado = 50f;
-	private float tempoMudarEstato = 0f; //Contador que vai de zero até o número sorteado para mudar de estato
-	private float tempoMudarEstatoRandom; //Guarda o número sorteado para mudar de Estato
+	public float changeEstatoInvestir = 50f;
+	public float tempoMudarEstato = 0f; //Contador que vai de zero até o número sorteado para mudar de estato
+	public float tempoMudarEstatoRandom; //Guarda o número sorteado para mudar de Estato
 	//Variáveis que guarda o tempo que vai mudar de Estato
 	public float minMudarEstatoParado = 10f;
 	public float maxMudarEstatoParado = 20f;
@@ -52,6 +53,9 @@ public class MiniBoss : MonoBehaviour {
 	public float maxMuitoProximo = 0f;
 	public float muitoDistante = 0f;
 	public float maxMuitoDistante = 4f;
+	public float minInvestindo = 4f;
+	public float maxInvestindo = 7f;
+	public float distanciaInvestida = 4f;
 
 	public int estato = 0;
 
@@ -67,6 +71,7 @@ public class MiniBoss : MonoBehaviour {
 
 		dadosDaFase = FindObjectOfType <DadosDaFase> ();
 
+		estato = 0;
 		SortearEstato ();
 	}
 
@@ -86,10 +91,17 @@ public class MiniBoss : MonoBehaviour {
 			}
 
 			if (viuAbejide) {
-				tempoMudarEstato += Time.deltaTime;
-				if (tempoMudarEstato > tempoMudarEstatoRandom) {
-					SortearEstato ();
-				}
+				//Se o miniBoss estiver invextindo, ele não vai poder mudar de estato
+				//if (estato != 2) {
+					tempoMudarEstato += Time.deltaTime;
+					if (tempoMudarEstato > tempoMudarEstatoRandom) {
+						if (estato == 2) {
+							meuAnimator.SetBool ("Investindo", false);
+						}
+
+						SortearEstato ();
+					}
+				//}
 
 				//Verifica qual é o estato que o inimig esta
 				switch (estato) {
@@ -118,12 +130,17 @@ public class MiniBoss : MonoBehaviour {
 						SeguirAbejide ();
 					}
 					break;	
+
+				case 2:
+					OlharParaVector3 (abejide.position, 1.5f);
+					GetComponent<Rigidbody> ().AddForce (transform.forward * 9000f);
+					break;
 				}
 
 				velocidade = meuNavMeshAgent.velocity.magnitude;
 			}
 
-			if (distancia < distanciaDeAtaque - 0.5f) {
+			if (distancia < distanciaDeAtaque - 0.5f && estato != 2) {
 				muitoDistante = 0f;
 				muitoProximo += Time.deltaTime;
 				GetComponent<Rigidbody> ().AddForce (transform.forward * -2000f);
@@ -139,16 +156,28 @@ public class MiniBoss : MonoBehaviour {
 				if (meuAnimator.GetBool ("AndandoParaTras")) {
 					meuAnimator.SetBool ("AndandoParaTras", false);
 				} else if (distancia > distanciaDeAtaque + 0.5f && estato == 0) {
-					muitoDistante += Time.deltaTime;
+					if (!meuAnimator.GetBool ("Investindo")) {
+						muitoDistante += Time.deltaTime;
 
-					if (muitoDistante > maxMuitoDistante) {
-						if (Random.Range (0f, 100f) < 35) {
+						//Caso o jogador fique muito distance, o inimigo pode dar uma investida
+						if (muitoDistante > maxMuitoDistante) {
 							muitoDistante = 0f;
-							tempoAtacar = 999;
-							Atacar ();
-						} else {
-							muitoDistante = 0f;
-							SortearEstato ();
+
+							if (distancia > distanciaInvestida && estato != 2 && Random.Range (0f, 100f) < changeEstatoInvestir) {
+								estato = 2;
+								tempoMudarEstato = 0;
+								meuAnimator.SetBool ("Investindo", true);
+								meuAnimator.SetTrigger ("Investir");
+								tempoMudarEstatoRandom = Random.Range (minInvestindo, maxInvestindo);
+							} else {
+								if (Random.Range (0f, 100f) < 35f) {
+									tempoAtacar = 999;
+									Atacar ();
+								} else {
+									muitoDistante = 0f;
+									SortearEstato ();
+								}
+							}
 						}
 					}
 				}
@@ -194,6 +223,16 @@ public class MiniBoss : MonoBehaviour {
 	/// </summary>
 	private void SortearEstato () {
 		tempoMudarEstato = 0f;
+
+		if (estato == 1) {
+			float chanceRandomInvestir = Random.Range (0f, 100f);
+
+			if (chanceRandomInvestir < changeEstatoInvestir && distancia > distanciaInvestida) {
+				estato = 2;
+				tempoMudarEstatoRandom = Random.Range (minInvestindo, maxInvestindo);
+				return;
+			}
+		}
 
 		float chanceRandomAtaque = Random.Range (0f, changeEstatoAtacando);
 		float chanceRandomParado = Random.Range (0f, changeEstatoParado);
@@ -294,7 +333,7 @@ public class MiniBoss : MonoBehaviour {
 		dadosDaFase.pontuacao += 1000;
 
 		for (int i = 0; i < 5; i++) {
-			if (Random.Range (0f, 100f) < 50) {
+			if (Random.Range (0f, 100f) < 70f) {
 				Vector3 rotacao = new Vector3 (Random.Range (0f, 360f), Random.Range (0f, 360f), Random.Range (0f, 360f));
 				Instantiate (Resources.Load ("Prefab/Vida", typeof(GameObject)), transform.position, Quaternion.Euler (rotacao));
 			}

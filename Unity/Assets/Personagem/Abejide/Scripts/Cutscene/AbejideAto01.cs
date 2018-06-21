@@ -19,6 +19,16 @@ public class AbejideAto01 : MonoBehaviour {
 
 	private string fala;
 
+	void Awake () {
+		InimigosNormais[] objInimigosNormais = FindObjectsOfType<InimigosNormais> ();
+		for (int i = 0; i < objInimigosNormais.Length; i++) {
+			objInimigosNormais [i].enabled = false;
+		}
+
+		FindObjectOfType<MiniBoss> ().enabled = false;
+
+	}
+
 	// Use this for initialization
 	void Start () {
 		corpoAnimator = GetComponentInChildren<Animator> ();
@@ -32,11 +42,6 @@ public class AbejideAto01 : MonoBehaviour {
 
 		meuMetodosDaCutscene = GetComponent<MetodosDaCutscene> ();
 		GetComponent<MetodosDaCutscene> ().PosicionarInicial ();
-
-		InimigosNormais[] objInimigosNormais = FindObjectsOfType<InimigosNormais> ();
-		for (int i = 0; i < objInimigosNormais.Length; i++) {
-			objInimigosNormais [i].enabled = false;
-		}
 	}
 
 	// Update is called once per frame
@@ -64,7 +69,7 @@ public class AbejideAto01 : MonoBehaviour {
 
 				corpoAnimator.SetInteger ("IndiceGatilho", 0); //Pedrificado.
 				corpoAnimator.SetTrigger ("Gatilho");
-				meuMetodosDaCutscene.ComecarAtuacaoMoverNoEixoY (2f, true, false, 1, 0);
+				meuMetodosDaCutscene.ComecarAtuacaoMoverNoEixoY (2.9f, true, false, 1.5f, 0);
 				break;
 			case 1:
 				meuMetodosDaCutscene.IncrementarAto ();
@@ -100,6 +105,7 @@ public class AbejideAto01 : MonoBehaviour {
 				}
 				break;
 			case 6:
+				//Tranca tudo levanta Abejide
 				meuMetodosDaCutscene.ComecarAtuacaoMoverNoEixoY (2f, true, true, 2, 0);
 				break;
 			case 7:
@@ -109,7 +115,7 @@ public class AbejideAto01 : MonoBehaviour {
 			case 8:
 				meuMetodosDaCutscene.ComecarAtuacaoSeguirOutroAtor (meuMetodosDaCutscene.PegarOutroAtor(2), false, true, false);
 				break;
-			case 9: //Só entra qui quando o sete encruzilhaja ja tiver passado do chão.
+			case 9: //Só entra aqui quando o sete encruzilhaja ja tiver passado do chão.
 				Destroy (cutsceneObjetos);
 				Destroy (pedraGigante.gameObject);
 
@@ -118,6 +124,7 @@ public class AbejideAto01 : MonoBehaviour {
 
 				GetComponent<AbejideAto01> ().enabled = false;
 				GetComponent<AbejideAto02> ().AtivarCodigo ();
+
 				break;
 			}
 

@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Cenario\Camera\Scripts\Cutscene\CameraAto01.cs" />
+     <Compile Include="Assets\Cenario\Camera\Scripts\Cutscene\CameraAto02.cs" />
      <Compile Include="Assets\Cenario\Camera\Scripts\seguirJogador.cs" />
      <Compile Include="Assets\Cenario\PrimeiroReino\Pedra\Scripts\FazerPedrasVoar.cs" />
      <Compile Include="Assets\Cenario\PrimeiroReino\Pedra\Scripts\PedraGigante.cs" />

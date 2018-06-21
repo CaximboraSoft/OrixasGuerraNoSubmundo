@@ -40,8 +40,8 @@ public class AbejideAto02 : MonoBehaviour {
 		texto = canvasTelaPreta.GetComponentInChildren<Text> ();
 
 		if (GetComponent<AbejideAto02> ().enabled) {
-			AtivarCodigo ();
 			GetComponentInChildren<Animator> ().runtimeAnimatorController = animacaoDaCurscene as RuntimeAnimatorController;
+			AtivarCodigo ();
 		}
 	}
 	
@@ -63,6 +63,9 @@ public class AbejideAto02 : MonoBehaviour {
 			telaPreta.color = new Color (0, 0, 0, 1);
 		}
 
+		cameraPrincipal.GetComponent<CameraAto01> ().enabled = false;
+		cameraPrincipal.GetComponent<CameraAto02> ().AtivarCodigo ();
+
 		meuMetodosDaCutscene.MudarNome("Abejide:");
 		meuMetodosDaCutscene.MudarIndicePosicao (0);
 		meuMetodosDaCutscene.MudarAtor (0);
@@ -76,8 +79,8 @@ public class AbejideAto02 : MonoBehaviour {
 	void Update () {
 		sat = meuMetodosDaCutscene.PegarSat ();
 
-		if (Input.GetKey (KeyCode.Space) && !pularCutscene) {
-			maxTempoEspera = 3f;
+		if (Input.GetKey (KeyCode.Return) && !pularCutscene) {
+			maxTempoEspera = 1f;
 			PularCutscene ();
 		}
 
@@ -125,7 +128,7 @@ public class AbejideAto02 : MonoBehaviour {
 							"Não deixarei que este seja o meu fim. Eles confiaram a mim a missão de matar essa linha estensa linha de Orixas e Exus\nque afrontam a " +
 							"humanidade tirando a sua liberdade.";
 						tempoEspera = 0;
-						maxTempoEspera = 1f * sat; //Tempo bom: 45f
+						maxTempoEspera = 45f * sat; //Tempo bom: 45f
 						GetComponent<MetodosDaCutscene> ().IncrementarAto ();
 					}
 					break;
@@ -198,6 +201,8 @@ public class AbejideAto02 : MonoBehaviour {
 	}
 
 	private void AcabouCutscene () {
+		FindObjectOfType<MiniBoss> ().enabled = true;
+
 		GetComponentInChildren<Arma> ().enabled = true;
 		GetComponent<MetodosDaCutscene> ().enabled = false;
 
@@ -209,6 +214,11 @@ public class AbejideAto02 : MonoBehaviour {
 		if (destroir != null) {
 			Destroy (destroir.gameObject);
 		}
+
+		//Ativa a camera e destroi os atores dela
+		cameraPrincipal.GetComponent<seguirJogador> ().enabled = true;
+		Destroy (cameraPrincipal.GetComponent<CameraAto01> ());
+		Destroy (cameraPrincipal.GetComponent<CameraAto02> ());
 
 		conversas.enabled = false;
 		cameraPrincipal.GetComponent<Animator> ().enabled = false;
@@ -250,6 +260,8 @@ public class AbejideAto02 : MonoBehaviour {
 
 		conversas.enabled = false;
 		cameraPrincipal.GetComponent<Animator> ().enabled = false;
+		cameraPrincipal.GetComponent<seguirJogador> ().AtivarCodigo ();
+
 		conversasBoca.enabled = false;
 
 		CarcereiroAto01[] objTemp = FindObjectsOfType<CarcereiroAto01> ();
