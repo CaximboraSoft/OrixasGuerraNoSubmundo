@@ -201,7 +201,9 @@ public class AbejideAto02 : MonoBehaviour {
 	}
 
 	private void AcabouCutscene () {
-		FindObjectOfType<MiniBoss> ().enabled = true;
+		if (!pularCutscene) {
+			GameObject.FindObjectOfType<SeteEncruzilhadasAto02> ().ColocarNaBatalhaFinal ();
+		}
 
 		GetComponentInChildren<Arma> ().enabled = true;
 		GetComponent<MetodosDaCutscene> ().enabled = false;
@@ -210,15 +212,11 @@ public class AbejideAto02 : MonoBehaviour {
 			Destroy (lanca.gameObject);
 		}
 
-		SeteEncruzilhadasAto02 destroir = GameObject.FindObjectOfType<SeteEncruzilhadasAto02> ();
-		if (destroir != null) {
-			Destroy (destroir.gameObject);
-		}
-
 		//Ativa a camera e destroi os atores dela
 		cameraPrincipal.GetComponent<seguirJogador> ().enabled = true;
 		Destroy (cameraPrincipal.GetComponent<CameraAto01> ());
 		Destroy (cameraPrincipal.GetComponent<CameraAto02> ());
+		Destroy (cameraPrincipal.GetComponent<MetodosDaCutscene> ());
 
 		conversas.enabled = false;
 		cameraPrincipal.GetComponent<Animator> ().enabled = false;
@@ -245,6 +243,8 @@ public class AbejideAto02 : MonoBehaviour {
 	}
 
 	public void PularCutscene () {
+		GameObject.FindObjectOfType<SeteEncruzilhadasAto02> ().ColocarNaBatalhaFinal ();
+
 		if (!GetComponent<AbejideAto02> ().enabled) {
 			GetComponent<AbejideAto02> ().enabled = true;
 			meuMetodosDaCutscene.MudarIndicePosicao (-1);
@@ -280,8 +280,7 @@ public class AbejideAto02 : MonoBehaviour {
 		if (lanca != null) {
 			Destroy (lanca.gameObject);
 		}
-
-		Destroy (GameObject.FindObjectOfType<SeteEncruzilhadasAto02> ().gameObject);
+		
 		corpoAnimator.runtimeAnimatorController = animacaoOriginal as RuntimeAnimatorController;
 		transform.position = new Vector3 (transform.position.x, 0.2f, transform.position.z);
 	}

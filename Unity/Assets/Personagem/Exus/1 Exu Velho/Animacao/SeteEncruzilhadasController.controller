@@ -8,12 +8,12 @@ AnimatorController:
   m_Name: SeteEncruzilhadasController
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: NewtonAndando
+  - m_Name: Velocidadde
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -35,8 +35,8 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: NewtonAndando
-    m_EventTreshold: 10
+    m_ConditionEvent: Velocidadde
+    m_EventTreshold: 0.3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102257818878780930}
   m_Solo: 0
@@ -59,8 +59,8 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: NewtonAndando
-    m_EventTreshold: 10
+    m_ConditionEvent: Velocidadde
+    m_EventTreshold: 0.3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102891313672392114}
   m_Solo: 0
@@ -91,13 +91,13 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400008, guid: 4a429724ae8a49940ad5cc2c616c9059, type: 3}
+  m_Motion: {fileID: 7400008, guid: 40e33b5af4e876548a5bde072bb2a9d2, type: 3}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: Velocidadde
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -121,7 +121,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400012, guid: 4a429724ae8a49940ad5cc2c616c9059, type: 3}
+  m_Motion: {fileID: 7400012, guid: 40e33b5af4e876548a5bde072bb2a9d2, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -140,7 +140,7 @@ AnimatorStateMachine:
     m_Position: {x: 366.13846, y: 123.26439, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102257818878780930}
-    m_Position: {x: 264, y: 204, z: 0}
+    m_Position: {x: 360, y: 204, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

@@ -4,49 +4,28 @@ using UnityEngine;
 
 public class AbejideMagia : MonoBehaviour {
 
-	public ParticleSystem parcicula;
+	private Rigidbody meuRigidbody;
 
-	public float massa;
-	public float addNewton;
-	public float maxNewton;
-	private float aceleracao;
-	private float newton;
-	public float maxDistancia;
-
-	private float inicialX;
-	private float inicialZ;
-
-	private float distancia;
-	private float distanciaX;
-	private float distanciaZ;
+	public float dano = 25;
+	public float velocidade;
 
 	// Use this for initialization
 	void Start () {
-		newton = 0;
-
-		inicialX = transform.position.x;
-		inicialZ = transform.position.z;
+		meuRigidbody = GetComponent<Rigidbody> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		distanciaX = transform.position.x - inicialX;
-		distanciaZ = transform.position.z - inicialZ;
-		distancia = Mathf.Sqrt(Mathf.Pow(distanciaX, 2) + Mathf.Pow(distanciaZ, 2));
+		meuRigidbody.AddForce (transform.forward * velocidade);
+	}
 
-		if (distancia > maxDistancia) {
-			Destroy(gameObject);
+	void OnTriggerEnter (Collider other) {
+		if (other.tag == "Inimigo") {
+			other.GetComponent<DadosMovimentacao> ().PerderVida (dano, false);
+			Destroy (gameObject);
+		} if (other.tag == "MiniBoss") {
+			other.GetComponent<DadosMovimentacao> ().PerderVida (dano / 2f, false);
+			Destroy (gameObject);
 		}
-
-		if (newton < maxNewton) {
-			newton += addNewton;
-
-			if (newton > maxNewton) {
-				newton = maxNewton;
-			}
-		}
-
-		aceleracao = (newton / massa);
-		transform.Translate (0, 0, aceleracao * Time.deltaTime);
 	}
 }

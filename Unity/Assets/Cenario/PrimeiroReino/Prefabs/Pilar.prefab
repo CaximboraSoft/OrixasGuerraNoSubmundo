@@ -364,8 +364,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1602575120795286}
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 2225.8, y: -678.30035, z: 3.3000002}
+  m_LocalRotation: {x: 0.000000059604638, y: 0.00000008940696, z: 0.7918391, w: 0.6107298}
+  m_LocalPosition: {x: 1760, y: -898.1, z: -1.7}
   m_LocalScale: {x: 11.050887, y: 11.050835, z: 77.35604}
   m_Children:
   - {fileID: 4211020668181452}
@@ -1185,7 +1185,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 990439819
+  randomSeed: 504427723
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -1581,7 +1581,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 15
+    maxNumParticles: 10
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -4546,7 +4546,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -905219294
+  randomSeed: 670251212
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4942,7 +4942,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 15
+    maxNumParticles: 10
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -7907,7 +7907,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -530406097
+  randomSeed: -2020149964
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -8303,7 +8303,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 15
+    maxNumParticles: 10
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -11268,7 +11268,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1182475424
+  randomSeed: 1842375068
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -11664,7 +11664,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 15
+    maxNumParticles: 10
     size3D: 0
     rotation3D: 0
     gravityModifier:

@@ -111,7 +111,7 @@ public class InimigosNormais : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (!rodandoCutscene) { 
+		if (!rodandoCutscene && !abejide.GetComponent<Abejide> ().GameOver ()) {
 			distancia = Vector3.Distance (transform.position, abejide.position);
 
 			if (!viuAbejide && distancia < distanciaEnxergar) {
@@ -149,10 +149,10 @@ public class InimigosNormais : MonoBehaviour {
 							OlharParaVector3 (abejide.position, meuDadosMovimentacao.velocidadeRotacao);
 						}
 
-						if (Vector3.Distance(abejide.position, posicaoDeredor) > maxDistanciaDeredor) {
+						if (Vector3.Distance (abejide.position, posicaoDeredor) > maxDistanciaDeredor) {
 							sorteouPosicaoDeredor = false;
 						}
-					//Mas caso ainda não tenha sido sorteado uma posição valida, o inimigo segue o Abejide
+						//Mas caso ainda não tenha sido sorteado uma posição valida, o inimigo segue o Abejide
 					} else {
 						SeguirAbejide ();
 					}
@@ -165,7 +165,7 @@ public class InimigosNormais : MonoBehaviour {
 						meuNavMeshAgent.SetDestination (posicaoDeredor);
 						OlharParaVector3 (abejide.position, meuDadosMovimentacao.velocidadeRotacao * 2f);
 
-						if (Vector3.Distance(abejide.position, posicaoDeredor) > maxDistanciaDeredor) {
+						if (Vector3.Distance (abejide.position, posicaoDeredor) > maxDistanciaDeredor) {
 							sorteouPosicaoDeredor = false;
 						}
 						//Mas caso ainda não tenha sido sorteado uma posição valida, o inimigo segue o Abejide
@@ -177,67 +177,72 @@ public class InimigosNormais : MonoBehaviour {
 
 				velocidade = meuNavMeshAgent.velocity.magnitude;
 			}
-		}
+		
 
-		if (nivelDaIa != 0 && distancia < distanciaDeAtaque - 0.5f) {
-			muitoDistante = 0f;
-			muitoProximo += Time.deltaTime;
-			GetComponent<Rigidbody> ().AddForce (transform.forward * -2000f);
+			if (nivelDaIa != 0 && distancia < distanciaDeAtaque - 0.5f) {
+				muitoDistante = 0f;
+				muitoProximo += Time.deltaTime;
+				GetComponent<Rigidbody> ().AddForce (transform.forward * -2000f);
 
-			if (nivelDaIa == 2) {
-				if (estato == 1) {
+				if (nivelDaIa == 2) {
+					if (estato == 1) {
+						estato = 0;
+					}
+
+					meuAnimator.SetBool ("AndandoParaTras", true);
+				}
+			} else {
+				muitoProximo = 0f;
+
+				if (nivelDaIa == 2 && meuAnimator.GetBool ("AndandoParaTras")) {
+					meuAnimator.SetBool ("AndandoParaTras", false);
+				} else if (distancia > distanciaDeAtaque + 0.5f && estato == 0) {
+					muitoDistante += Time.deltaTime;
+
+					if (muitoDistante > maxMuitoDistante) {
+						muitoDistante = 0f;
+						SortearEstato ();
+					}
+				}
+			}
+
+			if (muitoProximo > maxMuitoProximo && estato != 0) {
+				if (nivelDaIa == 2) {
+					tempoAtacar = 999;
 					estato = 0;
+					meuAnimator.SetBool ("Defendendo", false);
 				}
-
-				meuAnimator.SetBool ("AndandoParaTras", true);
 			}
+
+			//Só chama a função de ataque caso o inimigo esteja dentro do alcance de sua arma
+			if (distancia < distanciaDeAtaque + 0.5f && estato == 0) {
+				Atacar ();
+			} else if (tempoAtacar != 0f) {
+				//Caso não esteja dentro do ancance, é feito uma outra coisa de acordo com o nivel da IA
+				switch (nivelDaIa) {
+				//IA de nivel 0 é somente zerado o tempo de para atacar
+				case 0:
+					tempoAtacar = 0f;
+					break;
+
+				//IA de nivel 1 é sorteado um outro tempo de ataque porem com um tempo de ataque, porém com um maximo tempo um pouco menor
+				case 1:
+					tempoAtacar = 0f;
+					tempoAtacarRandom = Random.Range (minTempoAtacar, maxTempoAtacar / 1.5f);
+					break;
+				}
+			}
+
+			if (!sorteouPosicaoDeredor && estato != 0) {
+				SortearPosicaoDeredor ();
+			}
+
+			meuAnimator.SetFloat ("Velocidade", velocidade);
 		} else {
-			muitoProximo = 0f;
-
-			if (nivelDaIa == 2 && meuAnimator.GetBool ("AndandoParaTras")) {
-				meuAnimator.SetBool ("AndandoParaTras", false);
-			} else if (distancia > distanciaDeAtaque + 0.5f && estato == 0) {
-				muitoDistante += Time.deltaTime;
-
-				if (muitoDistante > maxMuitoDistante) {
-					muitoDistante = 0f;
-					SortearEstato ();
-				}
-			}
+			meuAnimator.SetFloat ("Velocidade", 0);
+			meuNavMeshAgent.SetDestination (transform.position);
 		}
 
-		if (muitoProximo > maxMuitoProximo && estato != 0) {
-			if (nivelDaIa == 2) {
-				tempoAtacar = 999;
-				estato = 0;
-				meuAnimator.SetBool ("Defendendo", false);
-			}
-		}
-
-		//Só chama a função de ataque caso o inimigo esteja dentro do alcance de sua arma
-		if (distancia < distanciaDeAtaque + 0.5f && estato == 0) {
-			Atacar ();
-		} else if (tempoAtacar != 0f) {
-			//Caso não esteja dentro do ancance, é feito uma outra coisa de acordo com o nivel da IA
-			switch (nivelDaIa) {
-			//IA de nivel 0 é somente zerado o tempo de para atacar
-			case 0:
-				tempoAtacar = 0f;
-				break;
-
-			//IA de nivel 1 é sorteado um outro tempo de ataque porem com um tempo de ataque, porém com um maximo tempo um pouco menor
-			case 1:
-				tempoAtacar = 0f;
-				tempoAtacarRandom = Random.Range (minTempoAtacar, maxTempoAtacar / 1.5f);
-				break;
-			}
-		}
-
-		if (!sorteouPosicaoDeredor && estato != 0) {
-			SortearPosicaoDeredor ();
-		}
-
-		meuAnimator.SetFloat ("Velocidade", velocidade);
 	}
 
 	/// <summary>
@@ -421,6 +426,8 @@ public class InimigosNormais : MonoBehaviour {
 	/// Desativa todas as coisas deste que o objeto pode esta ativado, tipo o <NavMeshAgent>;
 	/// </summary>
 	public void DesativarCodigo () {
+		Instantiate (Resources.Load ("Prefab/Morte", typeof(GameObject)), transform.position, Quaternion.identity);
+
 		bool droparVida = false;
 
 		//Verifica quantos inimigos com esse mesmo nivel de IA esta atacando, mas dependendo do nivel de IA tembem é contabilizado os outros
@@ -453,10 +460,14 @@ public class InimigosNormais : MonoBehaviour {
 		transform.tag = "Untagged";
 		Destroy (meuNavMeshAgent);
 		Destroy (seta.gameObject);
+		StartCoroutine ("DesroirSom");
 		Destroy (GetComponentInChildren<Arma> ().gameObject);
+		GetComponent<InimigosNormais> ().enabled = false;
+	}
+
+	IEnumerator DesroirSom () {
+		yield return new WaitForSeconds (2);
 		Destroy (meuAudioSource);
 		Destroy (GetComponent<InimigosNormais> ());
-		//meuNavMeshAgent.enabled = false;
-		//GetComponent<InimigosNormais> ().enabled = false;
 	}
 }

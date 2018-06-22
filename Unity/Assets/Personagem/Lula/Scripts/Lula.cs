@@ -15,6 +15,8 @@ public class Lula : MonoBehaviour {
 	public Renderer abejideEspada;
 	private Animator abejideAnimator;
 	public InimigosNormais[] pausarInimigosNormais;
+	public Transform cameraPrincipal;
+	public Transform cameraLugar;
 
 	public Conversas boca;
 
@@ -48,6 +50,7 @@ public class Lula : MonoBehaviour {
 		// && ato > 2 && !morto
 		if (Input.GetKeyDown (KeyCode.Return) && ato != 2 && ato != 0) {
 			if (ato < 2) {
+				cameraPrincipal.GetComponent<seguirJogador> ().AtivarComLula ();
 				boca.GetComponent<Conversas> ().conversas.enabled = false;
 				for (int i = 0; i < pausarInimigosNormais.Length; i++) {
 					pausarInimigosNormais [i].rodandoCutscene = false;
@@ -79,7 +82,9 @@ public class Lula : MonoBehaviour {
 			if (carcereirosMorreram) {
 				temporizador += Time.deltaTime;
 
-				if (temporizador > 2f) {
+				if (temporizador > 0.7f) {
+					cameraPrincipal.GetComponent<seguirJogador> ().enabled = false;
+
 					DesativarAbejide ();
 
 					abejide.enabled = false;
@@ -88,7 +93,7 @@ public class Lula : MonoBehaviour {
 					fala = "Psiu! Psiu...";
 					boca.GetComponent<Conversas> ().nome.text = "Akin:";
 					boca.GetComponent<Text> ().text = fala;
-					boca.GetComponent<Conversas> ().MudarTempoLimparTexto (1.5f);
+					boca.GetComponent<Conversas> ().MudarTempoLimparTexto (2.5f);
 					boca.GetComponent<Conversas> ().conversas.enabled = true;
 					temporizador = 0;
 					ato++;
@@ -96,8 +101,14 @@ public class Lula : MonoBehaviour {
 			}
 			break;
 		case 1:
+			cameraPrincipal.GetComponent<seguirJogador> ().seta.LookAt (transform.position);
+			cameraPrincipal.rotation = Quaternion.Lerp (cameraPrincipal.rotation, cameraPrincipal.GetComponent<seguirJogador> ().seta.rotation, 2 * Time.deltaTime);
+			cameraPrincipal.position = Vector3.Lerp (cameraPrincipal.position, cameraLugar.position, 2 * Time.deltaTime);
+
 			temporizador += Time.deltaTime;
-			if (temporizador > 1.5f) {
+			if (temporizador > 2.5f) {
+				cameraPrincipal.GetComponent<seguirJogador> ().AtivarComLula ();
+
 				for (int i = 0; i < pausarInimigosNormais.Length; i++) {
 					pausarInimigosNormais [i].rodandoCutscene = false;
 				}
@@ -186,6 +197,8 @@ public class Lula : MonoBehaviour {
 	}
 
 	private void AcabouCutscene () {
+		FindObjectOfType<SuccubusAto01> ().abejidePegouEspada = true;
+
 		for (int i = 0; i < pausarInimigosNormais.Length; i++) {
 			pausarInimigosNormais [i].rodandoCutscene = false;
 		}
@@ -203,6 +216,7 @@ public class Lula : MonoBehaviour {
 		abejideArma.dano = abejide.armasDano [0];
 		abejideArma.indiceDoLayer = 2;
 		Destroy(abejideArma.GetComponent<AudioSource> ());
+		Destroy(lugarDoAbejide.gameObject);
 		abejideArma.transform.localScale = new Vector3 (abejideArma.transform.localScale.x, abejide.alcanceEspadas[0], abejideArma.transform.localScale.z);
 		ato = -999;
 	}

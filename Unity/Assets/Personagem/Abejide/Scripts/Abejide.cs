@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 public class Abejide : MonoBehaviour {
 
+	public Transform satPosicao;
+
+	public Slider mana;
+	public float subMana = 10f;
+	public float addMana = 3.3f;
 	public Slider estamina;
 	public float addEstaminaParado;
 	public float addEstaminaAndando;
@@ -15,6 +20,12 @@ public class Abejide : MonoBehaviour {
 	public float subEstaminaEsquivando;
 	public int iDUltimoAtaque = 0;
 
+	private Canvas gameOver;
+	private AudioSource meuAudioSource;
+	public float maxTempoPassos = 0.2f;
+	public float tempoPassos;
+	public AudioClip esquivandoSom;
+	public AudioClip pulandoSom;
 	public Vector3 vetorDeMovimento;
 	private DadosMovimentacao meuDadosMovimentacao;
 	private AnimatorStateInfo armaStateInfo;
@@ -24,6 +35,7 @@ public class Abejide : MonoBehaviour {
 	public Renderer[] armas;
 	public float[] armasDano;
 	public float[] alcanceEspadas;
+	public Transform abejideMao;
 	public GameObject[] magias;
 	public AbejideChao meuAbejideChao;
 	private Vector3 angulo = Vector3.zero;
@@ -35,6 +47,7 @@ public class Abejide : MonoBehaviour {
 	public Image[] coracoes;
 	public int vidas = 6;
 
+	private bool correndo = false;
 	public bool focandoInimigoAnimator;
 	private bool focandoInimigoLocal;
 	public bool estaMovendo;
@@ -71,6 +84,10 @@ public class Abejide : MonoBehaviour {
 	public bool possoPular = true;
 
 	void Awake () {
+		gameOver = GameObject.FindGameObjectWithTag ("GameOver").GetComponent<Canvas> ();
+		gameOver.enabled = false;
+		meuAudioSource = GetComponent<AudioSource> ();
+
 		meuAnimator = GetComponentInChildren<Animator> ();
 		armaScript = GetComponentInChildren<Arma> ();
 		armaScript.enabled = false;
@@ -91,6 +108,7 @@ public class Abejide : MonoBehaviour {
 		tempoCombo = maxTempoCombo + 1f;
 		meuAnimator.SetBool ("Atacando", false);
 		GetComponent<Abejide> ().enabled = true;
+		correndo = false;
 	}
 
 	// Executa mesmo se o código estiver desatiado
@@ -113,12 +131,41 @@ public class Abejide : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetKeyDown (KeyCode.P)) {
+			transform.position = satPosicao.position;
+		}
+
+
+		if (meuAnimator.GetInteger ("IndiceGatilho") == 999) {
+			peStateInfo = meuAnimator.GetCurrentAnimatorStateInfo (meuAnimator.layerCount - 1);
+
+			tempoParaAtacar += Time.deltaTime;
+			if (peStateInfo.IsTag ("MORTO") && tempoParaAtacar > 1f) {
+				gameOver.GetComponentInChildren<Animator> ().SetTrigger ("GameOver");
+				gameOver.enabled = true;
+				GetComponent<Abejide> ().enabled = false;
+			}
+
+			return;
+		} else if (vidas <= 0) {
+			meuAnimator.SetInteger ("IndiceGatilho", 999);
+			meuAnimator.SetTrigger ("Gatilho");
+			tempoParaAtacar = 0;
+		}
+
+		//Ajusta os coraçõe de acordo com a vida do jogador.
 		for (int i = 0; i < coracoes.Length; i++) {
 			if (i < vidas) {
 				coracoes [i].enabled = true;
 			} else {
 				coracoes [i].enabled = false;
 			}
+		}
+
+		if (Input.GetKeyDown (KeyCode.LeftShift)) {
+			correndo = true;
+		} if (Input.GetKeyUp (KeyCode.LeftShift) || estamina.value <= estamina.minValue) {
+			correndo = false;
 		}
 
 		if (inimigoParaFocar != null && inimigoParaFocar.GetComponent<DadosMovimentacao> ().vida < 1) {
@@ -235,6 +282,8 @@ public class Abejide : MonoBehaviour {
 	void SistemaDePulo () {
 		//Faz o abejide pular
 		if (Input.GetKeyDown (KeyCode.C) && possoPular && !armaStateInfo.IsTag("Atacando") && !esquivando) {
+			meuAudioSource.clip = pulandoSom;
+			meuAudioSource.Play ();
 			estouNoChao = false;
 			meuAnimator.SetBool ("Subindo", true);
 			meuAnimator.SetTrigger ("SubirOuDescer");
@@ -284,6 +333,9 @@ public class Abejide : MonoBehaviour {
 
 	void Esquiva () {
 		if (Input.GetKeyDown (KeyCode.Space) && !esquivando && estouNoChao && meuAnimator.GetFloat ("Velocidade") != 0f) {
+			meuAudioSource.clip = esquivandoSom;
+			meuAudioSource.Play ();
+			tempoPassos = maxTempoPassos;
 			esquivando = true;
 			chegouNoAnguloDaEsquiva = false;
 			meuAnimator.SetBool ("Atacando", false);
@@ -318,9 +370,14 @@ public class Abejide : MonoBehaviour {
 	}
 
 	void Atacar() {
-		if (Input.GetKeyDown (KeyCode.Z)) {
+		if (Input.GetKeyDown (KeyCode.X) && mana.value >= subMana) {
+			mana.value -= subMana;
+			Instantiate (magias [0], abejideMao.position, abejideMao.rotation);
+		} else if (Input.GetKeyDown (KeyCode.Z)) {
 			if (meuAnimator.GetBool ("Correndo")) {
 				if (tempoParaAtacar > 0.4f) {
+					meuAudioSource.clip = pulandoSom;
+					meuAudioSource.Play ();
 					meuDadosMovimentacao.PegarMeuRigidbody().AddForce (transform.up * (meuDadosMovimentacao.velocidadePulando / 4f));
 					meuAnimator.SetTrigger ("AtaqueAndando");
 					estouNoChao = false;
@@ -395,7 +452,7 @@ public class Abejide : MonoBehaviour {
 
 			if (!esquivando) {
 				//Corre.
-				if (Input.GetKey (KeyCode.LeftShift)) {
+				if (correndo) {
 					tempoParaAtacar += Time.deltaTime;
 
 					meuAnimator.SetBool ("Correndo", true);
@@ -633,5 +690,13 @@ public class Abejide : MonoBehaviour {
 			Destroy (other.gameObject);
 			vidas++;
 		}
+	}
+
+	/// <summary>
+	/// Retorna se o canvas de came over esta ativo.
+	/// </summary>
+	/// <returns><c>true</c>, if over was gamed, <c>false</c> otherwise.</returns>
+	public bool GameOver () {
+		return gameOver.enabled;
 	}
 }

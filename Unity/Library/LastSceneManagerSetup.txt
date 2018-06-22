@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Telas/Menu.unity
+- path: Assets/Telas/PrimeiroReino.unity
   isLoaded: 1
   isActive: 1

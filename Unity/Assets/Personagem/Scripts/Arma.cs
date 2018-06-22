@@ -10,14 +10,15 @@ public class Arma : MonoBehaviour {
 	public int indiceDoLayer = 0;
 	public Animator donoAnimator;
 	private AnimatorStateInfo donoStateInfo;
+	private Abejide abejide;
 
 	public AudioClip[] danoSoco;
 
 	private int nomeDoAtaque;
 
 	// Use this for initialization
-	void Start () {
-		
+	void Awake () {
+		abejide = FindObjectOfType<Abejide> ();
 	}
 	
 	// Update is called once per frame
@@ -36,24 +37,31 @@ public class Arma : MonoBehaviour {
 			if (donoAnimator.name == "AbejideBlender") {
 				if (other.transform.tag == "Inimigo") {
 					nomeDoAtaque = donoStateInfo.fullPathHash;
-					other.GetComponent<DadosMovimentacao> ().PerderVida (dano);
+
+					abejide.mana.value += abejide.addMana;
+
+					bool danoDaEspada = true;
 					if (dano == 10f) {
 						GetComponent<AudioSource> ().clip = danoSoco [Random.Range (0, danoSoco.Length)];
 						GetComponent<AudioSource> ().Play ();
+						danoDaEspada = false;
 					}
-				} else if (other.transform.tag == "MiniBoss") {
+
+					other.GetComponent<DadosMovimentacao> ().PerderVida (dano * abejide.estamina.value, danoDaEspada);
+				} else if (other.transform.tag == "MiniBoss" && other.GetComponent<MiniBoss> ().enabled) {
 					nomeDoAtaque = donoStateInfo.fullPathHash;
-					other.GetComponent<DadosMovimentacao> ().PerderVida (dano);
-					if (dano == 10f) {
-						GetComponent<AudioSource> ().clip = danoSoco [Random.Range (0, danoSoco.Length)];
-						GetComponent<AudioSource> ().Play ();
-					}
+					other.GetComponent<DadosMovimentacao> ().PerderVida (dano * abejide.estamina.value, true);
+
+					abejide.mana.value += abejide.addMana;
+
 				} else if (other.transform.tag == "Coadjuvantes") {
 					FindObjectOfType <DadosDaFase> ().pontuacao += 50;
 
 					other.GetComponent<Animator> ().SetInteger ("Ato", -1);
 					other.GetComponent<Animator> ().SetTrigger ("MudarAto");
 					other.tag = "Untagged";
+
+					abejide.mana.value += abejide.addMana * 8f;
 				}
 			} else if (other.transform.tag == "Abejide") {
 				nomeDoAtaque = donoStateInfo.fullPathHash;

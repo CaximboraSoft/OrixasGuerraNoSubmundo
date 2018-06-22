@@ -14,6 +14,7 @@ TagManager:
   - Vida
   - Coadjuvantes
   - MiniBoss
+  - GameOver
   layers:
   - Default
   - TransparentFX

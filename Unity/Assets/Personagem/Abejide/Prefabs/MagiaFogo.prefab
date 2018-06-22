@@ -126,11 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc4e7baca27b5d342acb7fced13acb18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parcicula: {fileID: 198669159982090494}
-  massa: 15
-  addNewton: 2
-  maxNewton: 100
-  maxDistancia: 20
+  dano: 25
+  velocidade: 0
 --- !u!135 &135284287108712996
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -138,7 +135,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1021773834805530}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5

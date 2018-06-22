@@ -40,13 +40,8 @@ public class DadosMovimentacao : MonoBehaviour {
 		return meuRigidbody;
 	}
 
-	public void PerderVida (float dano) {
+	public void PerderVida (float dano, bool danoEspada) {
 		if (vida > 0) {
-			bool danoEspada = false;
-
-			if (dano != 10f) {
-				danoEspada = true;
-			}
 			if (meuInimigosNormais != null) {
 				meuInimigosNormais.PerdeuVida (danoEspada);
 

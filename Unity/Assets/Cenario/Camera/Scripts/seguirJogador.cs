@@ -57,4 +57,9 @@ public class seguirJogador : MonoBehaviour {
 		transform.rotation = Quaternion.Lerp (transform.rotation, seta.rotation, temporizador * Time.deltaTime);
 		transform.position = Vector3.Lerp (transform.position, novaPosicao, tempoDeResposta * Time.deltaTime);
 	}
+
+	public void AtivarComLula () {
+		temporizador = tempoOlhar;
+		GetComponent<seguirJogador> ().enabled = true;
+	}
 }

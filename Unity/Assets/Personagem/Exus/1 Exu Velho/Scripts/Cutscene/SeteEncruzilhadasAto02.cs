@@ -5,9 +5,8 @@ using UnityEngine;
 public class SeteEncruzilhadasAto02 : MonoBehaviour {
 
 	public GameObject terreno;
-	private Animator atorAnimator;
-	public RuntimeAnimatorController controllerCutscene;
 	private MetodosDaCutscene meuMetodosDaCutscene;
+	public Transform batalhaFinal;
 
 	private float tempoEspera;
 	private float maxTempoEspera;
@@ -26,9 +25,6 @@ public class SeteEncruzilhadasAto02 : MonoBehaviour {
 
 	// Use this for initialization
 	public void AtivarCodigo () {
-		atorAnimator = GetComponentInChildren<Animator> ();
-		atorAnimator.runtimeAnimatorController = controllerCutscene as RuntimeAnimatorController;
-
 		tempoEspera = 10;
 		maxTempoEspera = 0;
 
@@ -105,5 +101,18 @@ public class SeteEncruzilhadasAto02 : MonoBehaviour {
 		} else {
 			tempoEspera += Time.deltaTime;
 		}
+	}
+
+	public void ColocarNaBatalhaFinal () {
+		transform.position = batalhaFinal.position;
+		transform.rotation = batalhaFinal.rotation;
+
+		Destroy (batalhaFinal.gameObject);
+
+		GetComponent<SeteEncruzilhadasAto03> ().AtivarCodigo ();
+
+		Destroy (GetComponent<MetodosDaCutscene> ());
+		Destroy (GetComponent<SeteEncruzilhadasAto01> ());
+		Destroy (GetComponent<SeteEncruzilhadasAto02> ());
 	}
 }

@@ -2,15 +2,20 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto02.cs">
     <Files>
-      <File FileName="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" Line="116" Column="33" />
-      <File FileName="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto02.cs" Line="134" Column="12" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\Abejide.cs" Line="135" Column="45" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" Line="1" Column="1" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto02.cs" Line="219" Column="58" />
       <File FileName="Assets\Cenario\Scripts\DadosDaFase.cs" Line="1" Column="1" />
       <File FileName="Assets\Cenario\Scripts\EsconderObjeto.cs" Line="1" Column="1" />
-      <File FileName="Assets\Cenario\Camera\Scripts\Cutscene\CameraAto01.cs" Line="20" Column="44" />
-      <File FileName="Assets\Cenario\Camera\Scripts\Cutscene\CameraAto02.cs" Line="29" Column="47" />
-      <File FileName="Assets\Cenario\Camera\Scripts\seguirJogador.cs" Line="56" Column="3" />
-      <File FileName="Assets\Personagem\Abejide\Scripts\Abejide.cs" Line="618" Column="19" />
-      <File FileName="Assets\Personagem\InimigosNormais\Scripts\InimigosNormais.cs" Line="107" Column="49" />
+      <File FileName="Assets\Personagem\Scripts\Arma.cs" Line="51" Column="92" />
+      <File FileName="Assets\Personagem\Scripts\DadosMovimentacao.cs" Line="43" Column="53" />
+      <File FileName="Assets\Personagem\InimigosNormais\Succubus\Script\Cutscene\SuccubusAto01.cs" Line="77" Column="4" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\AbejideMagia.cs" Line="30" Column="3" />
+      <File FileName="Assets\Cenario\Camera\Scripts\Cutscene\CameraAto01.cs" Line="45" Column="1" />
+      <File FileName="Assets\Personagem\InimigosNormais\Scripts\InimigosNormais.cs" Line="460" Column="28" />
+      <File FileName="Assets\Personagem\Exus\Script\Boss.cs" Line="11" Column="3" />
+      <File FileName="Assets\Personagem\MiniBoss\Exo Quimera\Scripts\ExoQuimeraAto01.cs" Line="115" Column="4" />
+      <File FileName="Assets\Personagem\Exus\1 Exu Velho\Scripts\Cutscene\SeteEncruzilhadasAto03.cs" Line="79" Column="81" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -6,7 +6,6 @@ public class CameraAto01 : MonoBehaviour {
 
 	private DadosDaFase dadosDaFase;
 	private Animator atorAnimator;
-	public RuntimeAnimatorController controllerCutscene;
 
 	private float tempoEspera;
 	private float maxTempoEspera;
@@ -16,9 +15,7 @@ public class CameraAto01 : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		dadosDaFase = FindObjectOfType<DadosDaFase> ();
-
 		atorAnimator = GetComponent<Animator> ();
-		atorAnimator.runtimeAnimatorController = controllerCutscene as RuntimeAnimatorController;
 
 		ato = 0;
 		tempoEspera = 10;

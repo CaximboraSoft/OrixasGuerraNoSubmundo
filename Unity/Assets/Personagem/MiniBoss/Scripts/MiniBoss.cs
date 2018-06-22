@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class MiniBoss : MonoBehaviour {
 
-
+	public Animator portao;
 	private Vector3 posicaoDeredor;
 	public Transform seta;
 	private Transform abejide;
@@ -22,7 +22,6 @@ public class MiniBoss : MonoBehaviour {
 	public AudioClip[] danoSons;
 
 	private bool sorteouPosicaoDeredor = false;
-	public bool rodandoCutscene = false;
 	public bool viuAbejide = false;
 
 	private float distancia;
@@ -71,13 +70,12 @@ public class MiniBoss : MonoBehaviour {
 
 		dadosDaFase = FindObjectOfType <DadosDaFase> ();
 
-		estato = 0;
 		SortearEstato ();
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (!rodandoCutscene) { 
+		if (!abejide.GetComponent<Abejide> ().GameOver ()) { 
 			distancia = Vector3.Distance (transform.position, abejide.position);
 
 			if (!viuAbejide && distancia < distanciaEnxergar) {
@@ -93,14 +91,14 @@ public class MiniBoss : MonoBehaviour {
 			if (viuAbejide) {
 				//Se o miniBoss estiver invextindo, ele não vai poder mudar de estato
 				//if (estato != 2) {
-					tempoMudarEstato += Time.deltaTime;
-					if (tempoMudarEstato > tempoMudarEstatoRandom) {
-						if (estato == 2) {
-							meuAnimator.SetBool ("Investindo", false);
-						}
-
-						SortearEstato ();
+				tempoMudarEstato += Time.deltaTime;
+				if (tempoMudarEstato > tempoMudarEstatoRandom) {
+					if (estato == 2) {
+						meuAnimator.SetBool ("Investindo", false);
 					}
+
+					SortearEstato ();
+				}
 				//}
 
 				//Verifica qual é o estato que o inimig esta
@@ -138,67 +136,67 @@ public class MiniBoss : MonoBehaviour {
 				}
 
 				velocidade = meuNavMeshAgent.velocity.magnitude;
-			}
 
-			if (distancia < distanciaDeAtaque - 0.5f && estato != 2) {
-				muitoDistante = 0f;
-				muitoProximo += Time.deltaTime;
-				GetComponent<Rigidbody> ().AddForce (transform.forward * -2000f);
+				if (distancia < distanciaDeAtaque - 0.5f && estato != 2) {
+					muitoDistante = 0f;
+					muitoProximo += Time.deltaTime;
+					GetComponent<Rigidbody> ().AddForce (transform.forward * -2000f);
 
-				if (estato != 0) {
-					estato = 0;
-				}
+					if (estato != 0) {
+						estato = 0;
+					}
 
-				meuAnimator.SetBool ("AndandoParaTras", true);
-			} else {
-				muitoProximo = 0f;
+					meuAnimator.SetBool ("AndandoParaTras", true);
+				} else {
+					muitoProximo = 0f;
 
-				if (meuAnimator.GetBool ("AndandoParaTras")) {
-					meuAnimator.SetBool ("AndandoParaTras", false);
-				} else if (distancia > distanciaDeAtaque + 0.5f && estato == 0) {
-					if (!meuAnimator.GetBool ("Investindo")) {
-						muitoDistante += Time.deltaTime;
+					if (meuAnimator.GetBool ("AndandoParaTras")) {
+						meuAnimator.SetBool ("AndandoParaTras", false);
+					} else if (distancia > distanciaDeAtaque + 0.5f && estato == 0) {
+						if (!meuAnimator.GetBool ("Investindo")) {
+							muitoDistante += Time.deltaTime;
 
-						//Caso o jogador fique muito distance, o inimigo pode dar uma investida
-						if (muitoDistante > maxMuitoDistante) {
-							muitoDistante = 0f;
+							//Caso o jogador fique muito distance, o inimigo pode dar uma investida
+							if (muitoDistante > maxMuitoDistante) {
+								muitoDistante = 0f;
 
-							if (distancia > distanciaInvestida && estato != 2 && Random.Range (0f, 100f) < changeEstatoInvestir) {
-								estato = 2;
-								tempoMudarEstato = 0;
-								meuAnimator.SetBool ("Investindo", true);
-								meuAnimator.SetTrigger ("Investir");
-								tempoMudarEstatoRandom = Random.Range (minInvestindo, maxInvestindo);
-							} else {
-								if (Random.Range (0f, 100f) < 35f) {
-									tempoAtacar = 999;
-									Atacar ();
+								if (distancia > distanciaInvestida && estato != 2 && Random.Range (0f, 100f) < changeEstatoInvestir) {
+									estato = 2;
+									tempoMudarEstato = 0;
+									meuAnimator.SetBool ("Investindo", true);
+									meuAnimator.SetTrigger ("Investir");
+									tempoMudarEstatoRandom = Random.Range (minInvestindo, maxInvestindo);
 								} else {
-									muitoDistante = 0f;
-									SortearEstato ();
+									if (Random.Range (0f, 100f) < 35f) {
+										tempoAtacar = 999;
+										Atacar ();
+									} else {
+										muitoDistante = 0f;
+										SortearEstato ();
+									}
 								}
 							}
 						}
 					}
 				}
-			}
 
-			if (muitoProximo > maxMuitoProximo && estato != 0) {
-				tempoAtacar = 999;
-				estato = 0;
-				meuAnimator.SetBool ("Defendendo", false);
-			}
+				if (muitoProximo > maxMuitoProximo && estato != 0) {
+					tempoAtacar = 999;
+					estato = 0;
+					meuAnimator.SetBool ("Defendendo", false);
+				}
 
-			//Só chama a função de ataque caso o inimigo esteja dentro do alcance de sua arma
-			if (distancia < distanciaDeAtaque + 0.5f && estato == 0) {
-				Atacar ();
-			}
+				//Só chama a função de ataque caso o inimigo esteja dentro do alcance de sua arma
+				if (distancia < distanciaDeAtaque + 0.5f && estato == 0) {
+					Atacar ();
+				}
 
-			if (!sorteouPosicaoDeredor && estato != 0) {
-				SortearPosicaoDeredor ();
-			}
+				if (!sorteouPosicaoDeredor && estato != 0) {
+					SortearPosicaoDeredor ();
+				}
 
-			meuAnimator.SetFloat ("Velocidade", velocidade);
+				meuAnimator.SetFloat ("Velocidade", velocidade);
+			}
 		}
 	}
 
@@ -318,34 +316,33 @@ public class MiniBoss : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Para o inimigo caso o jogador entre em uma cutscene.
-	/// </summary>
-	public void PausarCutscene () {
-		rodandoCutscene = true;
-		meuNavMeshAgent.SetDestination (transform.position);
-		velocidade = 0f;
-	}
-
-	/// <summary>
 	/// Desativa todas as coisas deste que o objeto pode esta ativado, tipo o <NavMeshAgent>;
 	/// </summary>
 	public void DesativarCodigo () {
 		dadosDaFase.pontuacao += 1000;
 
-		for (int i = 0; i < 5; i++) {
+		Vector3 rotacao = new Vector3 (Random.Range (0f, 360f), Random.Range (0f, 360f), Random.Range (0f, 360f));
+		Instantiate (Resources.Load ("Prefab/Vida", typeof(GameObject)), transform.position, Quaternion.Euler (rotacao));
+
+		for (int i = 0; i < 3; i++) {
 			if (Random.Range (0f, 100f) < 70f) {
-				Vector3 rotacao = new Vector3 (Random.Range (0f, 360f), Random.Range (0f, 360f), Random.Range (0f, 360f));
+				rotacao = new Vector3 (Random.Range (0f, 360f), Random.Range (0f, 360f), Random.Range (0f, 360f));
 				Instantiate (Resources.Load ("Prefab/Vida", typeof(GameObject)), transform.position, Quaternion.Euler (rotacao));
 			}
 		}
 
+		portao.SetTrigger ("Abrir");
 		transform.tag = "Untagged";
 		Destroy (meuNavMeshAgent);
 		Destroy (seta.gameObject);
+		StartCoroutine ("DesroirSom");
 		Destroy (GetComponentInChildren<Arma> ().gameObject);
+		GetComponent<MiniBoss> ().enabled = false;
+	}
+
+	IEnumerator DesroirSom () {
+		yield return new WaitForSeconds (2);
 		Destroy (meuAudioSource);
-		Destroy (GetComponent<InimigosNormais> ());
-		//meuNavMeshAgent.enabled = false;
-		//GetComponent<InimigosNormais> ().enabled = false;
+		Destroy (GetComponent<MiniBoss> ());
 	}
 }
