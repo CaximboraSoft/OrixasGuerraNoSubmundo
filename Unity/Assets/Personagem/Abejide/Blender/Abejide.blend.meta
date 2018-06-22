@@ -32,6 +32,7 @@ ModelImporter:
     100048: Bone
     100050: _k45
     100052: Lanca01_Cube_001
+    100054: Cube
     400000: //RootNode
     400002: Amud
     400004: Azagaia
@@ -59,6 +60,7 @@ ModelImporter:
     400048: Bone
     400050: _k45
     400052: Lanca01_Cube_001
+    400054: Cube
     2100000: Material
     2100002: Abejide_001
     2100004: Abejide__Abejide_png
@@ -88,6 +90,7 @@ ModelImporter:
     4300016: NaCaraNao
     4300018: _k45
     4300020: Lanca01_Cube_001
+    4300022: Cube
     7400000: 0_Frente
     7400002: Azabaia_Parado
     7400004: Azagaia_Ataques
@@ -129,6 +132,7 @@ ModelImporter:
     7400076: MORTO
     7400078: DeQuatro
     7400080: Levantando
+    7400082: JogandoMagia
     9500000: //RootNode
     13700000: Amud
     13700002: Azagaia
@@ -139,6 +143,7 @@ ModelImporter:
     13700012: NaCaraNao
     13700014: _k45
     13700016: Lanca01_Cube_001
+    13700018: Cube
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -1056,6 +1061,34 @@ ModelImporter:
       takeName: Cutscene01
       firstFrame: 125
       lastFrame: 159
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: JogandoMagia
+      takeName: Sieg_Ataques
+      firstFrame: 160
+      lastFrame: 178
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

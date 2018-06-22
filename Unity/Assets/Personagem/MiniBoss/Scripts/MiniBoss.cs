@@ -90,7 +90,6 @@ public class MiniBoss : MonoBehaviour {
 
 			if (viuAbejide) {
 				//Se o miniBoss estiver invextindo, ele não vai poder mudar de estato
-				//if (estato != 2) {
 				tempoMudarEstato += Time.deltaTime;
 				if (tempoMudarEstato > tempoMudarEstatoRandom) {
 					if (estato == 2) {
@@ -99,7 +98,6 @@ public class MiniBoss : MonoBehaviour {
 
 					SortearEstato ();
 				}
-				//}
 
 				//Verifica qual é o estato que o inimig esta
 				switch (estato) {

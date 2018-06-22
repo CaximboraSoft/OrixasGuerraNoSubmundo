@@ -144,8 +144,7 @@ public class SeteEncruzilhadasAto03 : MonoBehaviour {
 		boca.GetComponent<Conversas> ().conversas.enabled = false;
 
 		abejide.GetComponent<Abejide> ().AtivarCodigoLula ();
-		GetComponent<Boss> ().enabled = true;
-		//GetComponent<Boss> ().viuAbejide = true;
+		GetComponent<Boss> ().AtivarCodigo ();
 
 		Destroy (GetComponent<SeteEncruzilhadasAto03> ());
 	}

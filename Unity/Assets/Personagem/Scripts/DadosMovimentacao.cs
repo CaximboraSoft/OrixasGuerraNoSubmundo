@@ -8,6 +8,7 @@ public class DadosMovimentacao : MonoBehaviour {
 	private Rigidbody meuRigidbody;
 	private InimigosNormais meuInimigosNormais;
 	private MiniBoss meuMiniBoss;
+	private Boss meuBoss;
 
 	public float vida = 100f;
 	public float velocidadeAndando;
@@ -21,6 +22,7 @@ public class DadosMovimentacao : MonoBehaviour {
 		meuRigidbody = GetComponent<Rigidbody> ();
 		meuInimigosNormais = GetComponent<InimigosNormais> ();
 		meuMiniBoss = GetComponent<MiniBoss> ();
+		meuBoss = GetComponent<Boss> ();
 	}
 	
 	// Update is called once per frame
@@ -42,14 +44,14 @@ public class DadosMovimentacao : MonoBehaviour {
 
 	public void PerderVida (float dano, bool danoEspada) {
 		if (vida > 0) {
-			if (meuInimigosNormais != null) {
+			if (meuInimigosNormais != null && meuInimigosNormais.estato != 2) { //Estato 2 é bloqueando
 				meuInimigosNormais.PerdeuVida (danoEspada);
-
-				if (meuInimigosNormais.estato != 2) {
-					vida -= dano;
-				}
-			} else {
+				vida -= dano;
+			} else if (meuMiniBoss != null) {
 				meuMiniBoss.PerdeuVida (danoEspada);
+				vida -= dano;
+			} else {
+				meuBoss.PerdeuVida (danoEspada);
 				vida -= dano;
 			}
 
@@ -66,8 +68,10 @@ public class DadosMovimentacao : MonoBehaviour {
 				Destroy (GetComponent<Collider> ());
 				if (meuInimigosNormais != null) {
 					meuInimigosNormais.DesativarCodigo ();
-				} else {
+				} else if (meuMiniBoss != null) {
 					meuMiniBoss.DesativarCodigo ();
+				} else {
+					meuBoss.DesativarCodigo ();
 				}
 			}
 

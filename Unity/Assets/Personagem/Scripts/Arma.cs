@@ -48,7 +48,7 @@ public class Arma : MonoBehaviour {
 					}
 
 					other.GetComponent<DadosMovimentacao> ().PerderVida (dano * abejide.estamina.value, danoDaEspada);
-				} else if (other.transform.tag == "MiniBoss" && other.GetComponent<MiniBoss> ().enabled) {
+				} else if (other.transform.tag == "MiniBoss") {
 					nomeDoAtaque = donoStateInfo.fullPathHash;
 					other.GetComponent<DadosMovimentacao> ().PerderVida (dano * abejide.estamina.value, true);
 

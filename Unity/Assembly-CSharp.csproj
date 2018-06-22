@@ -76,7 +76,9 @@
      <Compile Include="Assets\Personagem\Exus\1 Exu Velho\Scripts\Cutscene\SeteEncruzilhadasAto02.cs" />
      <Compile Include="Assets\Personagem\Exus\1 Exu Velho\Scripts\Cutscene\SeteEncruzilhadasAto03.cs" />
      <Compile Include="Assets\Personagem\Exus\2 Exu Tranca-Tudo\Scripts\Cutscene\TrancaRuaAto01.cs" />
+     <Compile Include="Assets\Personagem\Exus\Script\BolaDeFogo.cs" />
      <Compile Include="Assets\Personagem\Exus\Script\Boss.cs" />
+     <Compile Include="Assets\Personagem\Exus\Script\SpawBolasDeFogo.cs" />
      <Compile Include="Assets\Personagem\InimigosNormais\Carcereiro\Script\Cutscene\CarcereiroAto01.cs" />
      <Compile Include="Assets\Personagem\InimigosNormais\Esqueleto\Scripts\Cutscene\EsqueletoAto01.cs" />
      <Compile Include="Assets\Personagem\InimigosNormais\Scripts\InimigosNormais.cs" />

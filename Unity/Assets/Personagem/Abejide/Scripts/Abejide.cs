@@ -370,7 +370,8 @@ public class Abejide : MonoBehaviour {
 	}
 
 	void Atacar() {
-		if (Input.GetKeyDown (KeyCode.X) && mana.value >= subMana) {
+		if (Input.GetKeyDown (KeyCode.X) && mana.value >= subMana && !esquivando && !armaStateInfo.IsTag("Atacando")) {
+			meuAnimator.SetTrigger ("JogarMagia");
 			mana.value -= subMana;
 			Instantiate (magias [0], abejideMao.position, abejideMao.rotation);
 		} else if (Input.GetKeyDown (KeyCode.Z)) {
