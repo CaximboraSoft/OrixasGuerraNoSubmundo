@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 54292795868454198}
   m_Layer: 0
   m_Name: BolaDeFogo
-  m_TagString: Untagged
+  m_TagString: BolaDeFogo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68,7 +68,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1971262411752494}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 421.43, y: 14.52, z: 472.07355}
+  m_LocalPosition: {x: 759.8494, y: 0.34054184, z: 432.56396}
   m_LocalScale: {x: 1.2639908, y: 1.2639899, z: 1.2639899}
   m_Children:
   - {fileID: 4800343152215216}
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a8cf5f78947a544879c787da2be1d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidade: 35
+  velocidade: 10
 --- !u!135 &135800593614403882
 SphereCollider:
   m_ObjectHideFlags: 1

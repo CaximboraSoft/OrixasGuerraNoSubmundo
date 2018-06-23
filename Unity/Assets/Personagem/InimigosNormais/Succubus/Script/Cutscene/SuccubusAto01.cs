@@ -17,6 +17,7 @@ public class SuccubusAto01 : MonoBehaviour {
 	public Conversas boca;
 
 	public bool abejidePegouEspada = false;
+	private bool marreu = false;
 
 	private float temporizador;
 	private float maxTemporizador;
@@ -136,6 +137,7 @@ public class SuccubusAto01 : MonoBehaviour {
 			temporizador += Time.deltaTime;
 			if (temporizador > maxTemporizador) {
 				if (abejidePegouEspada) {
+					marreu = true;
 					atorAnimator.SetTrigger ("Morrendo");
 					abejide.GetComponentInChildren<Animator> ().SetBool ("Atacando", false);
 				} else {
@@ -183,6 +185,10 @@ public class SuccubusAto01 : MonoBehaviour {
 	}
 
 	private void PularCutscene () {
+		if (!marreu) {
+			atorAnimator.SetTrigger ("Morrendo");
+		}
+
 		GetComponent<Animator> ().SetTrigger ("PularCutscene");
 		AcabouCutscene ();
 	}

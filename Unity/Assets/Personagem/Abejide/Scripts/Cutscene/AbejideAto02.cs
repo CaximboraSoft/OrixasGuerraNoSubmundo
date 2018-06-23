@@ -128,7 +128,7 @@ public class AbejideAto02 : MonoBehaviour {
 							"Não deixarei que este seja o meu fim. Eles confiaram a mim a missão de matar essa linha estensa linha de Orixas e Exus\nque afrontam a " +
 							"humanidade tirando a sua liberdade.";
 						tempoEspera = 0;
-						maxTempoEspera = 45f * sat; //Tempo bom: 45f
+						maxTempoEspera = 30f * sat;
 						GetComponent<MetodosDaCutscene> ().IncrementarAto ();
 					}
 					break;

@@ -21,6 +21,7 @@ public class Abejide : MonoBehaviour {
 	public int iDUltimoAtaque = 0;
 
 	private Canvas gameOver;
+	public Text gameOverScore;
 	private AudioSource meuAudioSource;
 	public float maxTempoPassos = 0.2f;
 	public float tempoPassos;
@@ -47,6 +48,8 @@ public class Abejide : MonoBehaviour {
 	public Image[] coracoes;
 	public int vidas = 6;
 
+	public bool imune = false;
+	public ParticleSystem imuneParticula;
 	private bool correndo = false;
 	public bool focandoInimigoAnimator;
 	private bool focandoInimigoLocal;
@@ -71,6 +74,9 @@ public class Abejide : MonoBehaviour {
 	private float tempoParaPoderPular;
 	private float tempoSubindo;
 	public float forcaCaindo = 9800f;
+	public float addManaRecuperar = 1f;
+	public float maxTempoMana = 1f;
+	public float tempoRecuperarMana = 0f;
 
 	private bool chegouNoAnguloDaEsquiva;
 	private float anguloDaEsquiva;
@@ -135,12 +141,12 @@ public class Abejide : MonoBehaviour {
 			transform.position = satPosicao.position;
 		}
 
-
 		if (meuAnimator.GetInteger ("IndiceGatilho") == 999) {
 			peStateInfo = meuAnimator.GetCurrentAnimatorStateInfo (meuAnimator.layerCount - 1);
 
 			tempoParaAtacar += Time.deltaTime;
 			if (peStateInfo.IsTag ("MORTO") && tempoParaAtacar > 1f) {
+				gameOverScore.text = "Pontuação:\n" + FindObjectOfType<DadosDaFase> ().pontuacao.ToString ();
 				gameOver.GetComponentInChildren<Animator> ().SetTrigger ("GameOver");
 				gameOver.enabled = true;
 				GetComponent<Abejide> ().enabled = false;
@@ -151,6 +157,13 @@ public class Abejide : MonoBehaviour {
 			meuAnimator.SetInteger ("IndiceGatilho", 999);
 			meuAnimator.SetTrigger ("Gatilho");
 			tempoParaAtacar = 0;
+		}
+
+		//Recuperar mana com o passar do tempo
+		tempoRecuperarMana += Time.deltaTime;
+		if (tempoRecuperarMana > maxTempoMana) {
+			tempoRecuperarMana = 0f;
+			mana.value += addManaRecuperar;
 		}
 
 		//Ajusta os coraçõe de acordo com a vida do jogador.
@@ -683,7 +696,12 @@ public class Abejide : MonoBehaviour {
 	}
 
 	public void PerderVida () {
-		vidas--;
+		if (!imune) {
+			imune = true;
+			vidas--;
+			imuneParticula.Play ();
+			StartCoroutine ("Imunidade");
+		}
 	}
 
 	void OnCollisionEnter (Collision other) {
@@ -699,5 +717,11 @@ public class Abejide : MonoBehaviour {
 	/// <returns><c>true</c>, if over was gamed, <c>false</c> otherwise.</returns>
 	public bool GameOver () {
 		return gameOver.enabled;
+	}
+
+	IEnumerator Imunidade () {
+		yield return new WaitForSeconds (4);
+		imuneParticula.Stop ();
+		imune = false;
 	}
 }

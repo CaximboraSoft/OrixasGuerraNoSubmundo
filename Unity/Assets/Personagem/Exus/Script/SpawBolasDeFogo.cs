@@ -7,6 +7,7 @@ public class SpawBolasDeFogo : MonoBehaviour {
 	private Transform abejide;
 	public GameObject bolaDeFogo;
 
+	public float distanciaY = 5f;
 	public float precisaoX = 3f;
 	public float precisaoY = 3f;
 	public float maxTempoEntreSpaws = 2f;
@@ -29,14 +30,14 @@ public class SpawBolasDeFogo : MonoBehaviour {
 		if (temporizador > maxTempoEntreSpaws) {
 			contador++;
 
+			transform.position = new Vector3 (abejide.position.x, abejide.position.y + distanciaY, abejide.position.z);
 			transform.LookAt (abejide.position);
 
 			float randomX = Random.Range (-precisaoX, precisaoX);
 			float randomY = Random.Range (-precisaoY, precisaoY);
 
 			transform.eulerAngles = new Vector3 (transform.eulerAngles.x + randomX, transform.eulerAngles.y + randomY, transform.eulerAngles.z);
-			GameObject bolaCriada = Instantiate (bolaDeFogo, transform.position, transform.rotation);
-			//bolaCriada.
+			Instantiate (bolaDeFogo, transform.position, transform.rotation);
 
 			if (contador > maxBoloDeFogo) {
 				Destroy (gameObject);

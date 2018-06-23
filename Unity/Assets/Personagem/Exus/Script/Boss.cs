@@ -5,7 +5,11 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class Boss : MonoBehaviour {
-	
+
+	public GameObject[] inimigo;
+	public GameObject spawsBolasDeFogo;
+	public GameObject bolaDeFogo;
+	public Transform mao;
 	private Vector3 posicaoDeredor;
 	public Transform seta;
 	private Transform abejide;
@@ -22,6 +26,7 @@ public class Boss : MonoBehaviour {
 
 	private bool sorteouPosicaoDeredor = false;
 	public bool viuAbejide = false;
+	private bool ataqueBolaDeFogo = false;
 
 	private float distancia;
 	public float distanciaEnxergar = 20f;
@@ -53,7 +58,14 @@ public class Boss : MonoBehaviour {
 	public float maxMuitoProximo = 0f;
 	public float muitoDistante = 0f;
 	public float maxMuitoDistante = 4f;
+	public float magiaTemporizador;
+	private float temporizador;
 
+	private float tempoSpawInimigo = 0f;
+	private float tempoSpawInimigoRandom = 28f;
+
+	private int contadorBola = 0;
+	private int maxContadorBola = 60;
 	public int estato = 0;
 
 	public void AtivarCodigo () {
@@ -71,11 +83,34 @@ public class Boss : MonoBehaviour {
 
 		GetComponent<Boss> ().enabled = true;
 
+		tempoSpawInimigoRandom = Random.Range (20f, 30f);
 		SortearEstato ();
 	}
 
 	// Update is called once per frame
 	void Update () {
+
+		tempoSpawInimigo += Time.deltaTime;
+		if (tempoSpawInimigo > tempoSpawInimigoRandom) {
+			tempoSpawInimigoRandom = Random.Range (20f, 30f);
+			tempoSpawInimigo = 0;
+			sorteouPosicaoDeredor = false;
+			estato = 4;
+		}
+
+		temporizador += Time.deltaTime;
+		if (ataqueBolaDeFogo && temporizador > 0.2f) {
+			meuAnimator.SetInteger ("IndiceAtaque", 4);
+			meuAnimator.SetTrigger ("Atacar");
+
+			contadorBola++;
+
+			Instantiate (bolaDeFogo, mao.position, mao.rotation);
+			if (contadorBola > maxContadorBola) {
+				ataqueBolaDeFogo = false;
+			}
+		}
+
 		if (!abejide.GetComponent<Abejide> ().GameOver ()) { 
 			distancia = Vector3.Distance (transform.position, abejide.position);
 
@@ -137,15 +172,23 @@ public class Boss : MonoBehaviour {
 				case 3:
 					OlharParaVector3 (abejide.position, meuDadosMovimentacao.velocidadeRotacao);
 					break;
+				case 4:
+					if (sorteouPosicaoDeredor) {
+						GameObject inimigoCriado = Instantiate (inimigo[inimigo.Length - 1], posicaoDeredor, Quaternion.identity);
+						inimigoCriado.GetComponent<InimigosNormais> ().viuAbejide = true;
+						inimigoCriado.GetComponent<InimigosNormais> ().chanceDroparVidaExu = 75f;
+						inimigoCriado.GetComponent<InimigosNormais> ().AtivarCodigo ();
+						SortearEstato ();
+					}
+					break;
 				}
-
-
+				
 				velocidade = meuNavMeshAgent.velocity.magnitude;
 
 				if (distancia < distanciaDeAtaque - 0.5f && estato != 2) {
 					muitoDistante = 0f;
 					muitoProximo += Time.deltaTime;
-					GetComponent<Rigidbody> ().AddForce (transform.forward * -8000f);
+					GetComponent<Rigidbody> ().AddForce (transform.forward * -2000f);
 
 					if (estato != 0) {
 						estato = 0;
@@ -163,8 +206,8 @@ public class Boss : MonoBehaviour {
 						if (muitoDistante > maxMuitoDistante && estato == 0) {
 							muitoDistante = 0f;
 
-							if (Random.Range (0f, 100f) < 50f) {
-								SortearEstato ();
+							if (Random.Range (0f, 100f) < 35f) {
+								JogarBolaDeFogo ();
 							} else {
 								muitoDistante = 0f;
 								SortearEstato ();
@@ -189,6 +232,19 @@ public class Boss : MonoBehaviour {
 				meuAnimator.SetFloat ("Velocidade", velocidade);
 			}
 		}
+	}
+
+	/// <summary>
+	/// Faz chover bola de fogo.
+	/// </summary>
+	public void JogarBolaDeFogo () {
+		GameObject temp = Instantiate (spawsBolasDeFogo);
+		temp.GetComponent<SpawBolasDeFogo> ().tipoDeRotinaBolaDeFogo = 0;
+		temp.GetComponent<SpawBolasDeFogo> ().maxBoloDeFogo = Random.Range (10, 20);
+
+		sorteouPosicaoDeredor = false;
+		tempoMudarEstatoRandom = Random.Range (minMudarEstatoTeleporte, maxMudarEstatoTeleporte);
+		estato = 2;
 	}
 
 	/// <summary>
@@ -223,15 +279,34 @@ public class Boss : MonoBehaviour {
 			tempoAtacar = 0f;
 			tempoMudarEstatoRandom = Random.Range (minMudarEstatoAtacando, maxMudarEstatoAtacando);
 
+			if (Random.Range (0f, 100f) < 40f) {
+				JogarBolaDeFogo ();
+			}
 			//Estato parado perdo do Abejide
 		} else if (chanceRandomParado >= chanceRandomAtaque && chanceRandomParado > chanceRandomTeleportar) {
 			estato = 1;
 			sorteouPosicaoDeredor = false;
 			tempoMudarEstatoRandom = Random.Range (minMudarEstatoParado, maxMudarEstatoParado);
+
+			if (Random.Range (0f, 100f) < 35f) {
+				JogarBolaDeFogo ();
+			} else if (Random.Range (0f, 100f) < 35f) {
+				temporizador = -1f;
+				ataqueBolaDeFogo = true;
+				contadorBola = 0;
+				maxContadorBola = Random.Range (50, 70);
+			}
 		} else {
 			sorteouPosicaoDeredor = false;
 			tempoMudarEstatoRandom = Random.Range (minMudarEstatoTeleporte, maxMudarEstatoTeleporte);
 			estato = 2;
+
+			if (Random.Range (0f, 100f) < 35f) {
+				temporizador = -1f;
+				ataqueBolaDeFogo = true;
+				contadorBola = 0;
+				maxContadorBola = Random.Range (50, 70);
+			}
 		}
 	}
 
@@ -296,8 +371,14 @@ public class Boss : MonoBehaviour {
 	/// </summary>
 	public void PerdeuVida (bool danoEspada) {
 		if (danoEspada) {
-			meuAudioSource.clip = danoSons [Random.Range (0, danoSons.Length)];
+			meuAudioSource.clip = danoSons [Random.Range (0, danoSons.Length - 1)];
 			meuAudioSource.Play ();
+
+			if (Random.Range (0f, 100f) < 45f) {
+				sorteouPosicaoDeredor = false;
+				tempoMudarEstatoRandom = Random.Range (minMudarEstatoTeleporte, maxMudarEstatoTeleporte);
+				estato = 2;
+			}
 		}
 	}
 
@@ -305,7 +386,7 @@ public class Boss : MonoBehaviour {
 	/// Desativa todas as coisas deste que o objeto pode esta ativado, tipo o <NavMeshAgent>;
 	/// </summary>
 	public void DesativarCodigo () {
-		dadosDaFase.pontuacao += 1000;
+		dadosDaFase.pontuacao += 10000;
 
 		Vector3 rotacao = new Vector3 (Random.Range (0f, 360f), Random.Range (0f, 360f), Random.Range (0f, 360f));
 		Instantiate (Resources.Load ("Prefab/Vida", typeof(GameObject)), transform.position, Quaternion.Euler (rotacao));

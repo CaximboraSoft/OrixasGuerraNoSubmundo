@@ -46,11 +46,11 @@ public class seguirJogador : MonoBehaviour {
 		meuUltimoAlvo = meuAlvo;
 
 		//O tempo de toração vai decaindo até chegar a zero
-		if (temporizador > 0f) {
+		if (temporizador > 0.1f) {
 			temporizador -= Time.deltaTime;
 
-			if (temporizador < 0f) {
-				temporizador = 0f;
+			if (temporizador < 0.1f) {
+				temporizador = 0.1f;
 			}
 		}
 		seta.LookAt (meuAlvo.position + rotacao);

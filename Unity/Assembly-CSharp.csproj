@@ -71,6 +71,7 @@
      <Compile Include="Assets\Personagem\Abejide\Scripts\ColocarDentro.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto02.cs" />
+     <Compile Include="Assets\Personagem\Abejide\Scripts\Pausar.cs" />
      <Compile Include="Assets\Personagem\Coadjuvantes\Scripts\Coadjuvantes.cs" />
      <Compile Include="Assets\Personagem\Exus\1 Exu Velho\Scripts\Cutscene\SeteEncruzilhadasAto01.cs" />
      <Compile Include="Assets\Personagem\Exus\1 Exu Velho\Scripts\Cutscene\SeteEncruzilhadasAto02.cs" />

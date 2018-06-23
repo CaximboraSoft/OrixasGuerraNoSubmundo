@@ -15,6 +15,7 @@ TagManager:
   - Coadjuvantes
   - MiniBoss
   - GameOver
+  - BolaDeFogo
   layers:
   - Default
   - TransparentFX

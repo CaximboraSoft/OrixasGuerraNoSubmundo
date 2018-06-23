@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114463337860239648}
   m_Layer: 2
   m_Name: SpawBolasDeFogo
-  m_TagString: Untagged
+  m_TagString: Inimigo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bolaDeFogo: {fileID: 1971262411752494, guid: 53c8fab95bccb374c9b9fa4f03ee17f5, type: 2}
+  distanciaY: 50
   precisaoX: 3
   precisaoY: 3
   maxTempoEntreSpaws: 0.2

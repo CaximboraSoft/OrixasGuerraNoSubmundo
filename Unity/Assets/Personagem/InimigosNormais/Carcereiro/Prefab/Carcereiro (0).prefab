@@ -441,8 +441,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1889102022965366}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 21, y: 0.271, z: -40.9}
+  m_LocalRotation: {x: -0, y: 0.6974898, z: -0, w: 0.71659476}
+  m_LocalPosition: {x: -17.17, y: 0.27100003, z: -55.55237}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4522670041693966}
@@ -450,7 +450,7 @@ Transform:
   - {fileID: 4356924522450632}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -114.44201, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 88.452, z: 0}
 --- !u!4 &4819477044893792
 Transform:
   m_ObjectHideFlags: 1
@@ -767,7 +767,7 @@ MonoBehaviour:
   velocidade: 0
   distanciaDeAtaque: 1.8
   minTempoAtacar: 3
-  maxTempoAtacar: 9
+  maxTempoAtacar: 5
   minDistanciaDeredor: 4
   maxDistanciaDeredor: 15
   changeEstatoAtacando: 50

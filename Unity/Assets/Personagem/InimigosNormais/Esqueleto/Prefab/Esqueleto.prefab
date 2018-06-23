@@ -926,15 +926,15 @@ MonoBehaviour:
   distanciaEnxergar: 40
   velocidade: 0
   distanciaDeAtaque: 1.9
-  minTempoAtacar: 2
-  maxTempoAtacar: 5
+  minTempoAtacar: 1.8
+  maxTempoAtacar: 4
   minDistanciaDeredor: 2
   maxDistanciaDeredor: 14
   changeEstatoAtacando: 50
   changeEstatoParado: 20
   changeEstatoDefendendo: 30
   minMudarEstatoParado: 5
-  maxMudarEstatoParado: 15
+  maxMudarEstatoParado: 10
   minMudarEstatoAtacando: 15
   maxMudarEstatoAtacando: 30
   muitoProximo: 0

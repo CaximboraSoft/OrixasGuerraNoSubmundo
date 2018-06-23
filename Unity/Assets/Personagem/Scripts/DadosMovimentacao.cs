@@ -31,6 +31,9 @@ public class DadosMovimentacao : MonoBehaviour {
 			AnimatorStateInfo meuStateInfo = meuAnimator.GetCurrentAnimatorStateInfo (0);
 
 			if (meuStateInfo.IsTag ("MORTO")) {
+				if (meuBoss != null) {
+					FindObjectOfType<LevelManager> ().MostrarTelaFinal ();
+				}
 				meuAnimator.enabled = false;
 				Destroy (meuAnimator);
 				Destroy (GetComponent<DadosMovimentacao> ());
@@ -50,7 +53,7 @@ public class DadosMovimentacao : MonoBehaviour {
 			} else if (meuMiniBoss != null) {
 				meuMiniBoss.PerdeuVida (danoEspada);
 				vida -= dano;
-			} else {
+			} else if (meuBoss != null) {
 				meuBoss.PerdeuVida (danoEspada);
 				vida -= dano;
 			}
@@ -60,7 +63,10 @@ public class DadosMovimentacao : MonoBehaviour {
 
 				if (meuAnimator.layerCount > 2) {
 					meuAnimator.SetLayerWeight (2, 0f);
-					meuAnimator.SetLayerWeight (3, 0f);
+
+					if (meuAnimator.layerCount > 3) {
+						meuAnimator.SetLayerWeight (3, 0f);
+					}
 				}
 
 				meuAnimator.SetBool ("Morto", true);
@@ -70,7 +76,7 @@ public class DadosMovimentacao : MonoBehaviour {
 					meuInimigosNormais.DesativarCodigo ();
 				} else if (meuMiniBoss != null) {
 					meuMiniBoss.DesativarCodigo ();
-				} else {
+				} else if (meuBoss != null) {
 					meuBoss.DesativarCodigo ();
 				}
 			}

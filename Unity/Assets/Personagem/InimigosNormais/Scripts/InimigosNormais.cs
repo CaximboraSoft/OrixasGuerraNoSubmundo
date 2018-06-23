@@ -59,6 +59,8 @@ public class InimigosNormais : MonoBehaviour {
 	public float muitoDistante = 0f;
 	public float maxMuitoDistante = 4f;
 
+	public float chanceDroparVidaExu = 0;
+
 	public int nivelDaIa = 0;
 	/* Estatos:
 	 * 0: Atacando
@@ -80,7 +82,6 @@ public class InimigosNormais : MonoBehaviour {
 			} 
 
 			if (Random.Range (0, 2) == 0) { //Espada
-				espadaAtiva = true;
 				espada.enabled = true;
 				lanca.enabled = false;
 			} else { //Lanca
@@ -397,14 +398,7 @@ public class InimigosNormais : MonoBehaviour {
 		case 0:
 			SortearEstato ();
 			break;
-		//Caso estaj com IA nivel 1, o inimigo irá entar automaticamente no modo ataque
 		case 1:
-			estato = 0;
-			tempoMudarEstatoRandom = Random.Range (minMudarEstatoAtacando, maxMudarEstatoAtacando);
-			tempoAtacar = 0f;
-			tempoAtacarRandom = Random.Range (minTempoAtacar, maxTempoAtacar);
-			break;
-		case 2:
 			estato = 0;
 			if (tempoAtacar > 0) {
 				tempoAtacar -= 0.25f;
@@ -455,6 +449,13 @@ public class InimigosNormais : MonoBehaviour {
 		if (droparVida) {
 			Vector3 rotacao = new Vector3 (Random.Range (0f, 360f), Random.Range (0f, 360f), Random.Range (0f, 360f));
 			Instantiate (Resources.Load ("Prefab/Vida", typeof(GameObject)), transform.position, Quaternion.Euler (rotacao));
+		}
+
+		if (chanceDroparVidaExu != 0) {
+			if (Random.Range (0f, 100f) < chanceDroparVidaExu) {
+				Vector3 rotacao = new Vector3 (Random.Range (0f, 360f), Random.Range (0f, 360f), Random.Range (0f, 360f));
+				Instantiate (Resources.Load ("Prefab/Vida", typeof(GameObject)), transform.position, Quaternion.Euler (rotacao));
+			}
 		}
 
 		transform.tag = "Untagged";

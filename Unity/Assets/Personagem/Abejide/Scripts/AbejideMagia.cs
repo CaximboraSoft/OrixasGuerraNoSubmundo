@@ -20,11 +20,17 @@ public class AbejideMagia : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider other) {
+		if (other.tag == "ArmaColisor") {
+			return;
+		}
+
 		if (other.tag == "Inimigo") {
 			other.GetComponent<DadosMovimentacao> ().PerderVida (dano, false);
 			Destroy (gameObject);
 		} if (other.tag == "MiniBoss") {
-			other.GetComponent<DadosMovimentacao> ().PerderVida (dano / 2f, false);
+			other.GetComponent<DadosMovimentacao> ().PerderVida (dano / 2.5f, false);
+			Destroy (gameObject);
+		} else if (other.tag != "Abejide" && other.tag != "Player") {
 			Destroy (gameObject);
 		}
 	}

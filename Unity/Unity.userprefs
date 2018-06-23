@@ -1,22 +1,20 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Personagem\Exus\Script\SpawBolasDeFogo.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Personagem\Abejide\Scripts\Pausar.cs">
     <Files>
-      <File FileName="Assets\Personagem\Abejide\Scripts\Abejide.cs" Line="1" Column="1" />
-      <File FileName="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" Line="1" Column="1" />
-      <File FileName="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto02.cs" Line="1" Column="1" />
-      <File FileName="Assets\Cenario\Scripts\DadosDaFase.cs" Line="1" Column="1" />
-      <File FileName="Assets\Cenario\Scripts\EsconderObjeto.cs" Line="1" Column="1" />
-      <File FileName="Assets\Personagem\Scripts\Arma.cs" Line="55" Column="44" />
-      <File FileName="Assets\Personagem\Scripts\DadosMovimentacao.cs" Line="51" Column="41" />
-      <File FileName="Assets\Personagem\InimigosNormais\Succubus\Script\Cutscene\SuccubusAto01.cs" Line="1" Column="1" />
-      <File FileName="Assets\Personagem\Abejide\Scripts\AbejideMagia.cs" Line="1" Column="1" />
-      <File FileName="Assets\Cenario\Camera\Scripts\Cutscene\CameraAto01.cs" Line="1" Column="1" />
-      <File FileName="Assets\Personagem\Exus\1 Exu Velho\Scripts\Cutscene\SeteEncruzilhadasAto03.cs" Line="147" Column="41" />
-      <File FileName="Assets\Personagem\MiniBoss\Scripts\MiniBoss.cs" Line="88" Column="6" />
-      <File FileName="Assets\Personagem\Exus\Script\Boss.cs" Line="166" Column="44" />
-      <File FileName="Assets\Personagem\Exus\Script\SpawBolasDeFogo.cs" Line="37" Column="74" />
-      <File FileName="Assets\Personagem\Exus\Script\BolaDeFogo.cs" Line="16" Column="36" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\Abejide.cs" Line="149" Column="97" />
+      <File FileName="Assets\Personagem\InimigosNormais\Scripts\InimigosNormais.cs" Line="430" Column="33" />
+      <File FileName="Assets\Personagem\Scripts\Arma.cs" Line="34" Column="110" />
+      <File FileName="Assets\Personagem\Exus\Script\BolaDeFogo.cs" Line="38" Column="26" />
+      <File FileName="Assets\Personagem\Exus\Script\SpawBolasDeFogo.cs" Line="1" Column="1" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\AbejideMagia.cs" Line="22" Column="40" />
+      <File FileName="Assets\Personagem\Exus\Script\Boss.cs" Line="76" Column="14" />
+      <File FileName="Assets\Personagem\Exus\1 Exu Velho\Scripts\Cutscene\SeteEncruzilhadasAto02.cs" Line="1" Column="1" />
+      <File FileName="Assets\Personagem\InimigosNormais\Succubus\Script\Cutscene\SuccubusAto01.cs" Line="140" Column="20" />
+      <File FileName="Assets\Cenario\Camera\Scripts\seguirJogador.cs" Line="48" Column="10" />
+      <File FileName="Assets\Personagem\Scripts\DadosMovimentacao.cs" Line="34" Column="16" />
+      <File FileName="Assets\Interfaces\Menu\Script\LevelManager.cs" Line="23" Column="3" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\Pausar.cs" Line="26" Column="36" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

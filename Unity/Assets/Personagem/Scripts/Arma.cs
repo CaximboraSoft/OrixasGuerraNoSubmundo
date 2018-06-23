@@ -31,7 +31,7 @@ public class Arma : MonoBehaviour {
 	}
 
 	void OnTriggerStay (Collider other) {
-		if (donoStateInfo.fullPathHash != nomeDoAtaque && donoStateInfo.normalizedTime > donoStateInfo.length / 1.5f &&
+		if (donoStateInfo.fullPathHash != nomeDoAtaque && donoStateInfo.normalizedTime > donoStateInfo.length / 2.3f &&
 			donoStateInfo.IsTag ("Atacando")) {
 
 			if (donoAnimator.name == "AbejideBlender") {

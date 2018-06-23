@@ -110,6 +110,7 @@ public class SeteEncruzilhadasAto02 : MonoBehaviour {
 		Destroy (batalhaFinal.gameObject);
 
 		GetComponent<SeteEncruzilhadasAto03> ().AtivarCodigo ();
+		GetComponentInChildren<Arma> ().enabled = true;
 
 		Destroy (GetComponent<MetodosDaCutscene> ());
 		Destroy (GetComponent<SeteEncruzilhadasAto01> ());
