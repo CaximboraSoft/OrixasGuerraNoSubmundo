@@ -12,6 +12,8 @@ public class DadosDaFase : MonoBehaviour {
 	public Light[] luz;
 	public ParticleSystem[] fogo;
 
+	public bool portugues;
+
 	public int inimigosIa0Atacando; //Usado para os carcereiros
 	public int inimigosIa1Atacando; //Usados para as succubus
 	public int inimigosIa2Atacando; //Usados para as esqueletos
@@ -25,6 +27,12 @@ public class DadosDaFase : MonoBehaviour {
 		abejide = GameObject.FindGameObjectWithTag ("Abejide").transform;
 
 		PegarTochas ();
+
+		if (PlayerPrefs.GetInt ("Indioma") == 1) {
+			portugues = true;
+		} else {
+			portugues = false;
+		}
 	}
 	
 	// Update is called once per frame
@@ -97,5 +105,9 @@ public class DadosDaFase : MonoBehaviour {
 			fogo[i].Play ();
 			luz[i].enabled = true;
 		}
+	}
+
+	public bool PegarIndioma () {
+		return portugues;
 	}
 }

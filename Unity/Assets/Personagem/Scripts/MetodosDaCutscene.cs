@@ -465,4 +465,8 @@ public class MetodosDaCutscene : MonoBehaviour {
 	public int PegarSat () {
 		return meuDadosDaFase.sat;
 	}
+
+	public bool PegarIndioma () {
+		return meuDadosDaFase.portugues;
+	}
 }

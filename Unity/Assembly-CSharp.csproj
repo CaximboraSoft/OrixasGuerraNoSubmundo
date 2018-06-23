@@ -63,11 +63,16 @@
      <Compile Include="Assets\Cenario\Scripts\EsconderObjeto.cs" />
      <Compile Include="Assets\Cenario\Scripts\FPS.cs" />
      <Compile Include="Assets\Interfaces\Menu\Script\LevelManager.cs" />
+     <Compile Include="Assets\Interfaces\Menu\Splash Screen\BotoesIndioma.cs" />
+     <Compile Include="Assets\Interfaces\Menu\Splash Screen\Data.cs" />
+     <Compile Include="Assets\Interfaces\Menu\Splash Screen\PtEn.cs" />
      <Compile Include="Assets\Interfaces\Menu\Splash Screen\SplashScreen.cs" />
      <Compile Include="Assets\Interfaces\Scripts\Conversas.cs" />
+     <Compile Include="Assets\Personagem\Abejide\Prefabs\DestroirAposTempo.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\Abejide.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideChao.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\AbejideMagia.cs" />
+     <Compile Include="Assets\Personagem\Abejide\Scripts\Balas.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\ColocarDentro.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto01.cs" />
      <Compile Include="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto02.cs" />

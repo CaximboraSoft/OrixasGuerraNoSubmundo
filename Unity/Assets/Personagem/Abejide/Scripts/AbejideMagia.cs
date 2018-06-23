@@ -8,6 +8,7 @@ public class AbejideMagia : MonoBehaviour {
 
 	public float dano = 25;
 	public float velocidade;
+	private float temporizador;
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +17,11 @@ public class AbejideMagia : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		temporizador += Time.deltaTime;
+		if (temporizador > 10f) {
+			Destroy (gameObject);
+		}
+
 		meuRigidbody.AddForce (transform.forward * velocidade);
 	}
 

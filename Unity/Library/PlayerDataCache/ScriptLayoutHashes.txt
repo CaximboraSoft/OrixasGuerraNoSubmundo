@@ -115,6 +115,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 528ea1fd7c01796fc60c4e2f172ea229 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformVisualizer
 1be3d4da2de743fc288360e69201e9df Assembly-CSharp.dll:.Boss
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
+3c583e90d0ff3926e896f1a71adcbef8 Assembly-CSharp.dll:.Pausar
 ede94039aa1ffb418f7250c7f2178a84 Assembly-CSharp.dll:.FPS
 322cb40e1e282f28af980cbef7922a90 UnityEngine.Analytics.dll:UnityEngine.Analytics.AnalyticsEventTracker
 dc07d7ad69b399a46e92c483bf1c04ca UnityEngine.Analytics.dll:UnityEngine.Analytics.AnalyticsTracker
@@ -136,7 +137,7 @@ c6583d890bf7db2b93f96e829394d483 Assembly-CSharp.dll:.SeteEncruzilhadasAto01
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.EsconderObjeto
 a69aec9dd12c4bc48da323257c3d4414 Assembly-CSharp.dll:.Coadjuvantes
 8f17b2da80547c0f113848fec4d284fe Assembly-CSharp.dll:.ColocarDentro
-4a13270d3d3e76838fdff721d3fcb1f3 Assembly-CSharp.dll:.DadosDaFase
+7ce579570f6b598db53d15aa024ca971 Assembly-CSharp.dll:.DadosDaFase
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
 60b2bb652410a5867a5ab9a01cd38461 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkDiscovery
@@ -180,5 +181,9 @@ ab185e81ef555e0231cb286629a73dfa Assembly-CSharp.dll:.TrancaRuaAto01
 cefee73a023d97637362d1bf203464d3 Assembly-CSharp.dll:.AbejideAto02
 3a291ea79eae2cc008d456ecc3922c05 Assembly-CSharp.dll:.BolaDeFogo
 63c4676cbdfc0050b8d052d2f164d1e4 Assembly-CSharp.dll:.CarcereiroAto01
-8c7d0efe7c15dc9ddcd47052402668d5 Assembly-CSharp.dll:.Abejide
-3c583e90d0ff3926e896f1a71adcbef8 Assembly-CSharp.dll:.Pausar
+64dd39ea014edec89d511f9c30b88b9d Assembly-CSharp.dll:.Abejide
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.Data
+a57531da74dbbd9ee8b5107cf75762eb Assembly-CSharp.dll:.BotoesIndioma
+4814b6ded3a086d84b6abcbcdc1503e8 Assembly-CSharp.dll:.PtEn
+208167d4593a79b71220113ebb3685c7 Assembly-CSharp.dll:.Balas
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.DestroirAposTempo

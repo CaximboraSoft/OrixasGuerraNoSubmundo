@@ -16,6 +16,7 @@ TagManager:
   - MiniBoss
   - GameOver
   - BolaDeFogo
+  - Data
   layers:
   - Default
   - TransparentFX

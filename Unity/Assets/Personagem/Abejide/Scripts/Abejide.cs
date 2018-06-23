@@ -6,7 +6,15 @@ using UnityEngine.UI;
 
 public class Abejide : MonoBehaviour {
 
-	public Transform satPosicao;
+	public Canvas trapaca;
+	public Text trapacaText;
+	public Transform[] lugarSaidaDaBala;
+	public GameObject[] balasGameObj;
+	public Renderer[] armasDeFogo;
+	public int armasDeFogoAtiva = -1;
+	private int balas;
+	public float[] tempoTiros;
+	private float temporizadorTiros;
 
 	public Slider mana;
 	public float subMana = 10f;
@@ -29,6 +37,7 @@ public class Abejide : MonoBehaviour {
 	public AudioClip pulandoSom;
 	public Vector3 vetorDeMovimento;
 	private DadosMovimentacao meuDadosMovimentacao;
+	private AnimatorStateInfo armaDeFogoStateInfo;
 	private AnimatorStateInfo armaStateInfo;
 	private AnimatorStateInfo peStateInfo;
 	private AnimatorStateInfo esquivaStateInfo;
@@ -44,7 +53,6 @@ public class Abejide : MonoBehaviour {
 	public Transform inimigoParaFocar;
 	private float distanciaDoInimigo = 0f;
 	public Transform seta;
-	public Transform satPosicaoFora;
 	public Image[] coracoes;
 	public int vidas = 6;
 
@@ -137,8 +145,10 @@ public class Abejide : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.P)) {
-			transform.position = satPosicao.position;
+		temporizadorTiros += Time.deltaTime;
+
+		if (Input.GetKeyDown (KeyCode.Tab) && armaAtual != -1) {
+			trapaca.enabled = !trapaca.enabled;
 		}
 
 		if (meuAnimator.GetInteger ("IndiceGatilho") == 999) {
@@ -146,7 +156,11 @@ public class Abejide : MonoBehaviour {
 
 			tempoParaAtacar += Time.deltaTime;
 			if (peStateInfo.IsTag ("MORTO") && tempoParaAtacar > 1f) {
-				gameOverScore.text = "Pontuação:\n" + FindObjectOfType<DadosDaFase> ().pontuacao.ToString ();
+				if (FindObjectOfType<DadosDaFase> ().PegarIndioma ()) {
+					gameOverScore.text = "Pontuação:\n" + FindObjectOfType<DadosDaFase> ().pontuacao.ToString ();
+				} else {
+					gameOverScore.text = "Score:\n" + FindObjectOfType<DadosDaFase> ().pontuacao.ToString ();
+				}
 				gameOver.GetComponentInChildren<Animator> ().SetTrigger ("GameOver");
 				gameOver.enabled = true;
 				GetComponent<Abejide> ().enabled = false;
@@ -203,7 +217,11 @@ public class Abejide : MonoBehaviour {
 
 			if (estouNoChao) {
 				if (!esquivando) {
-					Atacar ();
+					if (armasDeFogoAtiva == -1) {
+						Atacar ();
+					} else {
+						ArmaDeFogo ();
+					}
 				}
 			}
 		} else {
@@ -289,6 +307,51 @@ public class Abejide : MonoBehaviour {
 
 		if (Input.GetKey (KeyCode.H)) {
 			meuDadosMovimentacao.PegarMeuRigidbody ().AddForce (transform.forward * forcaDeMovimento * 8f, ForceMode.Force);
+		}
+	}
+
+	void ArmaDeFogo () {
+		armaDeFogoStateInfo = meuAnimator.GetCurrentAnimatorStateInfo (3);
+
+		switch (armasDeFogoAtiva) {
+		//Revolver
+		case 0:
+			if (Input.GetKeyDown (KeyCode.Z) && balas > 0 && temporizadorTiros > tempoTiros[armasDeFogoAtiva] && !armaDeFogoStateInfo.IsTag("Recarregando")) {
+				temporizadorTiros = 0f;
+				meuAnimator.SetTrigger ("Atirar");
+				Instantiate (balasGameObj [armasDeFogoAtiva], lugarSaidaDaBala [armasDeFogoAtiva].position, lugarSaidaDaBala [armasDeFogoAtiva].rotation);
+				balas--;
+			} else if (Input.GetKeyDown (KeyCode.R) && balas < 6) {
+				balas = 6;
+				meuAnimator.SetTrigger ("Recarregar");
+			}
+			break;
+
+		//Ak45
+		case 1:
+			if (Input.GetKey (KeyCode.Z) && balas > 0 && temporizadorTiros > tempoTiros[armasDeFogoAtiva] && !armaDeFogoStateInfo.IsTag("Recarregando")) {
+				temporizadorTiros = 0f;
+				meuAnimator.SetTrigger ("Atirar");
+				Instantiate (balasGameObj [armasDeFogoAtiva], lugarSaidaDaBala [armasDeFogoAtiva].position, lugarSaidaDaBala [armasDeFogoAtiva].rotation);
+				balas--;
+			} else if (Input.GetKeyDown (KeyCode.R) && balas < 45) {
+				balas = 45;
+				meuAnimator.SetTrigger ("Recarregar");
+			}
+			break;
+
+		//Doze
+		case 2:
+			if (Input.GetKeyDown (KeyCode.Z) && balas > 0 && temporizadorTiros > tempoTiros[armasDeFogoAtiva] && !armaDeFogoStateInfo.IsTag("Recarregando")) {
+				temporizadorTiros = 0f;
+				meuAnimator.SetTrigger ("Atirar");
+				Instantiate (balasGameObj [armasDeFogoAtiva], lugarSaidaDaBala [armasDeFogoAtiva].position, lugarSaidaDaBala [armasDeFogoAtiva].rotation);
+				balas--;
+			} else if (Input.GetKeyDown (KeyCode.R) && balas < 5) {
+				balas = 5;
+				meuAnimator.SetTrigger ("Recarregar");
+			}
+			break;
 		}
 	}
 
@@ -628,10 +691,6 @@ public class Abejide : MonoBehaviour {
 		}
 		
 		peDirecao = Mathf.Lerp(peDirecao, 180f - (direcaoAngulo + (minhaRotacao / 2f)), 9f * Time.deltaTime);
-
-		if (Input.GetKeyDown (KeyCode.P)) {
-			transform.position = satPosicaoFora.position;
-		}
 	}
 
 	private void PeDirecaoDuasTeclas (float valor1, float valor2) {
@@ -723,5 +782,52 @@ public class Abejide : MonoBehaviour {
 		yield return new WaitForSeconds (4);
 		imuneParticula.Stop ();
 		imune = false;
+	}
+
+	public void ValidarTrapaca () {
+		
+		if (trapacaText.text == "0".ToUpper () && armasDeFogoAtiva != 0) {
+			if (armasDeFogoAtiva != -1) {
+				armasDeFogo [armasDeFogoAtiva].enabled = false;
+			}
+
+			balas = 6;
+			armasDeFogoAtiva = 0;
+			armasDeFogo [armasDeFogoAtiva].enabled = true;
+
+			meuAnimator.SetLayerWeight (1, 0);
+			meuAnimator.SetLayerWeight (2, 0);
+			meuAnimator.SetLayerWeight (3, 1);
+			meuAnimator.SetTrigger ("AtivarArmaDeFogo");
+		} else if (trapacaText.text == "1".ToUpper () && armasDeFogoAtiva != 1) {
+			if (armasDeFogoAtiva != -1) {
+				armasDeFogo [armasDeFogoAtiva].enabled = false;
+			}
+
+			balas = 45;
+			armasDeFogoAtiva = 1;
+			armasDeFogo [armasDeFogoAtiva].enabled = true;
+
+			meuAnimator.SetLayerWeight (1, 0);
+			meuAnimator.SetLayerWeight (2, 0);
+			meuAnimator.SetLayerWeight (3, 1);
+			meuAnimator.SetTrigger ("AtivarArmaDeFogo");
+		}  else if (trapacaText.text == "2".ToUpper () && armasDeFogoAtiva != 2) {
+			if (armasDeFogoAtiva != -1) {
+				armasDeFogo [armasDeFogoAtiva].enabled = false;
+			}
+
+			balas = 5;
+			armasDeFogoAtiva = 2;
+			armasDeFogo [armasDeFogoAtiva].enabled = true;
+
+			meuAnimator.SetLayerWeight (1, 0);
+			meuAnimator.SetLayerWeight (2, 0);
+			meuAnimator.SetLayerWeight (3, 1);
+			meuAnimator.SetTrigger ("AtivarArmaDeFogo");
+		}
+
+		armas [0].enabled = false;
+		meuAnimator.SetInteger ("IndiceArmaDeFogo", armasDeFogoAtiva);
 	}
 }

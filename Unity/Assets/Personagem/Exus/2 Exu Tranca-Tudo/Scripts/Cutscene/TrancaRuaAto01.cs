@@ -43,7 +43,11 @@ public class TrancaRuaAto01 : MonoBehaviour {
 
 			switch (meuMetodosDaCutscene.PegarAto ()) {
 			case 0:
-				fala = "Sua magia inconveniente não tem efeito por essas terras.";
+				if (meuMetodosDaCutscene.PegarIndioma ()) {
+					fala = "Sua magia inconveniente não tem efeito por essas terras.";
+				} else {
+					fala = "Ingles";
+				}
 				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 1, 5 * sat, true);
 				tempoEspera = 0;
 				maxTempoEspera = 3f * sat;
