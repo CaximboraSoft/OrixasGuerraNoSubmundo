@@ -120,13 +120,23 @@ public class AbejideAto02 : MonoBehaviour {
 
 					if (telaPreta.color.a >= 0.68f) {
 						telaPreta.color = new Color (0, 0, 0, 0.7f);
-						texto.text = "Abejide (Pensativo) \n\nTodos que conheço faleceram, minha familia assasinada e meus companheiros brutalmente massacrados\n" +
-							"por um Orixa. E ainda por cima ter que arcar com o peso dessa tortura, mediante aos opressores Exus.\n" +
-							"Como o destino é cruel. Sera que minha familia sofreu tanto a esse ponto.\n\n" +
-							"Lembranças:\n\nUm vilarejo, um anciao, pai e mãe... presentes em um so momento.\n\n" +
-							"Todos:\n\nCresça garoto. Nos livre desssa maldição e livre-se de seu passado\n\nAbejide:\n\n" +
-							"Não deixarei que este seja o meu fim. Eles confiaram a mim a missão de matar essa linha estensa linha de Orixas e Exus\nque afrontam a " +
-							"humanidade tirando a sua liberdade.";
+						if (meuMetodosDaCutscene.PegarIndioma ()) {
+							texto.text = "Abejide (Pensativo) \n\nTodos que conheço faleceram, minha familia assasinada e meus companheiros brutalmente massacrados\n" +
+								"por um Orixa. E ainda por cima ter que arcar com o peso dessa tortura, mediante aos opressores Exus.\n" +
+								"Como o destino é cruel. Sera que minha familia sofreu tanto a esse ponto.\n\n" +
+								"Lembranças:\n\nUm vilarejo, um anciao, pai e mãe... presentes em um so momento.\n\n" +
+								"Todos:\n\nCresça garoto. Nos livre desssa maldição e livre-se de seu passado\n\nAbejide:\n\n" +
+								"Não deixarei que este seja o meu fim. Eles confiaram a mim a missão de matar essa linha estensa linha de Orixas e Exus\nque afrontam a " +
+								"humanidade tirando a sua liberdade.";
+						} else {
+							texto.text = "Abejide (Pensativo) \n\nTodos que conheço faleceram, minha familia assasinada e meus companheiros brutalmente massacrados\n" +
+								"por um Orixa. E ainda por cima ter que arcar com o peso dessa tortura, mediante aos opressores Exus.\n" +
+								"Como o destino é cruel. Sera que minha familia sofreu tanto a esse ponto.\n\n" +
+								"Lembranças:\n\nUm vilarejo, um anciao, pai e mãe... presentes em um so momento.\n\n" +
+								"Todos:\n\nCresça garoto. Nos livre desssa maldição e livre-se de seu passado\n\nAbejide:\n\n" +
+								"Não deixarei que este seja o meu fim. Eles confiaram a mim a missão de matar essa linha estensa linha de Orixas e Exus\nque afrontam a " +
+								"humanidade tirando a sua liberdade.";
+						}
 						tempoEspera = 0;
 						maxTempoEspera = 30f * sat;
 						GetComponent<MetodosDaCutscene> ().IncrementarAto ();
@@ -167,7 +177,11 @@ public class AbejideAto02 : MonoBehaviour {
 					break;
 				case 9:
 					if (meuMetodosDaCutscene.AtorJaPassouDoAto (2, 7)) {
-						fala = "Não permitirei que saia impune";
+						if (meuMetodosDaCutscene.PegarIndioma ()) {
+							fala = "Não permitirei que saia impune";
+						} else {
+							fala = "Ingles";
+						}
 						meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 4, 3 * sat, true);
 						tempoEspera = 0;
 						maxTempoEspera = (4f + 3f) * sat;

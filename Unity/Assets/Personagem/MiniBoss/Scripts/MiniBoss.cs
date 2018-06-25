@@ -330,6 +330,7 @@ public class MiniBoss : MonoBehaviour {
 		}
 
 		portao.SetTrigger ("Abrir");
+		portao.GetComponent<MostrarPortao> ().FocarCameraNoAlvo ();
 		transform.tag = "Untagged";
 		Destroy (meuNavMeshAgent);
 		Destroy (seta.gameObject);

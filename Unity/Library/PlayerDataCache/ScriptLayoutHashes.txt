@@ -18,6 +18,7 @@ ff05dcdf90651c3d98a9cad3df5e471e UnityEngine.Timeline.dll:UnityEngine.Timeline.C
 31aaf521b3ef8699466676591ea0efd4 UnityEngine.Timeline.dll:UnityEngine.Timeline.GroupTrack
 31aaf521b3ef8699466676591ea0efd4 UnityEngine.Timeline.dll:UnityEngine.Timeline.PlayableTrack
 df374c01140c2d578bf70cbd60073d1d UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
+208167d4593a79b71220113ebb3685c7 Assembly-CSharp.dll:.Balas
 380945187724d259f3d083f3f1302b56 Assembly-CSharp.dll:.DadosMovimentacao
 82a7a1fba964230338420e35a3f22a7d Assembly-CSharp.dll:.CameraDetectarColisao
 54611fc79004a9f20b9f0b5911793480 Assembly-CSharp.dll:.Arma
@@ -86,6 +87,7 @@ f61c0793411f10cf5fbfa1473fef5ef2 UnityEngine.UI.dll:UnityEngine.UI.ToggleGroup
 86d36c43c53541d667100dc90b89cfba UnityEngine.UI.dll:UnityEngine.EventSystems.TouchInputModule
 1b8c02d0aa82fbf036a2b9b2d713eec3 UnityEngine.UI.dll:UnityEngine.UI.VerticalLayoutGroup
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.CameraAto01
+4814b6ded3a086d84b6abcbcdc1503e8 Assembly-CSharp.dll:.PtEn
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 dbc29a6f2739d277c10da432d73adb6d UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
 8144169769d51429c4aedc8b0f92d47b UnityEngine.Timeline.dll:UnityEngine.Timeline.AnimationPlayableAsset
@@ -136,6 +138,7 @@ b2699c57ffcc9fdeb021c98cd8a85b60 Assembly-CSharp.dll:.InimigosNormais
 c6583d890bf7db2b93f96e829394d483 Assembly-CSharp.dll:.SeteEncruzilhadasAto01
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.EsconderObjeto
 a69aec9dd12c4bc48da323257c3d4414 Assembly-CSharp.dll:.Coadjuvantes
+a57531da74dbbd9ee8b5107cf75762eb Assembly-CSharp.dll:.BotoesIndioma
 8f17b2da80547c0f113848fec4d284fe Assembly-CSharp.dll:.ColocarDentro
 7ce579570f6b598db53d15aa024ca971 Assembly-CSharp.dll:.DadosDaFase
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
@@ -168,6 +171,8 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 463516d5b5fe8e67a0a24c48f2095b04 UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInputModule
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.Data
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.DestroirAposTempo
 b8a019d8a94bfcf00c7bb0c3bf8f112e Assembly-CSharp.dll:.SuccubusAto01
 27132f692d06ac6e722571d543f3e10a Assembly-CSharp.dll:.FazerPedrasVoar
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
@@ -182,8 +187,3 @@ cefee73a023d97637362d1bf203464d3 Assembly-CSharp.dll:.AbejideAto02
 3a291ea79eae2cc008d456ecc3922c05 Assembly-CSharp.dll:.BolaDeFogo
 63c4676cbdfc0050b8d052d2f164d1e4 Assembly-CSharp.dll:.CarcereiroAto01
 64dd39ea014edec89d511f9c30b88b9d Assembly-CSharp.dll:.Abejide
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.Data
-a57531da74dbbd9ee8b5107cf75762eb Assembly-CSharp.dll:.BotoesIndioma
-4814b6ded3a086d84b6abcbcdc1503e8 Assembly-CSharp.dll:.PtEn
-208167d4593a79b71220113ebb3685c7 Assembly-CSharp.dll:.Balas
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.DestroirAposTempo

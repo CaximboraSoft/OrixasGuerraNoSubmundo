@@ -84,7 +84,11 @@ public class AbejideAto01 : MonoBehaviour {
 				if (meuMetodosDaCutscene.AtorJaPassouDoAto (2, 3)) {
 					corpoAnimator.SetInteger ("IndiceGatilho", 2); //Quebra a pedra.
 					corpoAnimator.SetTrigger ("Gatilho");
-					fala = "Seu velho tolo!!!";
+					if (meuMetodosDaCutscene.PegarIndioma ()) {
+						fala = "Seu velho tolo!!!";
+					} else {
+						fala = "Ingles";
+					}
 					meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 1, 4 * sat, true);
 					tempoEspera = 0;
 					maxTempoEspera = 4.5f * sat;

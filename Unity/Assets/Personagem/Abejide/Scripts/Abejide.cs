@@ -147,8 +147,22 @@ public class Abejide : MonoBehaviour {
 	void Update () {
 		temporizadorTiros += Time.deltaTime;
 
+		//Abre a tela de trapaças
 		if (Input.GetKeyDown (KeyCode.Tab) && armaAtual != -1) {
+			trapaca.GetComponentInChildren<InputField> ().enabled = !trapaca.enabled;
+
+			if (trapaca.enabled) {
+				trapaca.GetComponentInChildren<InputField> ().DeactivateInputField ();
+			} else {
+				trapaca.GetComponentInChildren<InputField> ().ActivateInputField ();
+			}
+
 			trapaca.enabled = !trapaca.enabled;
+		}
+
+		//Impede que as mecânicas do Abejide seja executada caso o jogador esteja no menu de trapaças
+		if (trapaca.enabled) {
+			return;
 		}
 
 		if (meuAnimator.GetInteger ("IndiceGatilho") == 999) {
@@ -785,49 +799,77 @@ public class Abejide : MonoBehaviour {
 	}
 
 	public void ValidarTrapaca () {
-		
-		if (trapacaText.text == "0".ToUpper () && armasDeFogoAtiva != 0) {
-			if (armasDeFogoAtiva != -1) {
-				armasDeFogo [armasDeFogoAtiva].enabled = false;
+		if (trapacaText.text == "500 conto".ToLower ()) {
+			if (armasDeFogoAtiva != 0) {
+				if (armasDeFogoAtiva != -1) {
+					armasDeFogo [armasDeFogoAtiva].enabled = false;
+				}
+
+				balas = 6;
+				armasDeFogoAtiva = 0;
+
+				DesativarEspada ();
+			} else {
+				AtivaEspada ();
 			}
 
-			balas = 6;
-			armasDeFogoAtiva = 0;
-			armasDeFogo [armasDeFogoAtiva].enabled = true;
+		} else if (trapacaText.text == "baguncinha na california".ToLower ()) {
+			if (armasDeFogoAtiva != 1) {
+				if (armasDeFogoAtiva != -1) {
+					armasDeFogo [armasDeFogoAtiva].enabled = false;
+				}
 
-			meuAnimator.SetLayerWeight (1, 0);
-			meuAnimator.SetLayerWeight (2, 0);
-			meuAnimator.SetLayerWeight (3, 1);
-			meuAnimator.SetTrigger ("AtivarArmaDeFogo");
-		} else if (trapacaText.text == "1".ToUpper () && armasDeFogoAtiva != 1) {
-			if (armasDeFogoAtiva != -1) {
-				armasDeFogo [armasDeFogoAtiva].enabled = false;
+				balas = 45;
+				armasDeFogoAtiva = 1;
+
+				DesativarEspada ();
+			} else {
+				AtivaEspada ();
 			}
+		}  else if (trapacaText.text == "na cara não".ToLower ()) {
+			if (armasDeFogoAtiva != 2) {
+				if (armasDeFogoAtiva != -1) {
+					armasDeFogo [armasDeFogoAtiva].enabled = false;
+				}
 
-			balas = 45;
-			armasDeFogoAtiva = 1;
-			armasDeFogo [armasDeFogoAtiva].enabled = true;
+				balas = 5;
+				armasDeFogoAtiva = 2;
 
-			meuAnimator.SetLayerWeight (1, 0);
-			meuAnimator.SetLayerWeight (2, 0);
-			meuAnimator.SetLayerWeight (3, 1);
-			meuAnimator.SetTrigger ("AtivarArmaDeFogo");
-		}  else if (trapacaText.text == "2".ToUpper () && armasDeFogoAtiva != 2) {
-			if (armasDeFogoAtiva != -1) {
-				armasDeFogo [armasDeFogoAtiva].enabled = false;
+				DesativarEspada ();
+			} else {
+				AtivaEspada ();
 			}
-
-			balas = 5;
-			armasDeFogoAtiva = 2;
-			armasDeFogo [armasDeFogoAtiva].enabled = true;
-
-			meuAnimator.SetLayerWeight (1, 0);
-			meuAnimator.SetLayerWeight (2, 0);
-			meuAnimator.SetLayerWeight (3, 1);
-			meuAnimator.SetTrigger ("AtivarArmaDeFogo");
 		}
 
-		armas [0].enabled = false;
-		meuAnimator.SetInteger ("IndiceArmaDeFogo", armasDeFogoAtiva);
+
+	}
+
+	void AtivaEspada () {
+		armasDeFogo [armasDeFogoAtiva].enabled = false;
+
+		armasDeFogoAtiva = -1;
+
+		//Ativa as layer da animação espada quebrada
+		meuAnimator.SetLayerWeight (1, 1);
+		meuAnimator.SetLayerWeight (2, 1);
+		//Desativa o layer da arma de fogo
+		meuAnimator.SetLayerWeight (3, 0);
+
+		armas [0].enabled = true; //Deixa a espara quebrada visivel
+	}
+
+	void DesativarEspada () {
+		//Ativa o render da arma de fogo do código digitado
+		armasDeFogo [armasDeFogoAtiva].enabled = true;
+
+		//Desativa as layer da animação espada quebrada
+		meuAnimator.SetLayerWeight (1, 0);
+		meuAnimator.SetLayerWeight (2, 0);
+		//Ativa o layer da arma de fogo
+		meuAnimator.SetLayerWeight (3, 1);
+		meuAnimator.SetTrigger ("AtivarArmaDeFogo");
+
+		armas [0].enabled = false; //Deixa a espara quebrada invisivel
+		meuAnimator.SetInteger ("IndiceArmaDeFogo", armasDeFogoAtiva); //Chama o trigger que troca a animação para a de acordo com a arma de fogo usada
 	}
 }

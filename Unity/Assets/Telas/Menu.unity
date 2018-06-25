@@ -997,7 +997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portugues: 'Selecione o idioma desejado:'
-  ingles: 'Select the idiom:'
+  ingles: 'Select the language:'
 --- !u!1 &341107933
 GameObject:
   m_ObjectHideFlags: 0
@@ -2960,9 +2960,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Inglish
-
-'
+  m_Text: English
 --- !u!222 &1208982713
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5091,7 +5089,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2e4dd8992256be44985024dfbf4c45d4, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0

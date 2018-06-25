@@ -62,13 +62,21 @@ public class TrancaRuaAto01 : MonoBehaviour {
 				meuMetodosDaCutscene.ComecarAtuacaoPosicao(velocidade, false, false, 0);
 				break;
 			case 4:
-				fala = "Há que bobagem. Se não fosse por nós ele estaria morto assim como todas as coisas vivas.";
+				if (meuMetodosDaCutscene.PegarIndioma ()) {
+					fala = "Há que bobagem. Se não fosse por nós ele estaria morto assim como todas as coisas vivas.";
+				} else {
+					fala = "Ingles";
+				}
 				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 0, 7 * sat, true);
 				tempoEspera = 0;
 				maxTempoEspera = 7 * sat;
 				break;
 			case 5:
-				fala = "E agora, como tu desejaste seu bem própio iremos balancear o karma a nosso favor. Que comece a punição.";
+				if (meuMetodosDaCutscene.PegarIndioma ()) {
+					fala = "E agora, como tu desejaste seu bem própio iremos balancear o karma a nosso favor. Que comece a punição.";
+				} else {
+					fala = "Ingles";
+				}
 				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 0, 8 * sat, true);
 				tempoEspera = 0;
 				maxTempoEspera = 8.1f * sat;
@@ -87,7 +95,11 @@ public class TrancaRuaAto01 : MonoBehaviour {
 				indiceRotacoes++;
 				break;
 			case 10:
-				fala = "Que ousado! De fato não é nada fraco.";
+				if (meuMetodosDaCutscene.PegarIndioma ()) {
+					fala = "Que ousado! De fato não é nada fraco.";
+				} else {
+					fala = "Ingles";
+				}
 				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 0, 5 * sat, true);
 				tempoEspera = 0;
 				maxTempoEspera = 1f * sat;

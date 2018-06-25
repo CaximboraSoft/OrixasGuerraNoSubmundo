@@ -61,13 +61,21 @@ public class SeteEncruzilhadasAto01 : MonoBehaviour {
 			switch (meuMetodosDaCutscene.PegarAto ()) {
 			case 0:
 				if (meuMetodosDaCutscene.AtorJaPassouDoAto(1, 2)) {
-					fala = "Não subestime o garoto, não esqueça que este jovem levou Olodumare ao limite, meu caro.";
+					if (meuMetodosDaCutscene.PegarIndioma ()) {
+						fala = "Não subestime o garoto, não esqueça que este jovem levou Olodumare ao limite, meu caro.";
+					} else {
+						fala = "Ingles";
+					}
 					GetComponent<MetodosDaCutscene> ().Falar (fala, GetComponent<MetodosDaCutscene> ().PegarNome (), 0, 6 * sat, true);
 				}
 				break;
 			case 1:
 				if (meuMetodosDaCutscene.AtorJaPassouDoAto(1, 6)) {
-					fala = "Eu vou começar pois tenho preferência no quesito idade.";
+					if (meuMetodosDaCutscene.PegarIndioma ()) {
+						fala = "Eu vou começar pois tenho preferência no quesito idade.";
+					} else {
+						fala = "Ingles";
+					}
 					meuMetodosDaCutscene.Falar (fala, GetComponent<MetodosDaCutscene> ().PegarNome (), 2, 6 * sat, true);
 					tempoEspera = 0;
 					maxTempoEspera = 4.5f * sat;
@@ -81,7 +89,11 @@ public class SeteEncruzilhadasAto01 : MonoBehaviour {
 				break;
 			case 4:
 				if (meuMetodosDaCutscene.AtorJaPassouDoAto(0, 6)) {
-					fala = "É melhor que tu fiques por bem meu jovem. Tu causou problemas de mais para nós. Não brimques com nossa paciência.";
+					if (meuMetodosDaCutscene.PegarIndioma ()) {
+						fala = "É melhor que tu fiques por bem meu jovem. Tu causou problemas de mais para nós. Não brimques com nossa paciência.";
+					} else {
+						fala = "Ingles";
+					}
 					meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 3, 9.5f * sat, true);
 				}
 				break;
@@ -93,13 +105,21 @@ public class SeteEncruzilhadasAto01 : MonoBehaviour {
 				indiceRotacoes++;
 				break;
 			case 7:
-				fala = "Faça isso novamente e você pagará um preço ainda maior do que aquele que temos em mente.";
+				if (meuMetodosDaCutscene.PegarIndioma ()) {
+					fala = "Faça isso novamente e você pagará um preço ainda maior do que aquele que temos em mente.";
+				} else {
+					fala = "Ingles";
+				}
 				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 0, 7 * sat, true);
 				tempoEspera = 0;
 				maxTempoEspera = 7.1f * sat;
 				break;
 			case 8:
-				fala = "Eu sei para onde iremos meu jovem. Mas acho que você não achará meu reino tão agradável quanto eu...";
+				if (meuMetodosDaCutscene.PegarIndioma ()) {
+					fala = "Eu sei para onde iremos meu jovem. Mas acho que você não achará meu reino tão agradável quanto eu...";
+				} else {
+					fala = "Ingles";
+				}
 				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 0, 7 * sat, true);
 				tempoEspera = 0;
 				maxTempoEspera = 8 * sat;

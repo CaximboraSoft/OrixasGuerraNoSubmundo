@@ -52,7 +52,11 @@ public class SeteEncruzilhadasAto02 : MonoBehaviour {
 					objTemp [i].AtivarCodigo ();
 				}
 
-				fala = "Esta será sua nova casa.";
+				if (meuMetodosDaCutscene.PegarIndioma ()) {
+					fala = "Esta será sua nova casa.";
+				} else {
+					fala = "Ingles";
+				}
 				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 5, 5 * sat, true);
 				tempoEspera = 0;
 				maxTempoEspera = (5 + 5) * sat;
@@ -62,7 +66,11 @@ public class SeteEncruzilhadasAto02 : MonoBehaviour {
 				break;
 			case 2:
 				if (meuMetodosDaCutscene.AtorJaPassouDoAto(0, 1)) {
-					fala = "Vamos nos divertir.";
+					if (meuMetodosDaCutscene.PegarIndioma ()) {
+						fala = "Vamos nos divertir.";
+					} else {
+						fala = "Ingles";
+					}
 					meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 0, 4 * sat, true);
 					tempoEspera = 0;
 					maxTempoEspera = 4 * sat;
@@ -73,20 +81,32 @@ public class SeteEncruzilhadasAto02 : MonoBehaviour {
 				break;
 			case 4:
 				if (meuMetodosDaCutscene.AtorJaPassouDoAto(0, 8)) {
-					fala = "Mas o que é isso?";
+					if (meuMetodosDaCutscene.PegarIndioma ()) {
+						fala = "Mas o que é isso?";
+					} else {
+						fala = "Ingles";
+					}
 					meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 0, 3 * sat, true);
 					tempoEspera = 0;
 					maxTempoEspera = 3 * sat;
 				}
 				break;
 			case 5:
-				fala = "Sou um velho cansado, mas não vou deixar que saia assim, meu caro.";
+				if (meuMetodosDaCutscene.PegarIndioma ()) {
+					fala = "Sou um velho cansado, mas não vou deixar que saia assim, meu caro.";
+				} else {
+					fala = "Ingles";
+				}
 				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 0, 4 * sat, true);
 				tempoEspera = 0;
 				maxTempoEspera = 4 * sat;
 				break;
 			case 6:
-				fala = "Carcereiros! Cuidem dele. Eu voltarei em breve.";
+				if (meuMetodosDaCutscene.PegarIndioma ()) {
+					fala = "Carcereiros! Cuidem dele. Eu voltarei em breve.";
+				} else {
+					fala = "Ingles";
+				}
 				meuMetodosDaCutscene.Falar (fala, meuMetodosDaCutscene.PegarNome (), 0, 4 * sat, true);
 				tempoEspera = 0;
 				maxTempoEspera = 4 * sat;

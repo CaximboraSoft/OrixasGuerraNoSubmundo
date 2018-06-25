@@ -207,7 +207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   somPrefab: {fileID: 1011229015024886, guid: ddfae52f71b4f34498ac53149ae43cb4, type: 2}
   som: {fileID: 8300000, guid: 654154ae8b190f143870c5ec17159a54, type: 3}
-  dano: 55
+  dano: 90
   velocidade: 400
   volume: 0.5
 --- !u!135 &135826958341331398

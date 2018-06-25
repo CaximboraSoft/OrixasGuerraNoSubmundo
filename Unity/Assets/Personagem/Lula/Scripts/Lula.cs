@@ -17,6 +17,7 @@ public class Lula : MonoBehaviour {
 	public InimigosNormais[] pausarInimigosNormais;
 	public Transform cameraPrincipal;
 	public Transform cameraLugar;
+	private DadosDaFase dadosDaFase;
 
 	public Conversas boca;
 
@@ -34,6 +35,7 @@ public class Lula : MonoBehaviour {
 		abejide = FindObjectOfType<Abejide> ();
 		abejideAnimator = abejide.GetComponentInChildren<Animator> ();
 		temporizador = 0f;
+		dadosDaFase = FindObjectOfType<DadosDaFase> ();
 	}
 	
 	// Update is called once per frame
@@ -145,7 +147,11 @@ public class Lula : MonoBehaviour {
 			break;
 
 		case 5:
-			fala = "Se me ajudar, te ajudarei a sair daqui. Vi seu olhar... O conheço muito bem.";
+			if (dadosDaFase.PegarIndioma ()) {
+				fala = "Se me ajudar, te ajudarei a sair daqui. Vi seu olhar... O conheço muito bem.";
+			} else {
+				fala = "Ingles";
+			}
 			boca.GetComponent<Text> ().text = fala;
 			boca.GetComponent<Conversas> ().MudarTempoLimparTexto (4f);
 			boca.GetComponent<Conversas> ().conversas.enabled = true;
@@ -155,7 +161,11 @@ public class Lula : MonoBehaviour {
 		case 6:
 			temporizador += Time.deltaTime;
 			if (temporizador > 4f) {
-				fala = "E de quebra você ganha uma arma muito boa. Hein, que tal?";
+				if (dadosDaFase.PegarIndioma ()) {
+					fala = "E de quebra você ganha uma arma muito boa. Hein, que tal?";
+				} else {
+					fala = "Ingles";
+				}
 				boca.GetComponent<Text> ().text = fala;
 				boca.GetComponent<Conversas> ().MudarTempoLimparTexto (4f);
 				boca.GetComponent<Conversas> ().conversas.enabled = true;
@@ -179,7 +189,11 @@ public class Lula : MonoBehaviour {
 		case 8:
 			temporizador += Time.deltaTime;
 			if (temporizador > 1f) {
-				fala = "Obrigado filho...";
+				if (dadosDaFase.PegarIndioma ()) {
+					fala = "Obrigado filho...";
+				} else {
+					fala = "Ingles";
+				}
 				boca.GetComponent<Text> ().text = fala;
 				boca.GetComponent<Conversas> ().MudarTempoLimparTexto (2f);
 				boca.GetComponent<Conversas> ().conversas.enabled = true;

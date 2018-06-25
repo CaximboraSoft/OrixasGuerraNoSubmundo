@@ -412,7 +412,9 @@ public class InimigosNormais : MonoBehaviour {
 	/// </summary>
 	public void PausarCutscene () {
 		rodandoCutscene = true;
-		meuNavMeshAgent.SetDestination (transform.position);
+		if (meuNavMeshAgent != null) {
+			meuNavMeshAgent.SetDestination (transform.position);
+		}
 		velocidade = 0f;
 	}
 

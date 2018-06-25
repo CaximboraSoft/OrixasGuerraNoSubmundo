@@ -15,6 +15,7 @@ public class SeteEncruzilhadasAto03 : MonoBehaviour {
 	public Transform rostoMostrarAbejide;
 	private Transform abejide;
 	private InimigosNormais[] inimigosNormais;
+	private DadosDaFase dadosDaFase;
 
 	public Conversas boca;
 
@@ -24,6 +25,10 @@ public class SeteEncruzilhadasAto03 : MonoBehaviour {
 	private string fala;
 
 	private int ato = 0;
+
+	void Start () {
+		dadosDaFase = FindObjectOfType<DadosDaFase> ();
+	}
 
 	public void AtivarCodigo () {
 		meuAnimator = GetComponentInChildren<Animator> ();
@@ -40,7 +45,7 @@ public class SeteEncruzilhadasAto03 : MonoBehaviour {
 
 		switch (ato) {
 			case 0:
-			if (Vector3.Distance (transform.position, abejide.position) < 30f) {
+			if (Vector3.Distance (transform.position, abejide.position) < 25f) {
 				ato++;
 			}
 			break;
@@ -58,12 +63,16 @@ public class SeteEncruzilhadasAto03 : MonoBehaviour {
 		case 2:
 			abejideSeta.LookAt ((new Vector3 (lugarDoAbejide.position.x, abejideSeta.position.y, lugarDoAbejide.position.z)));
 			abejide.rotation = Quaternion.Lerp (abejide.rotation, abejideSeta.rotation, 3 * Time.deltaTime);
-			abejide.position = Vector3.Lerp (abejide.position, lugarDoAbejide.position, 0.8f * Time.deltaTime);
+			abejide.position = Vector3.Lerp (abejide.position, lugarDoAbejide.position, 0.65f * Time.deltaTime);
 
 			if (Vector3.Distance (lugarDoAbejide.position, abejide.position) < 1f) {
 				boca.enabled = true;
 				boca.GetComponent<Conversas> ().MudarRostoMostrar (rostoMostrarExuVelho);
-				fala = "Muito bem, meu rapaz. Tu mataste a Quimera, as súcubus e se livrara das caveiras.";
+				if (dadosDaFase.PegarIndioma ()) {
+					fala = "Muito bem, meu rapaz. Tu mataste a Quimera, as súcubus e se livrara das caveiras.";
+				} else {
+					fala = "Ingles";
+				}
 				boca.GetComponent<Conversas> ().nome.text = "Exu Velho:";
 				boca.GetComponent<Text> ().text = fala;
 				boca.GetComponent<Conversas> ().MudarTempoLimparTexto (6.5f);
@@ -80,7 +89,11 @@ public class SeteEncruzilhadasAto03 : MonoBehaviour {
 
 			temporizador += Time.deltaTime;
 			if (temporizador > maxTemporizador) {
-				fala = "No entanto... tudo que é bom dura pouco. Não penso mais em torturá-lo. Agora vou te matar, e que se danem meus colegas.";
+				if (dadosDaFase.PegarIndioma ()) {
+					fala = "No entanto... tudo que é bom dura pouco. Não penso mais em torturá-lo. Agora vou te matar, e que se danem meus colegas.";
+				} else {
+					fala = "Ingles";
+				}
 				boca.GetComponent<Text> ().text = fala;
 				boca.GetComponent<Conversas> ().MudarTempoLimparTexto (8f);
 				boca.GetComponent<Conversas> ().conversas.enabled = true;
@@ -92,7 +105,11 @@ public class SeteEncruzilhadasAto03 : MonoBehaviour {
 		case 4:
 			temporizador += Time.deltaTime;
 			if (temporizador > maxTemporizador) {
-				fala = "Pois tu já és uma ameaça de alto nível. O meu reino será o seu túmulo.";
+				if (dadosDaFase.PegarIndioma ()) {
+					fala = "Pois tu já és uma ameaça de alto nível. O meu reino será o seu túmulo.";
+				} else {
+					fala = "Ingles";
+				}
 				boca.GetComponent<Text> ().text = fala;
 				boca.GetComponent<Conversas> ().MudarTempoLimparTexto (6.5f);
 				boca.GetComponent<Conversas> ().conversas.enabled = true;
@@ -106,7 +123,11 @@ public class SeteEncruzilhadasAto03 : MonoBehaviour {
 			if (temporizador > maxTemporizador) {
 				boca.GetComponent<Conversas> ().nome.text = "Abejide:";
 				boca.GetComponent<Conversas> ().MudarRostoMostrar (rostoMostrarAbejide);
-				fala = "Não... Não vai não.\nTeu reino é que será tua tumba, monstruosidade!";
+				if (dadosDaFase.PegarIndioma ()) {
+					fala = "Não... Não vai não.\nTeu reino é que será tua tumba, monstruosidade!";
+				} else {
+					fala = "Ingles";
+				}
 				boca.GetComponent<Text> ().text = fala;
 				boca.GetComponent<Conversas> ().MudarTempoLimparTexto (6.5f);
 				boca.GetComponent<Conversas> ().conversas.enabled = true;
@@ -120,7 +141,11 @@ public class SeteEncruzilhadasAto03 : MonoBehaviour {
 			if (temporizador > maxTemporizador) {
 				boca.GetComponent<Conversas> ().nome.text = "Exu Velho:";
 				boca.GetComponent<Conversas> ().MudarRostoMostrar (rostoMostrarExuVelho);
-				fala = "Muito bem então... Que duelemos!";
+				if (dadosDaFase.PegarIndioma ()) {
+					fala = "Muito bem então... Que duelemos!";
+				} else {
+					fala = "Ingles";
+				}
 				boca.GetComponent<Text> ().text = fala;
 				boca.GetComponent<Conversas> ().MudarTempoLimparTexto (4.5f);
 				boca.GetComponent<Conversas> ().conversas.enabled = true;

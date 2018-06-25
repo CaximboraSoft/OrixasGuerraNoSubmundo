@@ -13,6 +13,7 @@ public class SuccubusAto01 : MonoBehaviour {
 	public Transform rostoMostrarAbejide;
 	private Transform abejide;
 	private InimigosNormais[] inimigosNormais;
+	private DadosDaFase dadosDaFase;
 
 	public Conversas boca;
 
@@ -29,6 +30,7 @@ public class SuccubusAto01 : MonoBehaviour {
 	void Awake () {
 		abejide = GameObject.FindGameObjectWithTag ("Abejide").transform;
 		atorAnimator = GetComponentInChildren<Animator> ();
+		dadosDaFase = FindObjectOfType<DadosDaFase> ();
 	}
 	
 	// Update is called once per frame
@@ -63,7 +65,11 @@ public class SuccubusAto01 : MonoBehaviour {
 			if (Vector3.Distance (lugarDoAbejide.position, abejide.position) < 1f) {
 				boca.enabled = true;
 				boca.GetComponent<Conversas> ().MudarRostoMostrar (rostoMostrarAbejide);
-				fala = "Não pode ser...";
+				if (dadosDaFase.PegarIndioma ()) {
+					fala = "Não pode ser...";
+				} else {
+					fala = "Ingles";
+				}
 				boca.GetComponent<Conversas> ().nome.text = "Abejide:";
 				boca.GetComponent<Text> ().text = fala;
 				boca.GetComponent<Conversas> ().MudarTempoLimparTexto (2f);
@@ -86,7 +92,11 @@ public class SuccubusAto01 : MonoBehaviour {
 		case 4:
 			boca.GetComponent<Conversas> ().MudarRostoMostrar (rostoMostrarSuccubus);
 			boca.GetComponent<Conversas> ().nome.text = "Succubus:";
-			fala = "Ei garotão.\nNós sentimos o seu cheiro....";
+			if (dadosDaFase.PegarIndioma ()) {
+				fala = "Ei garotão.\nNós sentimos o seu cheiro....";
+			} else {
+				fala = "Ingles";
+			}
 			boca.GetComponent<Text> ().text = fala;
 			boca.GetComponent<Conversas> ().MudarTempoLimparTexto (4f);
 			boca.GetComponent<Conversas> ().conversas.enabled = true;
@@ -105,7 +115,11 @@ public class SuccubusAto01 : MonoBehaviour {
 			if (temporizador > maxTemporizador) {
 				boca.GetComponent<Conversas> ().MudarRostoMostrar (rostoMostrarAbejide);
 				boca.GetComponent<Conversas> ().nome.text = "Abejide:";
-				fala = "Não permitirei isso.";
+				if (dadosDaFase.PegarIndioma ()) {
+					fala = "Não permitirei isso.";
+				} else {
+					fala = "Ingles";
+				}
 				boca.GetComponent<Text> ().text = fala;
 				boca.GetComponent<Conversas> ().MudarTempoLimparTexto (4f);
 				boca.GetComponent<Conversas> ().conversas.enabled = true;
@@ -164,7 +178,7 @@ public class SuccubusAto01 : MonoBehaviour {
 				if (!abejidePegouEspada) {
 					abejide.GetComponent<Abejide> ().vidas = 0;
 				}
-				AcabouCutscene ();
+				StartCoroutine ("DestroirDados");
 			}
 			break;
 		}
@@ -190,7 +204,7 @@ public class SuccubusAto01 : MonoBehaviour {
 		}
 
 		GetComponent<Animator> ().SetTrigger ("PularCutscene");
-		AcabouCutscene ();
+		StartCoroutine ("DestroirDados");
 	}
 
 	private void AcabouCutscene () {
@@ -206,5 +220,10 @@ public class SuccubusAto01 : MonoBehaviour {
 		}
 
 		abejide.GetComponent<Abejide> ().AtivarCodigoLula ();
+	}
+
+	IEnumerator DestroirDados () {
+		yield return new WaitForSeconds (2);
+		AcabouCutscene ();
 	}
 }

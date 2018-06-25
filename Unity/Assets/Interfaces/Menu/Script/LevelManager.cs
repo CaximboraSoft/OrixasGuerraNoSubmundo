@@ -32,7 +32,7 @@ public class LevelManager : MonoBehaviour {
 		PtEn[] pten = FindObjectsOfType<PtEn> ();
 
 		if (pten.Length != 0) {
-			for (int i = 0; i < botoes.Length; i++) {
+			for (int i = 0; i < pten.Length; i++) {
 				pten [i].MudarIndioma ();
 			}
 		}
