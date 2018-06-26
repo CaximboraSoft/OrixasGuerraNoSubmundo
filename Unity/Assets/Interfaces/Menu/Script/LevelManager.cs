@@ -30,10 +30,16 @@ public class LevelManager : MonoBehaviour {
 		}
 
 		PtEn[] pten = FindObjectsOfType<PtEn> ();
-
 		if (pten.Length != 0) {
 			for (int i = 0; i < pten.Length; i++) {
 				pten [i].MudarIndioma ();
+			}
+		}
+
+		MudarIndiomaDropDown[] mudarIndiomaDropDown = FindObjectsOfType<MudarIndiomaDropDown> ();
+		if (mudarIndiomaDropDown.Length != 0) {
+			for (int i = 0; i < mudarIndiomaDropDown.Length; i++) {
+				mudarIndiomaDropDown [i].MudarIndioma ();
 			}
 		}
 	}

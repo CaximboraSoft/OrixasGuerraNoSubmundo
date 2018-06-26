@@ -1,17 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Personagem\Abejide\Scripts\Abejide.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Interfaces\Menu\Script\Data.cs">
     <Files>
-      <File FileName="Assets\Personagem\Abejide\Scripts\Abejide.cs" Line="151" Column="56" />
-      <File FileName="Assets\Personagem\MiniBoss\Scripts\MostrarPortao.cs" Line="19" Column="66" />
-      <File FileName="Assets\Personagem\Lula\Scripts\Lula.cs" Line="240" Column="3" />
-      <File FileName="Assets\Personagem\MiniBoss\Scripts\MiniBoss.cs" Line="333" Column="62" />
-      <File FileName="Assets\Personagem\Exus\2 Exu Tranca-Tudo\Scripts\Cutscene\TrancaRuaAto01.cs" Line="77" Column="6" />
-      <File FileName="Assets\Personagem\Abejide\Scripts\Cutscene\AbejideAto02.cs" Line="182" Column="8" />
-      <File FileName="Assets\Personagem\Exus\1 Exu Velho\Scripts\Cutscene\SeteEncruzilhadasAto01.cs" Line="66" Column="7" />
-      <File FileName="Assets\Personagem\Exus\1 Exu Velho\Scripts\Cutscene\SeteEncruzilhadasAto02.cs" Line="105" Column="48" />
-      <File FileName="Assets\Personagem\Exus\1 Exu Velho\Scripts\Cutscene\SeteEncruzilhadasAto03.cs" Line="73" Column="6" />
-      <File FileName="Assets\Personagem\InimigosNormais\Succubus\Script\Cutscene\SuccubusAto01.cs" Line="70" Column="6" />
+      <File FileName="Assets\Interfaces\Menu\Script\DesativarCanvas.cs" Line="11" Column="38" />
+      <File FileName="Assets\Interfaces\Menu\Script\LevelManager.cs" Line="41" Column="44" />
+      <File FileName="Assets\Interfaces\Menu\Script\MudarIndiomaDropDown.cs" Line="62" Column="53" />
+      <File FileName="Assets\Interfaces\Menu\Script\MudarResolucao.cs" Line="11" Column="31" />
+      <File FileName="Assets\Interfaces\Menu\Script\BotoesIndioma.cs" Line="30" Column="3" />
+      <File FileName="Assets\Interfaces\Menu\Script\Data.cs" Line="64" Column="3" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\Pausar.cs" Line="33" Column="14" />
+      <File FileName="Assets\Personagem\Abejide\Scripts\Abejide.cs" Line="155" Column="71" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

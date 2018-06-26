@@ -840,8 +840,6 @@ public class Abejide : MonoBehaviour {
 				AtivaEspada ();
 			}
 		}
-
-
 	}
 
 	void AtivaEspada () {

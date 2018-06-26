@@ -117,7 +117,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 528ea1fd7c01796fc60c4e2f172ea229 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformVisualizer
 1be3d4da2de743fc288360e69201e9df Assembly-CSharp.dll:.Boss
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
-3c583e90d0ff3926e896f1a71adcbef8 Assembly-CSharp.dll:.Pausar
+fb2e18f854d23a56ccd834f1e3b7971b Assembly-CSharp.dll:.Pausar
 ede94039aa1ffb418f7250c7f2178a84 Assembly-CSharp.dll:.FPS
 322cb40e1e282f28af980cbef7922a90 UnityEngine.Analytics.dll:UnityEngine.Analytics.AnalyticsEventTracker
 dc07d7ad69b399a46e92c483bf1c04ca UnityEngine.Analytics.dll:UnityEngine.Analytics.AnalyticsTracker
@@ -128,6 +128,7 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
 987175ccb222c569faa0131c2678e6a9 Assembly-CSharp.dll:.SeteEncruzilhadasAto02
+2b9d818dde2d701b9ae03d97251f84ba Assembly-CSharp.dll:.MostrarPortao
 b97087ff90f303e68457b4eb0381cf94 Assembly-CSharp.dll:.EsqueletoAto01
 97f80cadf8925a316b6066c7b9c40e70 Assembly-CSharp.dll:.ExoQuimeraAto01
 8100e52d9c0eb0b410792c043eead24e Assembly-CSharp.dll:.MetodosDaCutscene
@@ -155,7 +156,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 3f32f08a64daf40b09ed864d96fe3840 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransform
 73843688b51256aed059f049c540bca8 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformChild
 528ea1fd7c01796fc60c4e2f172ea229 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformVisualizer
-d984791569bdc45a70f62f9c954b3f1e Assembly-CSharp.dll:.seguirJogador
+37ce5f590d51f77d7327e54a18543758 Assembly-CSharp.dll:.seguirJogador
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.PlayModeRunnerCallback
 96d0fbde9fd209878a0a291f82c9bcdd UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.PlaymodeTestsController
 64eb32cc721b1cc68a91ed57461e188c UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.RemoteTestResultSender
@@ -187,3 +188,6 @@ cefee73a023d97637362d1bf203464d3 Assembly-CSharp.dll:.AbejideAto02
 3a291ea79eae2cc008d456ecc3922c05 Assembly-CSharp.dll:.BolaDeFogo
 63c4676cbdfc0050b8d052d2f164d1e4 Assembly-CSharp.dll:.CarcereiroAto01
 64dd39ea014edec89d511f9c30b88b9d Assembly-CSharp.dll:.Abejide
+19aad1d68820976560756f5ae5c647ce Assembly-CSharp.dll:.MudarResolucao
+1dc4f66ffd8ff80400e88a8fa300ae7d Assembly-CSharp.dll:.DesativarCanvas
+106272ea25a2ceea6141bd0e0e596a0d Assembly-CSharp.dll:.MudarIndiomaDropDown
