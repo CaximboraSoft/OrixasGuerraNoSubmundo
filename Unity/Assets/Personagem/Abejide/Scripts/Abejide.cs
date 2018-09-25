@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Abejide : MonoBehaviour {
 
 	public Canvas trapaca;
+	public Canvas pausa;
 	public Text trapacaText;
 	public Transform[] lugarSaidaDaBala;
 	public GameObject[] balasGameObj;
@@ -148,12 +149,15 @@ public class Abejide : MonoBehaviour {
 		temporizadorTiros += Time.deltaTime;
 
 		//Abre a tela de trapaças
-		if (Input.GetKeyDown (KeyCode.Tab) && armaAtual != -1) {
+		if (Input.GetKeyDown (KeyCode.Tab) && armaAtual != -1 && !pausa.enabled) {
+			trapaca.GetComponent<CanvasGroup> ().interactable = !trapaca.enabled;
 			trapaca.GetComponentInChildren<InputField> ().enabled = !trapaca.enabled;
 
 			if (trapaca.enabled) {
+				Time.timeScale = 1f;
 				trapaca.GetComponentInChildren<InputField> ().DeactivateInputField ();
 			} else {
+				Time.timeScale = 0f;
 				trapaca.GetComponentInChildren<InputField> ().ActivateInputField ();
 			}
 
@@ -317,10 +321,6 @@ public class Abejide : MonoBehaviour {
 			meuDadosMovimentacao.PegarMeuRigidbody ().AddForce (transform.forward * forcaDeMovimento * estamina.value, ForceMode.Force);
 		} else {
 			MovimentacaoOlhando ();
-		}
-
-		if (Input.GetKey (KeyCode.H)) {
-			meuDadosMovimentacao.PegarMeuRigidbody ().AddForce (transform.forward * forcaDeMovimento * 8f, ForceMode.Force);
 		}
 	}
 
@@ -799,7 +799,11 @@ public class Abejide : MonoBehaviour {
 	}
 
 	public void ValidarTrapaca () {
+		bool trapacaValida = false;
+
 		if (trapacaText.text == "500 conto".ToLower ()) {
+			trapacaValida = true;
+
 			if (armasDeFogoAtiva != 0) {
 				if (armasDeFogoAtiva != -1) {
 					armasDeFogo [armasDeFogoAtiva].enabled = false;
@@ -814,6 +818,8 @@ public class Abejide : MonoBehaviour {
 			}
 
 		} else if (trapacaText.text == "baguncinha na california".ToLower ()) {
+			trapacaValida = true;
+
 			if (armasDeFogoAtiva != 1) {
 				if (armasDeFogoAtiva != -1) {
 					armasDeFogo [armasDeFogoAtiva].enabled = false;
@@ -827,6 +833,8 @@ public class Abejide : MonoBehaviour {
 				AtivaEspada ();
 			}
 		}  else if (trapacaText.text == "na cara não".ToLower ()) {
+			trapacaValida = true;
+
 			if (armasDeFogoAtiva != 2) {
 				if (armasDeFogoAtiva != -1) {
 					armasDeFogo [armasDeFogoAtiva].enabled = false;
@@ -839,6 +847,21 @@ public class Abejide : MonoBehaviour {
 			} else {
 				AtivaEspada ();
 			}
+		}
+
+		if (trapacaValida) {
+			trapaca.GetComponent<CanvasGroup> ().interactable = !trapaca.enabled;
+			trapaca.GetComponentInChildren<InputField> ().enabled = !trapaca.enabled;
+
+			if (trapaca.enabled) {
+				Time.timeScale = 1f;
+				trapaca.GetComponentInChildren<InputField> ().DeactivateInputField ();
+			} else {
+				Time.timeScale = 0f;
+				trapaca.GetComponentInChildren<InputField> ().ActivateInputField ();
+			}
+
+			trapaca.enabled = !trapaca.enabled;
 		}
 	}
 

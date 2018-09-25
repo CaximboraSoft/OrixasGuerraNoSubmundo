@@ -36,7 +36,8 @@ public class SuccubusAto01 : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (ato > 0 && ato < 8 && abejidePegouEspada && Input.GetKeyDown (KeyCode.Return)) {
+		if (ato != -100 && ato > 0 && ato < 8 && abejidePegouEspada && Input.GetKeyDown (KeyCode.Return)) {
+			ato = -100;
 			PularCutscene ();
 		}
 

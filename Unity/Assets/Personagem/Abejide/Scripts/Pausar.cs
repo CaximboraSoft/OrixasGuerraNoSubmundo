@@ -5,14 +5,16 @@ using UnityEngine;
 public class Pausar : MonoBehaviour {
 
 	public Canvas pausa;
+	public Canvas trapaca;
 	public Canvas opcoes;
-
+	public Canvas fimDeJogo;
 	private bool jogoPausado = false;
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Escape)) {
+		if (Input.GetKeyDown (KeyCode.Escape) && !trapaca.enabled && !fimDeJogo.enabled) {
 			if (opcoes.enabled) {
+				opcoes.GetComponentInChildren <CanvasGroup> ().interactable = false;
 				opcoes.enabled = false;
 				pausa.enabled = true;
 			} else {
@@ -26,6 +28,8 @@ public class Pausar : MonoBehaviour {
 					DespausarJogo ();
 				}
 			}
+
+			pausa.GetComponent <CanvasGroup> ().interactable = jogoPausado;
 		}
 	}
 
@@ -33,5 +37,7 @@ public class Pausar : MonoBehaviour {
 		jogoPausado = false;
 		pausa.gameObject.SetActive (false);
 		Time.timeScale = 1;
+
+		pausa.GetComponent <CanvasGroup> ().interactable = jogoPausado;
 	}
 }

@@ -34,7 +34,7 @@ public class seguirJogador : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		Transform meuAlvo = abejide.GetComponent <Abejide> ().LugarParaCameraOlhar ();
 
 		if (meuAlvo != meuUltimoAlvo) {

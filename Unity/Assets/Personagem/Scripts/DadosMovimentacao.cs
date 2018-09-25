@@ -32,7 +32,7 @@ public class DadosMovimentacao : MonoBehaviour {
 
 			if (meuStateInfo.IsTag ("MORTO")) {
 				if (meuBoss != null) {
-					FindObjectOfType<LevelManager> ().MostrarTelaFinal ();
+					GetComponent <SeteEncruzilhadasAto04> ().enabled = true;
 				}
 				meuAnimator.enabled = false;
 				Destroy (meuAnimator);

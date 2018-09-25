@@ -401,12 +401,12 @@ public class Boss : MonoBehaviour {
 		transform.tag = "Untagged";
 		Destroy (meuNavMeshAgent);
 		Destroy (seta.gameObject);
-		StartCoroutine ("DesroirSom");
+		StartCoroutine ("DestroirSom");
 		Destroy (GetComponentInChildren<Arma> ().gameObject);
 		GetComponent<Boss> ().enabled = false;
 	}
 
-	IEnumerator DesroirSom () {
+	IEnumerator DestroirSom () {
 		yield return new WaitForSeconds (2);
 		Destroy (meuAudioSource);
 		Destroy (GetComponent<Boss> ());

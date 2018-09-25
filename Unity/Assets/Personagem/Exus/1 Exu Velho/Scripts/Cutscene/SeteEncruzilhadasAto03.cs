@@ -44,7 +44,7 @@ public class SeteEncruzilhadasAto03 : MonoBehaviour {
 		}
 
 		switch (ato) {
-			case 0:
+		case 0:
 			if (Vector3.Distance (transform.position, abejide.position) < 25f) {
 				ato++;
 			}
